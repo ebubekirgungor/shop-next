@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id         Int       @id @default(autoincrement())
+  email      String    @unique
+  first_name String
+  last_name  String
+  phone      String
+  birth_date DateTime  @db.Date
+  gender     Boolean
+  role       Role      @default(USER)
+  addresses  Address[]
+  orders     Order[]
+  favorites  Product[]
+  cart       Json
+}
+
+model Address {
+  id            Int    @id @default(autoincrement())
+  title         String
+  customer_name String
+  address       String
+  user_id       Int
+  user          User   @relation(fields: [user_id], references: [id])
+}
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  title    String
+  url      String    @unique
+  image    String
+  filters  Json
+  products Product[]
+}
+
+model Product {
+  id             Int      @id @default(autoincrement())
+  title          String
+  url            String   @unique
+  list_price     Float
+  stock_quantity Int
+  images         Json
+  filters        Json
+  category_id    Int
+  category       Category @relation(fields: [category_id], references: [id])
+  Users          User[]
+}
+
+enum DeliveryStatus {
+  DELIVERED
+  IN_PROGRESS
+  RETURNED
+  CANCELED
+}
+
+model Order {
+  id               Int            @id @default(autoincrement())
+  total_amount     Float
+  customer_name    String
+  delivery_address String
+  delivery_status  DeliveryStatus
+  products         Json
+  user_id          Int
+  user             User           @relation(fields: [user_id], references: [id])
+}
