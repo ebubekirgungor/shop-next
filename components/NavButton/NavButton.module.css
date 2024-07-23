@@ -1,0 +1,20 @@
+.link {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: 14px;
+  transition: transform 200ms ease-in-out;
+  will-change: transform;
+}
+
+.link:hover {
+  transform: translateY(-2px);
+}
+
+@media (prefers-color-scheme: dark) {
+  .link img {
+    filter: invert(100%);
+  }
+}

@@ -1,0 +1,49 @@
+.div {
+  display: flex;
+  column-gap: 0.5rem;
+}
+
+.div label {
+  cursor: pointer;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.input input {
+  width: 18px;
+  height: 20px;
+  appearance: none;
+  cursor: pointer;
+  outline: 1px solid rgb(var(--border-color));
+  border-radius: 6px;
+  transition: background-color 200ms, outline 200ms ease-in-out;
+}
+
+.input input:hover {
+  outline-color: rgb(75, 75, 75);
+}
+
+.input input:checked {
+  background-color: rgb(var(--foreground-color));
+}
+
+.input svg {
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-50%);
+  left: 50%;
+  fill: rgb(var(--button-text-color));
+  stroke: rgb(var(--button-text-color));
+  opacity: 0;
+  width: 14px;
+  height: 14px;
+  transition: opacity 200ms ease-in-out;
+}
+
+.input input:checked ~ svg {
+  opacity: 100;
+}

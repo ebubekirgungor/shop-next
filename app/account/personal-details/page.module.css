@@ -1,0 +1,10 @@
+.row {
+  display: flex;
+  column-gap: 2rem;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+}

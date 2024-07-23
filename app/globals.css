@@ -1,0 +1,80 @@
+:root {
+  --foreground-color: 0, 0, 0;
+  --background-color: 249, 250, 251;
+  --nav-background-color: 255, 255, 255;
+  --border-color: 229, 231, 235;
+  --search-input-color: 243, 244, 246;
+  --input-color: 248, 249, 251;
+  --button-text-color: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-color: 238, 238, 238;
+    --background-color: 20, 20, 20;
+    --nav-background-color: 15, 15, 15;
+    --border-color: 40, 40, 40;
+    --search-input-color: 20, 20, 20;
+    --input-color: 18, 18, 18;
+    --button-text-color: 0, 0, 0;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  user-select: none;
+  overflow-x: hidden;
+}
+
+body {
+  color: rgb(var(--foreground-color));
+  background-color: rgb(var(--background-color));
+}
+
+label {
+  font-size: 14px;
+}
+
+input {
+  font-family: inherit;
+  font-size: 14px;
+  padding-block: 2px;
+  padding-inline: 10px;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 500;
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+  background: transparent;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+}
