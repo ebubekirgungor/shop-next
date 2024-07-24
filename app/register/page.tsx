@@ -102,7 +102,7 @@ export default function Login() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const response = await fetch("http://localhost/api/v1/auth/signup", {
+    const response = await fetch("/api/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -115,7 +115,7 @@ export default function Login() {
         birth_date: new Date(
           `${birthDate.year}-${birthDate.month}-${birthDate.day}`
         ),
-        gender: gender,
+        gender: Boolean(gender),
         password: password,
       }),
     });
