@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
   }
 
   const token = await sign(
-    { email: email, role: Role[user.role] },
+    { id: user.id, email: email, role: Role[user.role] },
     getSecretKey(),
     {
       expiresIn: remember_me ? "30d" : "1h",

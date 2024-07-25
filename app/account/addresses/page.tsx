@@ -22,7 +22,7 @@ export default function Addresses() {
   const [isLoading, setLoading] = useState(true);
 
   async function getAllAddresses() {
-    await fetch("http://localhost/api/v1/addresses", {
+    await fetch("/api/addresses", {
       credentials: "include",
     })
       .then((response) => response.json())
@@ -70,7 +70,7 @@ export default function Addresses() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const response = await fetch("addresses/actions", {
+    const response = await fetch("/api/addresses", {
       method: dialogType,
       headers: {
         "Content-Type": "application/json",
