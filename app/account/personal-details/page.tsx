@@ -35,9 +35,9 @@ export default function PersonalDetails() {
         formatPhone(data.phone);
         setEmail(data.email);
         setBirthDate({
-          day: data.birth_date.split("-")[2],
-          month: data.birth_date.split("-")[1],
-          year: data.birth_date.split("-")[0],
+          day: data.birth_date.slice(8, 10),
+          month: data.birth_date.slice(5, 7),
+          year: data.birth_date.slice(0, 4),
         });
         setGender(data.gender.toString());
         setLoading(false);
@@ -106,7 +106,7 @@ export default function PersonalDetails() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    await fetch("personal-details/update", {
+    await fetch("/api/users/me", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
