@@ -34,11 +34,7 @@ export default function PersonalDetails() {
         setPhone(data.phone);
         formatPhone(data.phone);
         setEmail(data.email);
-        setBirthDate({
-          day: data.birth_date.slice(8, 10),
-          month: data.birth_date.slice(5, 7),
-          year: data.birth_date.slice(0, 4),
-        });
+        setBirthDate(data.birth_date);
         setGender(data.gender.toString());
         setLoading(false);
       });

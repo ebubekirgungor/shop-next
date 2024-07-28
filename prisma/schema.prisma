@@ -19,7 +19,7 @@ model User {
   first_name String
   last_name  String
   phone      String    @unique
-  birth_date DateTime  @db.Date
+  birth_date String
   gender     Boolean
   role       Role      @default(USER)
   addresses  Address[]

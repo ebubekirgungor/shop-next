@@ -15,9 +15,20 @@ async function me(_req: Request) {
   const email = (await verify(cookies().get("token")?.value, getPublicKey()))
     .email;
 
-  return NextResponse.json(
-    await prisma.user.findUnique({ where: { email: email } })
-  );
+  const user = await prisma.user.findUnique({ where: { email: email } });
+
+  return NextResponse.json({
+    email: email,
+    first_name: user?.first_name,
+    last_name: user?.last_name,
+    phone: user?.phone,
+    birth_date: {
+      day: user?.birth_date.split("-")[2],
+      month: user?.birth_date.split("-")[1],
+      year: user?.birth_date.split("-")[0],
+    },
+    gender: user?.gender,
+  });
 }
 
 async function update(req: Request) {
@@ -33,7 +44,7 @@ async function update(req: Request) {
         first_name,
         last_name,
         phone,
-        birth_date: new Date(birth_date),
+        birth_date: birth_date,
         gender: gender === "true",
       },
     });
