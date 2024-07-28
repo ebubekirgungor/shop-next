@@ -23,9 +23,7 @@ export default function Categories() {
   const [isLoading, setLoading] = useState(true);
 
   async function getAllCategories() {
-    await fetch("http://localhost/api/v1/categories", {
-      credentials: "include",
-    })
+    await fetch("/api/categories")
       .then((response) => response.json())
       .then((data) => {
         setCategories(data);
@@ -46,7 +44,6 @@ export default function Categories() {
   function openDialog(type: DialogType, category: Category) {
     setDialogType(type);
     const copy = { ...category };
-    if (type == "PUT") copy["image"] = "/images/categories/" + copy.image;
     setNewCategory(copy);
     setDialogStatus(true);
     setDialog(true);
@@ -107,28 +104,11 @@ export default function Categories() {
     const formData = new FormData();
     formData.append("id", (newCategory.id || 0).toString());
     formData.append("title", newCategory.title);
-    formData.append(
-      "url",
-      newCategory.title
-        .toLowerCase()
-        .replaceAll(" ", "-")
-        .replaceAll("ç", "c")
-        .replaceAll("ğ", "g")
-        .replaceAll("ı", "i")
-        .replaceAll("ö", "o")
-        .replaceAll("ş", "s")
-        .replaceAll("ü", "u")
-    );
     formData.append("filters", JSON.stringify(newCategory.filters));
     formData.append("image", newImage!);
 
-    console.log(formData.get("image"));
-
-    const response = await fetch("categories/actions", {
+    const response = await fetch("/api/categories", {
       method: dialogType,
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: formData,
     });
 
@@ -175,7 +155,7 @@ export default function Categories() {
                       <Icon name="delete" />
                     </button>
                   </div>
-                  <img src={"/images/categories/" + category.image} />
+                  <img src={category.image} />
                   <div className={styles.title}>{category.title}</div>
                 </div>
               ))}
