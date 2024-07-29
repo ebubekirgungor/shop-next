@@ -10,9 +10,13 @@ export default function AdminLayout({
   return (
     <>
       <nav className={styles.nav}>
-        <Link href="categories">
+        <Link href="/admin/categories">
           <Icon name="category"></Icon>
           Categories
+        </Link>
+        <Link href="/admin/products">
+          <Icon name="product"></Icon>
+          Products
         </Link>
       </nav>
       {children}

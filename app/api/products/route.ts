@@ -8,7 +8,17 @@ import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 
 async function all(_req: Request) {
-  return NextResponse.json(await prisma.product.findMany());
+  return NextResponse.json(
+    await prisma.product.findMany({
+      include: {
+        category: {
+          select: {
+            title: true,
+          },
+        },
+      },
+    })
+  );
 }
 
 async function create(req: Request) {
