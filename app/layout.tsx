@@ -34,6 +34,7 @@ export default function RootLayout({
                 alt="Logo"
                 width={200}
                 height={100}
+                priority={true}
               ></Image>
             </Link>
           </div>

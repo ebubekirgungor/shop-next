@@ -15,7 +15,7 @@ interface Product {
   id: number | null;
   title: string;
   url: string;
-  category: { title: string };
+  category: string;
   list_price: number;
   stock_quantity: number;
 }
@@ -26,7 +26,7 @@ const columns = [
     title: "Title",
   },
   {
-    key: "category.title",
+    key: "category",
     title: "Category",
   },
   {
@@ -87,7 +87,7 @@ export default function Products() {
   return (
     <LayoutContainer>
       <LayoutTitle>Products</LayoutTitle>
-      <LayoutBox minHeight="274px">
+      <LayoutBox minHeight="220px">
         {isLoading ? (
           <LoadingSpinner />
         ) : (

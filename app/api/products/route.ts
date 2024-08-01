@@ -9,14 +9,25 @@ import path from "path";
 
 async function all(_req: Request) {
   return NextResponse.json(
-    await prisma.product.findMany({
-      include: {
-        category: {
-          select: {
-            title: true,
+    (
+      await prisma.product.findMany({
+        include: {
+          category: {
+            select: {
+              title: true,
+            },
           },
         },
-      },
+      })
+    ).map((product) => {
+      return {
+        id: product.id,
+        title: product.title,
+        url: product.url,
+        list_price: product.list_price,
+        stock_quantity: product.stock_quantity,
+        category: product.category.title,
+      };
     })
   );
 }

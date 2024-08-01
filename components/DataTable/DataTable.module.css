@@ -2,11 +2,77 @@
   width: 100%;
   border: 1px solid rgb(var(--border-color));
   border-radius: 8px;
-  padding: 1rem;
+  border-collapse: collapse;
+  table-layout: fixed;
+  overflow: hidden;
+  background-color: rgb(243 244 246);
+}
+
+@media (prefers-color-scheme: dark) {
+  .table {
+    background-color: rgb(24 24 24);
+  }
+}
+
+.table thead tr {
+  white-space: nowrap;
+  background-color: rgb(229 231 235);
+}
+
+@media (prefers-color-scheme: dark) {
+  .table thead tr {
+    background-color: rgb(32 32 32);
+  }
 }
 
 .table th {
   text-align: start;
+  padding: 1rem;
+}
+
+.table tbody td {
+  padding: 1rem;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid rgb(var(--border-color));
+  border-top: 1px solid rgb(var(--border-color));
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: rgb(var(--background-color));
+}
+
+.table tbody tr:hover {
+  background-color: rgb(243 244 246);
+}
+
+@media (prefers-color-scheme: dark) {
+  .table tbody tr:hover {
+    background-color: rgb(24 24 24);
+  }
+}
+
+.columnTitle {
+  display: flex;
+  column-gap: 0.5rem;
+  cursor: pointer;
+}
+
+.columnTitle span {
+  transition: transform 200ms ease-in-out, filter 200ms ease-in-out;
+}
+
+.arrow {
+  filter: contrast(0);
+}
+
+.arrowActive {
+  filter: contrast(none);
+}
+
+.arrowRotate {
+  transform: rotate(180deg);
 }
 
 .actions {
@@ -14,8 +80,22 @@
   align-items: center;
   justify-content: flex-end;
   gap: 0.5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: 0.5rem;
+}
+
+.actions button {
+  padding: 0.5rem;
+  border-radius: 100%;
+  transition: background-color 200ms ease-in-out;
+}
+
+.actions button:hover {
+  background-color: rgba(var(--foreground-color), 0.1);
+}
+
+.actions button:disabled {
+  pointer-events: none;
+  filter: contrast(0);
 }
 
 .noResult {
