@@ -6,7 +6,6 @@ import Link from "next/link";
 import Image from "next/image";
 import NavButton from "@/components/NavButton";
 import { cookies } from "next/headers";
-import { Role } from "@/enums";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500"] });
 
@@ -14,15 +13,13 @@ export const metadata: Metadata = {
   title: "Shop",
 };
 
-const role = cookies().get("role");
-
-//{role == Role.ADMIN ? "Account" : "Login"}
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const role = cookies().get("role");
+
   return (
     <html lang="en">
       <body className={poppins.className}>

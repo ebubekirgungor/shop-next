@@ -5,7 +5,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   type?: string;
   name?: string;
-  value?: string;
+  value?: string | number;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 

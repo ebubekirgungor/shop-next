@@ -3,12 +3,13 @@ import { NextResponse } from "next/server";
 export type NextFunction = () => void;
 export type Middleware = (
   request: Request,
+  params: any,
   next: NextFunction
 ) => Promise<NextResponse | void>;
 
 export const handler =
   (...middleware: Middleware[]) =>
-  async (request: Request) => {
+  async (request: Request, params: any) => {
     let result;
 
     for (let i = 0; i < middleware.length; i++) {
@@ -18,7 +19,7 @@ export const handler =
         nextInvoked = true;
       };
 
-      result = await middleware[i](request, next);
+      result = await middleware[i](request, params, next);
 
       if (!nextInvoked) {
         break;
