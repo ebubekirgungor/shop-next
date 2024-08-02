@@ -19,8 +19,12 @@ interface DataTableProps {
   data: Data[];
 }
 
+const itemsPerPageOptions = [5, 10, 25, 50, 100];
+
 export const DataTable = ({ columns, data }: DataTableProps) => {
   const [searchedData, setSearchedData] = useState(data);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
   const [sort, setSort] = useState({
     field: "",
@@ -42,9 +46,15 @@ export const DataTable = ({ columns, data }: DataTableProps) => {
     );
   }
 
-  const displayedData = sort.isReverse
+  const sortedData = sort.isReverse
     ? sortBy(searchedData, sort.field).reverse()
     : sortBy(searchedData, sort.field);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+
+  const displayedData = sortedData.slice(startIndex, startIndex + itemsPerPage);
+
+  const totalPages = Math.ceil(data.length / itemsPerPage);
 
   return (
     <div className={styles.container}>
@@ -85,7 +95,7 @@ export const DataTable = ({ columns, data }: DataTableProps) => {
                 ))}
                 <td style={{ padding: "0" }}>
                   <Link
-                    href={window.location.pathname + "/" + row.id.toString()}
+                    href={window.location.pathname + "/" + row.id}
                     className={styles.editButton}
                   >
                     <Icon name="edit" />
@@ -105,18 +115,42 @@ export const DataTable = ({ columns, data }: DataTableProps) => {
           <tr>
             <td colSpan={columns.length + 1}>
               <div className={styles.tableFooter}>
-                {displayedData.length} items
                 <div className={styles.actions}>
-                  <button>
+                  Items per page:
+                  <select
+                    onChange={(e) => setItemsPerPage(Number(e.target.value))}
+                  >
+                    {itemsPerPageOptions.map((option) => (
+                      <option value={option}>{option}</option>
+                    ))}
+                  </select>
+                  <button
+                    onClick={() => setCurrentPage(1)}
+                    disabled={currentPage == 1}
+                  >
                     <Icon name="first" />
                   </button>
-                  <button>
+                  <button
+                    onClick={() =>
+                      currentPage > 1 && setCurrentPage(currentPage - 1)
+                    }
+                    disabled={currentPage == 1}
+                  >
                     <Icon name="previous" />
                   </button>
-                  <button>
+                  <button
+                    onClick={() =>
+                      currentPage < totalPages &&
+                      setCurrentPage(currentPage + 1)
+                    }
+                    disabled={currentPage == totalPages || totalPages == 0}
+                  >
                     <Icon name="next" />
                   </button>
-                  <button>
+                  <button
+                    onClick={() => setCurrentPage(totalPages)}
+                    disabled={currentPage == totalPages || totalPages == 0}
+                  >
                     <Icon name="last" />
                   </button>
                 </div>

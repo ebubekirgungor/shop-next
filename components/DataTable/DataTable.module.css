@@ -91,7 +91,7 @@
 
 .tableFooter {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   padding: 0.5rem;
   padding-left: 1rem;
@@ -125,9 +125,9 @@
 .editButton {
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 2.5rem;
   height: 2.5rem;
-  padding: 0.5rem;
   border-radius: 100%;
   transition: background-color 200ms ease-in-out;
 }
