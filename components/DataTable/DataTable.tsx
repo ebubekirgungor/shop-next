@@ -3,6 +3,7 @@ import styles from "./DataTable.module.css";
 import { ChangeEvent, useState } from "react";
 import sortBy from "lodash/sortBy";
 import Input from "../Input";
+import Link from "next/link";
 
 interface Column {
   key: string;
@@ -33,8 +34,10 @@ export const DataTable = ({ columns, data }: DataTableProps) => {
 
   function handleSearch(e: ChangeEvent<HTMLInputElement>) {
     setSearchedData(
-      data.filter((data: Data) =>
-        data.title.toLowerCase().includes(e.target.value.toLowerCase())
+      data.filter((item: Data) =>
+        item[columns[0].key]
+          .toLowerCase()
+          .includes(e.target.value.toLowerCase())
       )
     );
   }
@@ -70,6 +73,7 @@ export const DataTable = ({ columns, data }: DataTableProps) => {
                 </div>
               </th>
             ))}
+            <th style={{ width: "3rem" }}></th>
           </tr>
         </thead>
         <tbody>
@@ -79,11 +83,19 @@ export const DataTable = ({ columns, data }: DataTableProps) => {
                 {columns.map((column) => (
                   <td key={column.key}>{row[column.key]}</td>
                 ))}
+                <td style={{ padding: "0" }}>
+                  <Link
+                    href={window.location.pathname + "/" + row.id.toString()}
+                    className={styles.editButton}
+                  >
+                    <Icon name="edit" />
+                  </Link>
+                </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan={columns.length} className={styles.noResult}>
+              <td colSpan={columns.length + 1} className={styles.noResult}>
                 No results
               </td>
             </tr>
@@ -91,20 +103,23 @@ export const DataTable = ({ columns, data }: DataTableProps) => {
         </tbody>
         <tfoot>
           <tr>
-            <td colSpan={columns.length}>
-              <div className={styles.actions}>
-                <button>
-                  <Icon name="first"></Icon>
-                </button>
-                <button>
-                  <Icon name="previous"></Icon>
-                </button>
-                <button>
-                  <Icon name="next"></Icon>
-                </button>
-                <button>
-                  <Icon name="last"></Icon>
-                </button>
+            <td colSpan={columns.length + 1}>
+              <div className={styles.tableFooter}>
+                {displayedData.length} items
+                <div className={styles.actions}>
+                  <button>
+                    <Icon name="first" />
+                  </button>
+                  <button>
+                    <Icon name="previous" />
+                  </button>
+                  <button>
+                    <Icon name="next" />
+                  </button>
+                  <button>
+                    <Icon name="last" />
+                  </button>
+                </div>
               </div>
             </td>
           </tr>

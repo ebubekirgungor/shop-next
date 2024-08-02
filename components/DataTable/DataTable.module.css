@@ -9,6 +9,7 @@
   background-image: url("/icons/search.svg");
   background-repeat: no-repeat;
   background-position: 98%;
+  font-size: 16px;
 }
 
 .table {
@@ -88,12 +89,18 @@
   transform: rotate(180deg);
 }
 
+.tableFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  padding-left: 1rem;
+}
+
 .actions {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
   gap: 0.5rem;
-  padding: 0.5rem;
 }
 
 .actions button {
@@ -113,4 +120,18 @@
 
 .noResult {
   text-align: center;
+}
+
+.editButton {
+  display: flex;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0.5rem;
+  border-radius: 100%;
+  transition: background-color 200ms ease-in-out;
+}
+
+.editButton:hover {
+  background-color: rgba(var(--foreground-color), 0.1);
 }
