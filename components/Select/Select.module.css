@@ -1,0 +1,18 @@
+.select {
+  appearance: none;
+  cursor: pointer;
+  width: 100%;
+  height: 44px;
+  background-color: rgb(var(--input-color));
+  border: 1px solid rgb(var(--border-color));
+  border-radius: 6px;
+  padding-left: 1rem;
+  margin-top: 0.5rem;
+  outline: none;
+  transition: box-shadow 200ms ease-in-out;
+}
+
+.select:focus {
+  box-shadow: 0 0 0 1px rgb(var(--border-color)),
+    0 0 0 1px rgb(var(--border-color));
+}
