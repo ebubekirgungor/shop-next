@@ -42,5 +42,28 @@ async function update(req: Request, { params }: { params: { id: string } }) {
   }
 }
 
+async function remove(_req: Request, { params }: { params: { id: string } }) {
+  try {
+    await prisma.product.delete({
+      where: { id: Number(params.id) },
+    });
+
+    return NextResponse.json(
+      { message: "Product deleted" },
+      {
+        status: 200,
+      }
+    );
+  } catch (e: any) {
+    return NextResponse.json(
+      { message: e.message },
+      {
+        status: 500,
+      }
+    );
+  }
+}
+
 export const GET = handler(get);
 export const PUT = handler(update);
+export const DELETE = handler(remove);

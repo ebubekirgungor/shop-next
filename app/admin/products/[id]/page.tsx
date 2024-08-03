@@ -10,6 +10,8 @@ import Button from "@/components/Button";
 import Select from "@/components/Select";
 import Link from "next/link";
 import Icon from "@/components/Icon";
+import Dialog from "@/components/Dialog";
+import { useRouter } from "next/navigation";
 
 interface Category {
   id: number | null;
@@ -34,6 +36,7 @@ interface Product {
 }
 
 export default function Product({ params }: { params: { id: string } }) {
+  const router = useRouter();
   const [product, setProduct] = useState<Product>();
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setLoading] = useState(true);
@@ -61,6 +64,19 @@ export default function Product({ params }: { params: { id: string } }) {
         setLoading(false);
       });
   }, []);
+
+  const [dialog, setDialog] = useState(false);
+  const [dialogStatus, setDialogStatus] = useState(false);
+
+  function openDialog() {
+    setDialogStatus(true);
+    setDialog(true);
+  }
+
+  function closeDialog() {
+    setDialogStatus(false);
+    setTimeout(() => setDialog(false), 300);
+  }
 
   function handleProduct(e: ChangeEvent<HTMLInputElement>) {
     const copy = { ...product } as any;
@@ -123,6 +139,18 @@ export default function Product({ params }: { params: { id: string } }) {
     });
   }
 
+  async function onDeleteSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const response = await fetch("/api/products/" + params.id, {
+      method: "DELETE",
+    });
+
+    if (response.status == 200) {
+      router.push("/admin/products");
+    }
+  }
+
   return (
     <LayoutContainer>
       <LayoutTitle style={{ paddingLeft: "1rem" }}>
@@ -182,7 +210,26 @@ export default function Product({ params }: { params: { id: string } }) {
               ))}
             </div>
             <Button>Update</Button>
+            <Button
+              className={styles.deleteButton}
+              type="button"
+              onClick={openDialog}
+            >
+              Delete
+            </Button>
           </form>
+        )}
+        {dialog && (
+          <Dialog
+            title="Delete product"
+            close={closeDialog}
+            status={dialogStatus}
+          >
+            <form onSubmit={onDeleteSubmit}>
+              <div style={{ textAlign: "center" }}>Are you sure?</div>
+              <Button>Delete</Button>
+            </form>
+          </Dialog>
         )}
       </LayoutBox>
     </LayoutContainer>

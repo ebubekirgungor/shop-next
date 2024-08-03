@@ -42,11 +42,22 @@ label {
   font-size: 14px;
 }
 
-input, select {
+input,
+select {
   font-family: inherit;
   font-size: 14px;
   padding-block: 2px;
   padding-inline: 10px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 button {

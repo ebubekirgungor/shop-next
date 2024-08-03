@@ -121,7 +121,9 @@ export const DataTable = ({ columns, data }: DataTableProps) => {
                     onChange={(e) => setItemsPerPage(Number(e.target.value))}
                   >
                     {itemsPerPageOptions.map((option) => (
-                      <option value={option}>{option}</option>
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
                     ))}
                   </select>
                   <button

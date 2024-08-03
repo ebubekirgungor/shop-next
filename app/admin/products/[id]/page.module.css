@@ -17,3 +17,12 @@
 .previousButton:hover {
   background-color: rgba(var(--foreground-color), 0.1);
 }
+
+.deleteButton {
+  color: white !important;
+  background-color: rgb(239, 68, 68) !important;
+}
+
+.deleteButton:hover {
+  background-color: rgba(239, 68, 68, 0.9) !important;
+}
