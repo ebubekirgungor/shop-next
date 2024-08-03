@@ -3,6 +3,7 @@ export const fetchCache = "default-no-store";
 import { NextResponse } from "next/server";
 import { handler } from "@/app/middleware/handler";
 import prisma from "@/lib/prisma";
+import { admin, user } from "@/app/middleware/auth";
 
 async function get(_req: Request, { params }: { params: { id: string } }) {
   return NextResponse.json(
@@ -65,5 +66,5 @@ async function remove(_req: Request, { params }: { params: { id: string } }) {
 }
 
 export const GET = handler(get);
-export const PUT = handler(update);
-export const DELETE = handler(remove);
+export const PUT = handler(user, admin, update);
+export const DELETE = handler(user, admin, remove);

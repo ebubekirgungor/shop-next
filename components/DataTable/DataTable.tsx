@@ -116,8 +116,10 @@ export const DataTable = ({ columns, data }: DataTableProps) => {
             <td colSpan={columns.length + 1}>
               <div className={styles.tableFooter}>
                 <div className={styles.actions}>
-                  Items per page:
+                  <label htmlFor={"itemsPerPage"}>Items per page:</label>
                   <select
+                    id={"itemsPerPage"}
+                    style={{ width: "5rem" }}
                     onChange={(e) => setItemsPerPage(Number(e.target.value))}
                   >
                     {itemsPerPageOptions.map((option) => (

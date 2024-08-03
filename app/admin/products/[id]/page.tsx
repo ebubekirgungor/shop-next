@@ -159,7 +159,7 @@ export default function Product({ params }: { params: { id: string } }) {
         </Link>
         Edit Product
       </LayoutTitle>
-      <LayoutBox minHeight="220px">
+      <LayoutBox minHeight="388px">
         {isLoading ? (
           <LoadingSpinner />
         ) : (
