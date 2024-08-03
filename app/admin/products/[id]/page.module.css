@@ -60,6 +60,7 @@
 .imageBox {
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .imageBox button {
@@ -68,12 +69,12 @@
   margin: 0.5rem;
   padding: 0.5rem;
   border-radius: 100%;
-  background-color: rgba(62, 62, 62, 0.2);
+  background-color: rgba(200, 200, 200, 0.7);
   transition: background-color 200ms ease-in-out;
 }
 
 .imageBox button:hover {
-  background-color: rgba(62, 62, 62, 0.3);
+  background-color: rgba(200, 200, 200, 0.9);
 }
 
 .imageBox div {

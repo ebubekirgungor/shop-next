@@ -12,8 +12,8 @@ import Link from "next/link";
 import Icon from "@/components/Icon";
 import Dialog from "@/components/Dialog";
 import { useRouter } from "next/navigation";
-import ChipButton from "@/components/ChipButton";
 import Image from "next/image";
+import Chip from "@/components/Chip";
 
 interface Category {
   id: number | null;
@@ -26,9 +26,14 @@ interface Filter {
   value: string;
 }
 
-interface Image {
+interface ProductImage {
   url: string;
+  name: string;
   order: number;
+}
+
+interface EventTarget {
+  files: unknown;
 }
 
 interface Product {
@@ -40,12 +45,12 @@ interface Product {
   list_price: number;
   stock_quantity: number;
   filters: Filter[];
-  images: Image[];
 }
 
 export default function Product({ params }: { params: { id: string } }) {
   const router = useRouter();
   const [product, setProduct] = useState<Product>();
+  const [productImages, setProductImages] = useState<ProductImage[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setLoading] = useState(true);
 
@@ -69,6 +74,15 @@ export default function Product({ params }: { params: { id: string } }) {
           filters: data.filters,
         });
         setProduct(data);
+        const productImagesArray: ProductImage[] = [];
+        data.images.map((image: ProductImage) => {
+          productImagesArray.push({
+            url: "/images/products/" + image.name,
+            name: image.name,
+            order: image.order,
+          });
+        });
+        setProductImages(productImagesArray);
         setLoading(false);
       });
   }, []);
@@ -126,30 +140,58 @@ export default function Product({ params }: { params: { id: string } }) {
     setProduct(copy);
   }
 
+  const [imagesToUpload, setImagesToUpload] = useState<File[]>([]);
+
+  function handleUploadImage(e: ChangeEvent<HTMLInputElement>) {
+    const copy = [...productImages];
+
+    const imagesToUploadCopy = [...imagesToUpload];
+
+    Array.prototype.slice
+      .call((e.target as EventTarget).files)
+      .forEach((file: File) => {
+        copy.push({
+          url: URL.createObjectURL(file),
+          name: file.name,
+          order: copy.length,
+        });
+        imagesToUploadCopy.push(file);
+      });
+
+    setImagesToUpload(imagesToUploadCopy);
+    setProductImages(copy);
+  }
+
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
+    const formData = new FormData();
+
+    for (const item in product) {
+      if (item == "filters") {
+        formData.append(item, JSON.stringify(product.filters));
+      } else if (item == "images") {
+        formData.append(
+          item,
+          JSON.stringify(
+            productImages.map(({ url, ...rest }: ProductImage) => rest)
+          )
+        );
+      } else {
+        formData.append(
+          item,
+          (product as unknown as { [key: string]: string })[item]
+        );
+      }
+    }
+
+    for (const image in imagesToUpload) {
+      formData.append("files", imagesToUpload[image]);
+    }
+
     await fetch("/api/products/" + params.id, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: product?.title,
-        url: product?.title
-          .toLowerCase()
-          .replaceAll(" ", "-")
-          .replaceAll("ç", "c")
-          .replaceAll("ğ", "g")
-          .replaceAll("ı", "i")
-          .replaceAll("ö", "o")
-          .replaceAll("ş", "s")
-          .replaceAll("ü", "u"),
-        list_price: product?.list_price,
-        stock_quantity: product?.stock_quantity,
-        category_id: product?.category_id,
-        filters: product?.filters,
-      }),
+      body: formData,
     });
   }
 
@@ -168,18 +210,18 @@ export default function Product({ params }: { params: { id: string } }) {
   async function deleteImage(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const copy = { ...product };
+    const copy = [...productImages];
 
-    copy?.images?.splice(
-      copy?.images.map((image: Image) => image.order).indexOf(imageToDelete!),
+    copy.splice(
+      copy.map((image: ProductImage) => image.order).indexOf(imageToDelete!),
       1
     );
 
-    for (let i = 0; i < copy!.images!.length; i++) {
-      copy!.images![i].order = i;
+    for (let i = 0; i < copy.length; i++) {
+      copy[i].order = i;
     }
 
-    setProduct(copy as Product);
+    setProductImages(copy);
     closeDialog();
   }
 
@@ -191,7 +233,7 @@ export default function Product({ params }: { params: { id: string } }) {
         </Link>
         Edit Product
       </LayoutTitle>
-      <LayoutBox minHeight="650px">
+      <LayoutBox minHeight="470px">
         {isLoading ? (
           <LoadingSpinner />
         ) : (
@@ -243,10 +285,20 @@ export default function Product({ params }: { params: { id: string } }) {
             </div>
             <div className={styles.column}>
               <div className={styles.imagesLabel}>
-                Images <ChipButton>Upload</ChipButton>
+                Images
+                <label>
+                  <input
+                    style={{ display: "none" }}
+                    type="file"
+                    accept=".jpg,.jpeg,.png"
+                    multiple
+                    onChange={handleUploadImage}
+                  />
+                  <Chip>Upload</Chip>
+                </label>
               </div>
               <div className={styles.imagesContainer}>
-                {product?.images.map((image) => (
+                {productImages.map((image) => (
                   <div className={styles.imageBox} key={image.order}>
                     <button
                       type="button"
