@@ -4,6 +4,12 @@
   gap: 2rem;
 }
 
+.column {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.5rem;
+}
+
 .previousButton {
   display: flex;
   justify-content: center;
@@ -25,4 +31,51 @@
 
 .deleteButton:hover {
   background-color: rgba(239, 68, 68, 0.9) !important;
+}
+
+.imagesContainer {
+  display: flex;
+  flex-wrap: nowrap;
+  column-gap: 1rem;
+  overflow-x: auto;
+}
+
+.imagesContainer img {
+  width: 11rem;
+  height: 11rem;
+  object-position: center;
+  object-fit: contain;
+  border: 1px solid rgb(var(--border-color));
+  border-radius: 12px;
+  background-color: white;
+}
+
+.imagesLabel {
+  display: flex;
+  align-items: center;
+  column-gap: 1rem;
+  font-size: 14px;
+}
+
+.imageBox {
+  display: flex;
+  flex-direction: column;
+}
+
+.imageBox button {
+  align-self: flex-end;
+  position: absolute;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 100%;
+  background-color: rgba(62, 62, 62, 0.2);
+  transition: background-color 200ms ease-in-out;
+}
+
+.imageBox button:hover {
+  background-color: rgba(62, 62, 62, 0.3);
+}
+
+.imageBox div {
+  filter: none;
 }

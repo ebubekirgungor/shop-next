@@ -12,6 +12,8 @@ import Link from "next/link";
 import Icon from "@/components/Icon";
 import Dialog from "@/components/Dialog";
 import { useRouter } from "next/navigation";
+import ChipButton from "@/components/ChipButton";
+import Image from "next/image";
 
 interface Category {
   id: number | null;
@@ -24,6 +26,11 @@ interface Filter {
   value: string;
 }
 
+interface Image {
+  url: string;
+  order: number;
+}
+
 interface Product {
   id: number | null;
   title: string;
@@ -33,6 +40,7 @@ interface Product {
   list_price: number;
   stock_quantity: number;
   filters: Filter[];
+  images: Image[];
 }
 
 export default function Product({ params }: { params: { id: string } }) {
@@ -65,10 +73,16 @@ export default function Product({ params }: { params: { id: string } }) {
       });
   }, []);
 
+  type DialogType = "product" | "image";
+
+  const [dialogType, setDialogType] = useState<DialogType>();
   const [dialog, setDialog] = useState(false);
   const [dialogStatus, setDialogStatus] = useState(false);
+  const [imageToDelete, setImageToDelete] = useState<number>();
 
-  function openDialog() {
+  function openDialog(type: DialogType, image?: number) {
+    setDialogType(type);
+    setImageToDelete(image);
     setDialogStatus(true);
     setDialog(true);
   }
@@ -139,7 +153,7 @@ export default function Product({ params }: { params: { id: string } }) {
     });
   }
 
-  async function onDeleteSubmit(event: FormEvent<HTMLFormElement>) {
+  async function deleteProduct(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const response = await fetch("/api/products/" + params.id, {
@@ -151,6 +165,24 @@ export default function Product({ params }: { params: { id: string } }) {
     }
   }
 
+  async function deleteImage(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const copy = { ...product };
+
+    copy?.images?.splice(
+      copy?.images.map((image: Image) => image.order).indexOf(imageToDelete!),
+      1
+    );
+
+    for (let i = 0; i < copy!.images!.length; i++) {
+      copy!.images![i].order = i;
+    }
+
+    setProduct(copy as Product);
+    closeDialog();
+  }
+
   return (
     <LayoutContainer>
       <LayoutTitle style={{ paddingLeft: "1rem" }}>
@@ -159,7 +191,7 @@ export default function Product({ params }: { params: { id: string } }) {
         </Link>
         Edit Product
       </LayoutTitle>
-      <LayoutBox minHeight="388px">
+      <LayoutBox minHeight="650px">
         {isLoading ? (
           <LoadingSpinner />
         ) : (
@@ -209,23 +241,51 @@ export default function Product({ params }: { params: { id: string } }) {
                 />
               ))}
             </div>
-            <Button>Update</Button>
-            <Button
-              className={styles.deleteButton}
-              type="button"
-              onClick={openDialog}
-            >
-              Delete
-            </Button>
+            <div className={styles.column}>
+              <div className={styles.imagesLabel}>
+                Images <ChipButton>Upload</ChipButton>
+              </div>
+              <div className={styles.imagesContainer}>
+                {product?.images.map((image) => (
+                  <div className={styles.imageBox} key={image.order}>
+                    <button
+                      type="button"
+                      onClick={() => openDialog("image", image.order)}
+                    >
+                      <Icon name="delete" />
+                    </button>
+                    <Image
+                      src={image.url}
+                      alt={image.url}
+                      width="0"
+                      height="0"
+                      sizes="11rem"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className={styles.column}>
+              <Button>Update</Button>
+              <Button
+                className={styles.deleteButton}
+                type="button"
+                onClick={() => openDialog("product")}
+              >
+                Delete
+              </Button>
+            </div>
           </form>
         )}
         {dialog && (
           <Dialog
-            title="Delete product"
+            title={`Delete ${dialogType}`}
             close={closeDialog}
             status={dialogStatus}
           >
-            <form onSubmit={onDeleteSubmit}>
+            <form
+              onSubmit={dialogType === "product" ? deleteProduct : deleteImage}
+            >
               <div style={{ textAlign: "center" }}>Are you sure?</div>
               <Button>Delete</Button>
             </form>
