@@ -5,6 +5,8 @@ import LayoutBox from "@/components/LayoutBox";
 import LayoutTitle from "@/components/LayoutTitle";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { DataTable } from "@/components/DataTable";
+import Chip from "@/components/Chip";
+import Link from "next/link";
 
 interface Product {
   id: number | null;
@@ -49,7 +51,12 @@ export default function Products() {
 
   return (
     <LayoutContainer>
-      <LayoutTitle>Products</LayoutTitle>
+      <LayoutTitle>
+        Products
+        <Chip>
+          <Link href="products/create">Add</Link>
+        </Chip>
+      </LayoutTitle>
       <LayoutBox minHeight="220px">
         {isLoading ? (
           <LoadingSpinner />

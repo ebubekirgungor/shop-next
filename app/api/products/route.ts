@@ -35,9 +35,7 @@ async function all(_req: Request) {
 async function create(req: Request) {
   const formData = await req.formData();
 
-  const images: any = formData.get("images");
-
-  const images_json = [];
+  const images: any = formData.getAll("files");
 
   try {
     for (let i = 0; i < images.length; i++) {
@@ -49,15 +47,10 @@ async function create(req: Request) {
       await mkdir(directoryPath, { recursive: true });
 
       await writeFile(filePath, buffer);
-
-      images_json.push({
-        order: i,
-        name: "/images/products/" + images[i].name,
-      });
     }
   } catch {
     return NextResponse.json(
-      { message: "Images can not uploaded" },
+      { message: "Image can not uploaded" },
       {
         status: 500,
       }
@@ -82,7 +75,7 @@ async function create(req: Request) {
         list_price: Number(formData.get("list_price")),
         stock_quantity: Number(formData.get("stock_quantity")),
         filters: JSON.parse(formData.get("filters") as string),
-        images: images_json,
+        images: JSON.parse(formData.get("images") as string),
         category_id: Number(formData.get("category_id")),
       },
     });

@@ -37,22 +37,25 @@ interface EventTarget {
 }
 
 interface Product {
-  id: number | null;
-  title: string;
-  url: string;
-  category_id: number;
-  category: { title: string };
-  list_price: number;
-  stock_quantity: number;
+  id?: number | null;
+  title?: string;
+  url?: string;
+  category_id?: number;
+  category?: { title: string };
+  list_price?: number;
+  stock_quantity?: number;
   filters: Filter[];
+  images: ProductImage[];
 }
 
 export default function Product({ params }: { params: { id: string } }) {
   const router = useRouter();
+  const isAdd = params.id === "create";
+
   const [product, setProduct] = useState<Product>();
   const [productImages, setProductImages] = useState<ProductImage[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(!isAdd);
 
   const [oldProduct, setOldProduct] = useState<{
     category_id: number;
@@ -66,25 +69,29 @@ export default function Product({ params }: { params: { id: string } }) {
         setCategories(data);
       });
 
-    fetch("/api/products/" + params.id)
-      .then((response) => response.json())
-      .then((data) => {
-        setOldProduct({
-          category_id: data.category_id,
-          filters: data.filters,
-        });
-        setProduct(data);
-        const productImagesArray: ProductImage[] = [];
-        data.images.map((image: ProductImage) => {
-          productImagesArray.push({
-            url: "/images/products/" + image.name,
-            name: image.name,
-            order: image.order,
+    if (isAdd) {
+      setProduct({ images: [], filters: [] });
+    } else {
+      fetch("/api/products/" + params.id)
+        .then((response) => response.json())
+        .then((data) => {
+          setOldProduct({
+            category_id: data.category_id,
+            filters: data.filters,
           });
+          setProduct(data);
+          const productImagesArray: ProductImage[] = [];
+          data.images.map((image: ProductImage) => {
+            productImagesArray.push({
+              url: "/images/products/" + image.name,
+              name: image.name,
+              order: image.order,
+            });
+          });
+          setProductImages(productImagesArray);
+          setLoading(false);
         });
-        setProductImages(productImagesArray);
-        setLoading(false);
-      });
+    }
   }, []);
 
   type DialogType = "product" | "image";
@@ -108,8 +115,7 @@ export default function Product({ params }: { params: { id: string } }) {
 
   function handleProduct(e: ChangeEvent<HTMLInputElement>) {
     const copy = { ...product } as any;
-    const value = e.target.value;
-    copy[e.target.name] = isNaN(Number(value)) ? value : Number(value);
+    copy[e.target.name] = e.target.value;
     setProduct(copy);
   }
 
@@ -169,10 +175,10 @@ export default function Product({ params }: { params: { id: string } }) {
 
     for (const item in product) {
       if (item == "filters") {
-        formData.append(item, JSON.stringify(product.filters));
+        formData.append("filters", JSON.stringify(product.filters));
       } else if (item == "images") {
         formData.append(
-          item,
+          "images",
           JSON.stringify(
             productImages.map(({ url, ...rest }: ProductImage) => rest)
           )
@@ -189,8 +195,8 @@ export default function Product({ params }: { params: { id: string } }) {
       formData.append("files", imagesToUpload[image]);
     }
 
-    await fetch("/api/products/" + params.id, {
-      method: "PUT",
+    await fetch(`/api/products${!isAdd ? "/" + params.id : ""}`, {
+      method: isAdd ? "POST" : "PUT",
       body: formData,
     });
   }
@@ -231,9 +237,9 @@ export default function Product({ params }: { params: { id: string } }) {
         <Link href={"/admin/products"} className={styles.previousButton}>
           <Icon name="previous" />
         </Link>
-        Edit Product
+        {isAdd ? "Create Product" : "Edit Product"}
       </LayoutTitle>
-      <LayoutBox minHeight="470px">
+      <LayoutBox minHeight={isAdd ? "400px" : "470px"}>
         {isLoading ? (
           <LoadingSpinner />
         ) : (
@@ -243,7 +249,7 @@ export default function Product({ params }: { params: { id: string } }) {
                 label="Title"
                 type="text"
                 name="title"
-                value={product?.title}
+                value={product?.title ?? ""}
                 onChange={handleProduct}
               />
               <Input
@@ -252,7 +258,7 @@ export default function Product({ params }: { params: { id: string } }) {
                 type="number"
                 min="1"
                 name="list_price"
-                value={product?.list_price}
+                value={product?.list_price ?? ""}
                 onChange={handleProduct}
               />
               <Input
@@ -260,28 +266,30 @@ export default function Product({ params }: { params: { id: string } }) {
                 type="number"
                 min="0"
                 name="stock_quantity"
-                value={product?.stock_quantity}
+                value={product?.stock_quantity ?? ""}
                 onChange={handleProduct}
               />
               <Select
                 label="Category"
-                value={product?.category_id}
+                value={product?.category_id ?? 0}
                 onChange={handleCategory}
               >
+                <option value={0}>Select category</option>
                 {categories.map((category) => (
                   <option value={category.id?.toString()} key={category.id}>
                     {category.title}
                   </option>
                 ))}
               </Select>
-              {product?.filters.map((filter, index) => (
-                <Input
-                  label={filter.name}
-                  key={index}
-                  value={filter.value}
-                  onChange={(e) => handleFilter(e, index)}
-                />
-              ))}
+              {product?.filters &&
+                product?.filters.map((filter, index) => (
+                  <Input
+                    label={filter.name}
+                    key={index}
+                    value={filter.value}
+                    onChange={(e) => handleFilter(e, index)}
+                  />
+                ))}
             </div>
             <div className={styles.column}>
               <div className={styles.imagesLabel}>
@@ -318,14 +326,16 @@ export default function Product({ params }: { params: { id: string } }) {
               </div>
             </div>
             <div className={styles.column}>
-              <Button>Update</Button>
-              <Button
-                className={styles.deleteButton}
-                type="button"
-                onClick={() => openDialog("product")}
-              >
-                Delete
-              </Button>
+              <Button>{isAdd ? "Create" : "Update"}</Button>
+              {!isAdd && (
+                <Button
+                  className={styles.deleteButton}
+                  type="button"
+                  onClick={() => openDialog("product")}
+                >
+                  Delete
+                </Button>
+              )}
             </div>
           </form>
         )}
