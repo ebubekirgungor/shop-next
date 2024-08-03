@@ -140,7 +140,7 @@ export default function Categories() {
             ></button>
             {categories &&
               categories.map((category) => (
-                <div className={styles.categoryBox}>
+                <div className={styles.categoryBox} key={category.id}>
                   <div className={styles.actions}>
                     <button
                       className={styles.button}
@@ -204,7 +204,7 @@ export default function Categories() {
                   <div className={styles.filtersRow}>
                     {newCategory.filters &&
                       newCategory.filters.map((filter, index) => (
-                        <div className={styles.filter}>
+                        <div className={styles.filter} key={index}>
                           {filter}
                           <button
                             onClick={() => deleteFilter(index)}

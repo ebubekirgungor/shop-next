@@ -53,9 +53,9 @@ export default function Products() {
     <LayoutContainer>
       <LayoutTitle>
         Products
-        <Chip>
-          <Link href="products/create">Add</Link>
-        </Chip>
+        <Link href="products/create">
+          <Chip>Add</Chip>
+        </Link>
       </LayoutTitle>
       <LayoutBox minHeight="220px">
         {isLoading ? (

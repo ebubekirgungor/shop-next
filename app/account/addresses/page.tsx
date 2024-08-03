@@ -111,6 +111,7 @@ export default function Addresses() {
                   address={address.address}
                   editButton={() => openDialog("PUT", address)}
                   deleteButton={() => openDialog("DELETE", address)}
+                  key={address.id}
                 ></Address>
               ))}
           </div>
