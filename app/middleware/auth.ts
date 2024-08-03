@@ -8,7 +8,7 @@ const {
   V4: { verify },
 } = require("paseto");
 
-export const user: Middleware = async (_req, next) => {
+export const user: Middleware = async (_req, _params, next) => {
   try {
     await verify(cookies().get("token")?.value, getPublicKey());
   } catch {
@@ -23,7 +23,7 @@ export const user: Middleware = async (_req, next) => {
   next();
 };
 
-export const admin: Middleware = async (_req, next) => {
+export const admin: Middleware = async (_req, _params, next) => {
   if (
     (await verify(cookies().get("token")?.value, getPublicKey())).role !=
     Role.ADMIN

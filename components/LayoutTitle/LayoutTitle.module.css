@@ -1,9 +1,14 @@
 .box {
+  display: flex;
+  align-items: center;
+  column-gap: 1rem;
   width: 100%;
   min-width: 35rem;
+  height: 5rem;
   background-color: rgb(var(--nav-background-color));
   border: 1px solid rgb(var(--border-color));
   border-radius: 12px;
-  padding: 1.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
   font-size: large;
 }

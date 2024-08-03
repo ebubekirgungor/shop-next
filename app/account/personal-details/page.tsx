@@ -129,7 +129,7 @@ export default function PersonalDetails() {
           <LoadingSpinner />
         ) : (
           <form onSubmit={onSubmit}>
-            <div className={styles.row}>
+            <div className={styles.grid}>
               <Input
                 label="First name"
                 type="text"
@@ -144,8 +144,6 @@ export default function PersonalDetails() {
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
               />
-            </div>
-            <div className={styles.row}>
               <Input
                 label="Phone number"
                 type="text"
@@ -160,9 +158,7 @@ export default function PersonalDetails() {
                 defaultValue={email}
                 disabled
               />
-            </div>
-            <div className={styles.row}>
-              <div className={styles.row} style={{ width: "50%" }}>
+              <div className={styles.row}>
                 <Input
                   label="Day"
                   type="text"
