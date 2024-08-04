@@ -6,11 +6,6 @@ import Image from "next/image";
 import Icon from "@/components/Icon";
 import Button from "@/components/Button";
 
-interface Image {
-  name: string;
-  order: number;
-}
-
 interface Product {
   id: number | null;
   title: string;
@@ -18,7 +13,7 @@ interface Product {
   category: string;
   list_price: number;
   stock_quantity: number;
-  images: Image[];
+  images: string[];
 }
 
 export default function Product({ params }: { params: { url: string } }) {
@@ -76,11 +71,11 @@ export default function Product({ params }: { params: { url: string } }) {
               onTouchStart={onTouchStart}
               onTouchMove={onTouchMove}
             >
-              {product?.images.map((image) => (
-                <div key={image.order} style={{ flex: "0 0 100%" }}>
+              {product?.images.map((image, index) => (
+                <div key={index} style={{ flex: "0 0 100%" }}>
                   <Image
-                    src={"/images/products/" + image.name}
-                    alt={image.name}
+                    src={"/images/products/" + image}
+                    alt={image}
                     width="0"
                     height="0"
                     sizes="35rem"
@@ -107,8 +102,8 @@ export default function Product({ params }: { params: { url: string } }) {
                   onClick={() => gotoSlide(index)}
                 >
                   <Image
-                    src={"/images/products/" + image.name}
-                    alt={image.name}
+                    src={"/images/products/" + image}
+                    alt={image}
                     width="0"
                     height="0"
                     sizes="3rem"

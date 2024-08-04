@@ -29,7 +29,6 @@ interface Filter {
 interface ProductImage {
   url: string;
   name: string;
-  order: number;
 }
 
 interface EventTarget {
@@ -81,11 +80,10 @@ export default function Product({ params }: { params: { id: string } }) {
           });
           setProduct(data);
           const productImagesArray: ProductImage[] = [];
-          data.images.map((image: ProductImage) => {
+          data.images.map((image: string) => {
             productImagesArray.push({
-              url: "/images/products/" + image.name,
-              name: image.name,
-              order: image.order,
+              url: "/images/products/" + image,
+              name: image,
             });
           });
           setProductImages(productImagesArray);
@@ -159,7 +157,6 @@ export default function Product({ params }: { params: { id: string } }) {
         copy.push({
           url: URL.createObjectURL(file),
           name: file.name,
-          order: copy.length,
         });
         imagesToUploadCopy.push(file);
       });
@@ -179,9 +176,7 @@ export default function Product({ params }: { params: { id: string } }) {
       } else if (item == "images") {
         formData.append(
           "images",
-          JSON.stringify(
-            productImages.map(({ url, ...rest }: ProductImage) => rest)
-          )
+          JSON.stringify(productImages.map((image: ProductImage) => image.name))
         );
       } else {
         formData.append(
@@ -218,14 +213,7 @@ export default function Product({ params }: { params: { id: string } }) {
 
     const copy = [...productImages];
 
-    copy.splice(
-      copy.map((image: ProductImage) => image.order).indexOf(imageToDelete!),
-      1
-    );
-
-    for (let i = 0; i < copy.length; i++) {
-      copy[i].order = i;
-    }
+    copy.splice(imageToDelete!, 1);
 
     setProductImages(copy);
     closeDialog();
@@ -306,11 +294,11 @@ export default function Product({ params }: { params: { id: string } }) {
                 </label>
               </div>
               <div className={styles.imagesContainer}>
-                {productImages.map((image) => (
-                  <div className={styles.imageBox} key={image.order}>
+                {productImages.map((image, index) => (
+                  <div className={styles.imageBox} key={index}>
                     <button
                       type="button"
-                      onClick={() => openDialog("image", image.order)}
+                      onClick={() => openDialog("image", index)}
                     >
                       <Icon name="delete" />
                     </button>
