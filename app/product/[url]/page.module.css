@@ -1,0 +1,100 @@
+.box {
+  display: flex;
+  justify-content: center;
+  min-height: 642px;
+  width: clamp(30rem, 70rem, 70rem);
+  background-color: rgb(var(--button-text-color));
+  border: 1px solid rgb(var(--border-color));
+  border-radius: 12px;
+}
+
+.sliderContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  padding-bottom: 1rem;
+  width: 50%;
+  position: relative;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.slideButtons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  position: absolute;
+  width: 100%;
+  height: 35rem;
+}
+
+.slideButtons button {
+  padding: 0.5rem;
+  background-color: rgb(var(--border-color));
+  border-radius: 100%;
+  transition: background-color 200ms ease-in-out;
+}
+
+.slideButtons button:hover {
+  background-color: rgba(var(--border-color), 0.7);
+}
+
+.slider {
+  display: flex;
+  width: 100%;
+  height: 35rem;
+  transition: transform 500ms ease-in-out;
+}
+
+.slider img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.miniImages {
+  display: flex;
+  justify-content: center;
+  column-gap: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.miniImages button {
+  display: flex;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  background-color: white;
+  border-radius: 12px;
+  transition: box-shadow 200ms ease-in-out;
+}
+
+.selected {
+  box-shadow: 0 0 0 3px;
+}
+
+.miniImages img {
+  width: 100%;
+  height: 100%;
+  object-position: center;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.product {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  padding: 1.5rem;
+}
+
+.title {
+  font-size: 22px;
+}
+
+.listPrice {
+  font-size: 36px;
+}

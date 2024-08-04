@@ -109,6 +109,6 @@ async function remove(_req: Request, { params }: { params: { id: string } }) {
   }
 }
 
-export const GET = handler(get);
+export const GET = handler(user, admin, get);
 export const PUT = handler(user, admin, update);
 export const DELETE = handler(user, admin, remove);
