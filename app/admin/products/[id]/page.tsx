@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent, useRef } from "react";
 import styles from "./page.module.css";
 import LayoutContainer from "@/components/LayoutContainer";
 import LayoutBox from "@/components/LayoutBox";
@@ -219,6 +219,26 @@ export default function Product({ params }: { params: { id: string } }) {
     closeDialog();
   }
 
+  const dragItem = useRef<number | null>(null);
+  const dragOverItem = useRef<number | null>(null);
+
+  function handleSort() {
+    const images = [...productImages];
+    const draggedItemContent = images.splice(dragItem.current!, 1)[0];
+    images.splice(dragOverItem.current!, 0, draggedItemContent);
+    dragItem.current = null;
+    dragOverItem.current = null;
+    setProductImages(images);
+  }
+
+  function handleDragStart(position: number) {
+    dragItem.current = position;
+  }
+
+  function handleDragEnter(position: number) {
+    dragOverItem.current = position;
+  }
+
   return (
     <LayoutContainer>
       <LayoutTitle style={{ paddingLeft: "1rem" }}>
@@ -295,7 +315,15 @@ export default function Product({ params }: { params: { id: string } }) {
               </div>
               <div className={styles.imagesContainer}>
                 {productImages.map((image, index) => (
-                  <div className={styles.imageBox} key={index}>
+                  <div
+                    className={styles.imageBox}
+                    key={index}
+                    draggable
+                    onDragStart={() => handleDragStart(index)}
+                    onDragEnter={() => handleDragEnter(index)}
+                    onDragEnd={handleSort}
+                    onDragOver={(e) => e.preventDefault()}
+                  >
                     <button
                       type="button"
                       onClick={() => openDialog("image", index)}
