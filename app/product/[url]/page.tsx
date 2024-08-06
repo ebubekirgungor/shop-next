@@ -58,6 +58,16 @@ export default function Product({ params }: { params: { url: string } }) {
     }
   }
 
+  async function addProductToCart() {
+    const response = await fetch("/api/cart/" + product?.id, {
+      method: "POST",
+    });
+
+    if (response.status == 200) {
+      //
+    }
+  }
+
   return (
     <div className={styles.box}>
       {isLoading ? (
@@ -115,7 +125,7 @@ export default function Product({ params }: { params: { url: string } }) {
           <div className={styles.product}>
             <div className={styles.title}>{product?.title}</div>
             <div className={styles.listPrice}>{product?.list_price} TL</div>
-            <Button>Add to Cart</Button>
+            <Button onClick={addProductToCart}>Add to Cart</Button>
           </div>
         </>
       )}
