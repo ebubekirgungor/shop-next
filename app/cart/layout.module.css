@@ -1,0 +1,11 @@
+.checkoutBox {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  padding: 1rem;
+  min-width: 16rem;
+  height: fit-content;
+  background-color: rgb(var(--nav-background-color));
+  border-radius: 12px;
+  border: solid 1px rgb(var(--border-color));
+}

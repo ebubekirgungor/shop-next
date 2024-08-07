@@ -58,4 +58,35 @@ async function cart(_req: Request) {
   );
 }
 
+async function update(req: Request) {
+  const email = (await verify(cookies().get("token")?.value, getPublicKey()))
+    .email;
+
+  const { cart } = await req.json();
+
+  try {
+    await prisma.user.update({
+      where: { email: email },
+      data: {
+        cart,
+      },
+    });
+
+    return NextResponse.json(
+      { message: "Cart updated" },
+      {
+        status: 200,
+      }
+    );
+  } catch (e: any) {
+    return NextResponse.json(
+      { message: e.message },
+      {
+        status: 500,
+      }
+    );
+  }
+}
+
 export const GET = handler(user, cart);
+export const POST = handler(user, update);

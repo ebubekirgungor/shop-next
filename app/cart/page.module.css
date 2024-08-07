@@ -1,0 +1,99 @@
+.itemsCount {
+  padding-top: 2px;
+  filter: contrast(0);
+  font-size: 16px;
+}
+
+.row {
+  display: flex;
+  column-gap: 1rem;
+  align-items: center;
+}
+
+.layoutBox {
+  display: flex;
+  flex-direction: column;
+  padding: 0 !important;
+}
+
+.product {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 2rem;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgb(var(--border-color));
+}
+
+.product:last-child {
+  border: none;
+}
+
+.product img {
+  width: 6rem;
+  height: 6rem;
+  object-fit: contain;
+  border: 1px solid rgb(var(--border-color));
+  border-radius: 8px;
+}
+
+.longRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 1rem;
+  min-width: 21rem;
+  margin: 1rem;
+}
+
+.quantityBox {
+  width: 7rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  border: 1px solid rgb(var(--border-color));
+  border-radius: 9999px;
+}
+
+.quantityBox button {
+  width: 2.5rem;
+  height: 2rem;
+  transition: background-color 200ms ease-in-out;
+}
+
+.quantityBox button:first-of-type {
+  border-top-left-radius: 9999px;
+  border-bottom-left-radius: 9999px;
+}
+
+.quantityBox button:last-of-type {
+  border-top-right-radius: 9999px;
+  border-bottom-right-radius: 9999px;
+}
+
+.quantityBox button:hover {
+  background-color: rgba(var(--foreground-color), 0.1);
+}
+
+.quantityBox button:disabled {
+  pointer-events: none;
+}
+
+.product h4 {
+  word-break: keep-all;
+}
+
+.deleteButton {
+  padding: 0.5rem;
+  border-radius: 100%;
+  transition: background-color 200ms ease-in-out;
+}
+
+.deleteButton:hover {
+  background-color: rgba(var(--foreground-color), 0.1);
+}
+
+.checkoutBox {
+  min-width: 16rem;
+  padding: 1.5rem !important;
+}

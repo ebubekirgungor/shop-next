@@ -2,13 +2,14 @@ import { FC } from "react";
 import styles from "./LayoutBox.module.css";
 
 interface Props {
-  children?: React.ReactNode;
   minHeight?: string;
+  className?: string;
+  children?: React.ReactNode;
 }
 
-const LayoutBox: FC<Props> = ({ children, minHeight }) => {
+const LayoutBox: FC<Props> = ({ minHeight, className, children }) => {
   return (
-    <div className={styles.box} style={{ minHeight }}>
+    <div className={`${styles.box} ${className}`} style={{ minHeight }}>
       {children}
     </div>
   );
