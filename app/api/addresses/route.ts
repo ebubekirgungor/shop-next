@@ -12,13 +12,12 @@ const {
 } = require("paseto");
 
 async function all(_req: Request) {
-  const email = (await verify(cookies().get("token")?.value, getPublicKey()))
-    .email;
+  const id = (await verify(cookies().get("token")?.value, getPublicKey())).id;
 
   return NextResponse.json(
     (
       await prisma.user.findUnique({
-        where: { email: email },
+        where: { id: id },
         include: { addresses: true },
       })
     )?.addresses

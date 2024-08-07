@@ -18,10 +18,9 @@ interface Cart {
 }
 
 async function add(_req: Request, { params }: { params: { id: string } }) {
-  const email = (await verify(cookies().get("token")?.value, getPublicKey()))
-    .email;
+  const id = (await verify(cookies().get("token")?.value, getPublicKey())).id;
 
-  const user = await prisma.user.findUnique({ where: { email: email } });
+  const user = await prisma.user.findUnique({ where: { id: id } });
 
   const userCart: Cart[] = JSON.parse(JSON.stringify(user?.cart));
 
@@ -40,7 +39,7 @@ async function add(_req: Request, { params }: { params: { id: string } }) {
   }
 
   await prisma.user.update({
-    where: { email: email },
+    where: { id: id },
     data: {
       cart: JSON.parse(JSON.stringify(userCart)),
     },

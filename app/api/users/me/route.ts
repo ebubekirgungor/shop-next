@@ -12,13 +12,12 @@ const {
 } = require("paseto");
 
 async function me(_req: Request) {
-  const email = (await verify(cookies().get("token")?.value, getPublicKey()))
-    .email;
+  const id = (await verify(cookies().get("token")?.value, getPublicKey())).id;
 
-  const user = await prisma.user.findUnique({ where: { email: email } });
+  const user = await prisma.user.findUnique({ where: { id: id } });
 
   return NextResponse.json({
-    email: email,
+    email: user?.email,
     first_name: user?.first_name,
     last_name: user?.last_name,
     phone: user?.phone,
@@ -34,12 +33,11 @@ async function me(_req: Request) {
 async function update(req: Request) {
   const { first_name, last_name, phone, birth_date, gender } = await req.json();
 
-  const email = (await verify(cookies().get("token")?.value, getPublicKey()))
-    .email;
+  const id = (await verify(cookies().get("token")?.value, getPublicKey())).id;
 
   try {
     await prisma.user.update({
-      where: { email: email },
+      where: { id: id },
       data: {
         first_name,
         last_name,
