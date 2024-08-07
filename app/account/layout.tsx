@@ -18,6 +18,10 @@ export default function AccountLayout({
           <Icon name="address"></Icon>
           Addresses
         </Link>
+        <Link href="favorites">
+          <Icon name="favorite"></Icon>
+          Favorites
+        </Link>
       </nav>
       {children}
     </>

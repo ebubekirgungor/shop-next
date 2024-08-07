@@ -1,0 +1,50 @@
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.product {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  width: 14rem;
+  height: 22rem;
+  background-color: rgb(var(--nav-background-color));
+  border: 1px solid rgb(var(--border-color));
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.product button {
+  align-self: flex-end;
+  position: absolute;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 100%;
+  background-color: rgba(200, 200, 200, 0.7);
+  transition: background-color 200ms ease-in-out;
+}
+
+.product button:hover {
+  background-color: rgba(200, 200, 200, 0.9);
+}
+
+.product img {
+  width: calc(14rem - 2px);
+  height: 14rem;
+  object-fit: contain;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.product .title {
+  padding: 1rem;
+  font-size: medium;
+}
+
+.product .price {
+  padding: 1rem;
+  padding-top: 0;
+  font-size: x-large;
+}

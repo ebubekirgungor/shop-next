@@ -45,7 +45,7 @@ export default function RootLayout({
             >
               {role ? "Account" : "Login"}
             </NavButton>
-            <NavButton icon="favorite" href="/favorites">
+            <NavButton icon="favorite" href="/account/favorites">
               Favorites
             </NavButton>
             <NavButton icon="cart" href="/cart">
