@@ -14,6 +14,7 @@ interface Product {
   list_price: number;
   stock_quantity: number;
   images: string[];
+  is_favorite: boolean;
 }
 
 export default function Product({ params }: { params: { url: string } }) {
@@ -66,6 +67,17 @@ export default function Product({ params }: { params: { url: string } }) {
     if (response.status == 200) {
       //
     }
+  }
+
+  async function toggleFavorite() {
+    setProduct((prevState) => ({
+      ...prevState!,
+      is_favorite: !product?.is_favorite,
+    }));
+
+    await fetch("/api/favorites/" + product?.id, {
+      method: product?.is_favorite ? "DELETE" : "POST",
+    });
   }
 
   return (
@@ -123,7 +135,19 @@ export default function Product({ params }: { params: { url: string } }) {
             </div>
           </div>
           <div className={styles.product}>
-            <div className={styles.title}>{product?.title}</div>
+            <div className={styles.title}>
+              {product?.title}
+              <button
+                className={styles.favoriteButton}
+                onClick={toggleFavorite}
+              >
+                {product?.is_favorite ? (
+                  <Icon name="favorite_filled" disableFilter />
+                ) : (
+                  <Icon name="favorite" />
+                )}
+              </button>
+            </div>
             <div className={styles.listPrice}>{product?.list_price} TL</div>
             <Button onClick={addProductToCart}>Add to Cart</Button>
           </div>
