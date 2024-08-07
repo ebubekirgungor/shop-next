@@ -1,0 +1,61 @@
+export const fetchCache = "default-no-store";
+
+import { NextResponse } from "next/server";
+import { handler } from "@/app/middleware/handler";
+import { user } from "@/app/middleware/auth";
+import { cookies } from "next/headers";
+import prisma from "@/lib/prisma";
+import { getPublicKey } from "@/lib/keyStore";
+import { JsonValue } from "@prisma/client/runtime/library";
+
+const {
+  V4: { verify },
+} = require("paseto");
+
+interface Cart {
+  id: number;
+  quantity: number;
+  selected: boolean;
+}
+
+interface Product {
+  id: number;
+  title: string;
+  url: string;
+  list_price: number;
+  stock_quantity: number;
+  images: JsonValue;
+  filters: JsonValue;
+  category_id: number;
+  cart?: Cart;
+}
+
+async function cart(_req: Request) {
+  const email = (await verify(cookies().get("token")?.value, getPublicKey()))
+    .email;
+
+  const user = await prisma.user.findUnique({ where: { email: email } });
+
+  const userCart: Cart[] = JSON.parse(JSON.stringify(user?.cart));
+
+  const cartDataById = new Map(
+    userCart.map((item) => {
+      return [item.id, item];
+    })
+  );
+
+  const products = await prisma.product.findMany({
+    where: {
+      id: { in: userCart.map((item) => item.id) },
+    },
+  });
+
+  return NextResponse.json(
+    products.map((product: Product) => {
+      product.cart = cartDataById.get(product.id);
+      return product;
+    })
+  );
+}
+
+export const GET = handler(user, cart);
