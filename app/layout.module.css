@@ -42,8 +42,7 @@
 }
 
 .search input:focus {
-  box-shadow: 0 0 0 2px rgb(var(--border-color)),
-    0 0 0 2px rgb(var(--border-color));
+  box-shadow: 0 0 0 2px rgb(var(--border-color));
 }
 
 .nav_buttons {

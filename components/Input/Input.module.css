@@ -11,8 +11,7 @@
 }
 
 .input:focus {
-  box-shadow: 0 0 0 1px rgb(var(--border-color)),
-    0 0 0 1px rgb(var(--border-color));
+  box-shadow: 0 0 0 1px rgb(var(--border-color));
 }
 
 .input:disabled {
