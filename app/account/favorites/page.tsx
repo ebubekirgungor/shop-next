@@ -1,13 +1,11 @@
 "use client";
-import { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import styles from "./page.module.css";
 import LayoutContainer from "@/components/LayoutContainer";
 import LayoutBox from "@/components/LayoutBox";
 import LayoutTitle from "@/components/LayoutTitle";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import Address from "@/components/Address";
 import Dialog from "@/components/Dialog";
-import Input from "@/components/Input";
 import Button from "@/components/Button";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,9 +15,7 @@ interface Product {
   id: number | null;
   title: string;
   url: string;
-  category: string;
   list_price: number;
-  stock_quantity: number;
   images: string[];
   is_favorite: boolean;
 }
@@ -83,7 +79,7 @@ export default function Favorites() {
               favorites.map((product) => (
                 <div className={styles.product} key={product.id}>
                   <button onClick={() => openDialog(product.id!)}>
-                    <Icon name="delete" />
+                    <Icon name="delete" disableFilter />
                   </button>
                   <Link href={"/product/" + product.url}>
                     <Image
