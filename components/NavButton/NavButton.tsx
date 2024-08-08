@@ -1,7 +1,7 @@
 import { FC } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import styles from "./NavButton.module.css";
+import Icon from "../Icon";
 
 interface Props {
   href: string;
@@ -12,12 +12,7 @@ interface Props {
 const NavButton: FC<Props> = ({ href, icon, children }) => {
   return (
     <Link href={href} className={styles.link}>
-      <Image
-        src={`/icons/` + icon + `.svg`}
-        alt="icon"
-        width={24}
-        height={24}
-      />
+      <Icon name={icon} />
       {children}
     </Link>
   );

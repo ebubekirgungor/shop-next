@@ -12,9 +12,3 @@
 .link:hover {
   transform: translateY(-2px);
 }
-
-@media (prefers-color-scheme: dark) {
-  .link img {
-    filter: invert(100%);
-  }
-}
