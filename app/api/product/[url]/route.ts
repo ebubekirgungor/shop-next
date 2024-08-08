@@ -26,7 +26,14 @@ export async function GET(
   _req: Request,
   { params }: { params: { url: string } }
 ) {
-  const id = (await verify(cookies().get("token")?.value, getPublicKey())).id;
+  const token = cookies().get("token")?.value;
+  let id = null;
+
+  if (token) {
+    try {
+      id = (await verify(cookies().get("token")?.value, getPublicKey())).id;
+    } catch {}
+  }
 
   const product = await prisma.product.findUnique({
     where: { url: params.url },
@@ -37,18 +44,22 @@ export async function GET(
         },
       },
       Users: {
-        select: {
-          id: true,
-        },
+        select: id
+          ? {
+              id: true,
+            }
+          : null,
       },
     },
   });
 
-  (product as Product)!.is_favorite = product?.Users.some(
-    (user) => user.id === id
-  );
+  if (token) {
+    (product as Product)!.is_favorite = product?.Users.some(
+      (user) => user.id === id
+    );
 
-  delete (product as Product).Users;
+    delete (product as Product).Users;
+  }
 
   return Response.json(product);
 }

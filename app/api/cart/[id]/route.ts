@@ -12,32 +12,49 @@ const {
 } = require("paseto");
 
 async function add(_req: Request, { params }: { params: { id: string } }) {
-  const id = (await verify(cookies().get("token")?.value, getPublicKey())).id;
+  const token = cookies().get("token")?.value;
+  let id;
 
-  const user = await prisma.user.findUnique({ where: { id: id } });
+  let cart: Cart[] = [];
 
-  const userCart: Cart[] = JSON.parse(JSON.stringify(user?.cart));
+  if (token) {
+    try {
+      id = (await verify(token, getPublicKey())).id;
+      const user = await prisma.user.findUnique({ where: { id: id } });
+
+      cart = JSON.parse(JSON.stringify(user?.cart));
+    } catch {}
+  } else {
+    cart = JSON.parse(cookies().get("cart")?.value! || "[]");
+  }
 
   const productId = Number(params.id);
-
-  const existingItem = userCart.findIndex((item) => item.id === productId);
+  const existingItem = cart.findIndex((item) => item.id === productId);
 
   if (existingItem !== -1) {
-    userCart[existingItem].quantity++;
+    cart[existingItem].quantity++;
   } else {
-    userCart.push({
+    cart.push({
       id: productId,
       quantity: 1,
       selected: true,
     });
   }
 
-  await prisma.user.update({
-    where: { id: id },
-    data: {
-      cart: JSON.parse(JSON.stringify(userCart)),
-    },
-  });
+  if (token) {
+    await prisma.user.update({
+      where: { id: id },
+      data: {
+        cart: JSON.parse(JSON.stringify(cart)),
+      },
+    });
+  } else {
+    cookies().set({
+      name: "cart",
+      value: JSON.stringify(cart),
+      path: "/",
+    });
+  }
 
   return NextResponse.json(
     { message: "Product added to cart" },
@@ -47,4 +64,4 @@ async function add(_req: Request, { params }: { params: { id: string } }) {
   );
 }
 
-export const POST = handler(user, add);
+export const POST = handler(add);

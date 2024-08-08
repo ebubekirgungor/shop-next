@@ -11,6 +11,7 @@ import CheckBox from "@/components/CheckBox";
 import Link from "next/link";
 import CartLayout from "@/components/CartLayout";
 import NoItem from "@/components/NoItem";
+import { hasCookie, setCookie } from "cookies-next";
 
 enum Operation {
   increase = 1,
@@ -73,15 +74,21 @@ export default function Cart() {
   }
 
   async function updateCart() {
-    const response = await fetch("/api/cart", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ cart: products.map((product) => product.cart) }),
-    });
+    const cart = products.map((product) => product.cart);
 
-    return response.status === 200;
+    if (hasCookie("role")) {
+      const response = await fetch("/api/cart", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ cart: cart }),
+      });
+
+      return response.status === 200;
+    } else {
+      setCookie("cart", JSON.stringify(cart));
+    }
   }
 
   useEffect(() => {
@@ -103,7 +110,7 @@ export default function Cart() {
             <span className={styles.itemsCount}>({products.length} items)</span>
           )}
         </LayoutTitle>
-        <LayoutBox minHeight="290px" className={styles.layoutBox}>
+        <LayoutBox minHeight="145px" className={styles.layoutBox}>
           {isLoading ? (
             <LoadingSpinner />
           ) : products.length === 0 ? (

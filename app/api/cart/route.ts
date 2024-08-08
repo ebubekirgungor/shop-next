@@ -25,21 +25,30 @@ interface Product {
 }
 
 async function cart(_req: Request) {
-  const id = (await verify(cookies().get("token")?.value, getPublicKey())).id;
+  const token = cookies().get("token")?.value;
 
-  const user = await prisma.user.findUnique({ where: { id: id } });
+  let cart: Cart[] = [];
 
-  const userCart: Cart[] = JSON.parse(JSON.stringify(user?.cart));
+  if (token) {
+    try {
+      const id = (await verify(token, getPublicKey())).id;
+      const user = await prisma.user.findUnique({ where: { id: id } });
+
+      cart = JSON.parse(JSON.stringify(user?.cart));
+    } catch {}
+  } else {
+    cart = JSON.parse(cookies().get("cart")?.value!) || [];
+  }
 
   const cartDataById = new Map(
-    userCart.map((item) => {
+    cart.map((item) => {
       return [item.id, item];
     })
   );
 
   const products = await prisma.product.findMany({
     where: {
-      id: { in: userCart.map((item) => item.id) },
+      id: { in: cart.map((item) => item.id) },
     },
   });
 
@@ -80,5 +89,5 @@ async function update(req: Request) {
   }
 }
 
-export const GET = handler(user, cart);
+export const GET = handler(cart);
 export const POST = handler(user, update);

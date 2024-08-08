@@ -5,17 +5,7 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import Image from "next/image";
 import Icon from "@/components/Icon";
 import Button from "@/components/Button";
-
-interface Product {
-  id: number | null;
-  title: string;
-  url: string;
-  category: string;
-  list_price: number;
-  stock_quantity: number;
-  images: string[];
-  is_favorite: boolean;
-}
+import { hasCookie } from "cookies-next";
 
 export default function Product({ params }: { params: { url: string } }) {
   const [product, setProduct] = useState<Product>();
@@ -70,14 +60,16 @@ export default function Product({ params }: { params: { url: string } }) {
   }
 
   async function toggleFavorite() {
-    setProduct((prevState) => ({
-      ...prevState!,
-      is_favorite: !product?.is_favorite,
-    }));
-
-    await fetch("/api/favorites/" + product?.id, {
+    const response = await fetch("/api/favorites/" + product?.id, {
       method: product?.is_favorite ? "DELETE" : "POST",
     });
+
+    if (response.status == 200) {
+      setProduct((prevState) => ({
+        ...prevState!,
+        is_favorite: !product?.is_favorite,
+      }));
+    }
   }
 
   return (
@@ -137,16 +129,18 @@ export default function Product({ params }: { params: { url: string } }) {
           <div className={styles.product}>
             <div className={styles.title}>
               {product?.title}
-              <button
-                className={styles.favoriteButton}
-                onClick={toggleFavorite}
-              >
-                {product?.is_favorite ? (
-                  <Icon name="favorite_filled" disableFilter />
-                ) : (
-                  <Icon name="favorite" />
-                )}
-              </button>
+              {hasCookie("role") && (
+                <button
+                  className={styles.favoriteButton}
+                  onClick={toggleFavorite}
+                >
+                  {product?.is_favorite ? (
+                    <Icon name="favorite_filled" disableFilter />
+                  ) : (
+                    <Icon name="favorite" />
+                  )}
+                </button>
+              )}
             </div>
             <div className={styles.listPrice}>{product?.list_price} TL</div>
             <Button onClick={addProductToCart}>Add to Cart</Button>

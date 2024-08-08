@@ -5,7 +5,7 @@ import styles from "./layout.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import NavButton from "@/components/NavButton";
-import { cookies } from "next/headers";
+import NavLoginLink from "./NavLoginLink";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500"] });
 
@@ -18,8 +18,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const role = cookies().get("role");
-
   return (
     <html lang="en">
       <body className={poppins.className}>
@@ -39,12 +37,7 @@ export default function RootLayout({
             <input placeholder="Search products" />
           </div>
           <div className={styles.nav_buttons}>
-            <NavButton
-              icon="account"
-              href={role ? "/account/personal-details" : "/login"}
-            >
-              {role ? "Account" : "Login"}
-            </NavButton>
+            <NavLoginLink />
             <NavButton icon="favorite" href="/account/favorites">
               Favorites
             </NavButton>

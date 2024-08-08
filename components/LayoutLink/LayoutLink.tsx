@@ -13,7 +13,6 @@ interface Props {
 }
 
 const LayoutLink: FC<Props> = ({ href, icon, title }) => {
-  console.log(usePathname());
   return (
     <Link
       className={`${styles.link} ${
