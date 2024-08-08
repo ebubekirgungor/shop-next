@@ -1,6 +1,5 @@
 import styles from "./layout.module.css";
-import Link from "next/link";
-import Icon from "@/components/Icon";
+import LayoutLink from "@/components/LayoutLink";
 
 export default function AccountLayout({
   children,
@@ -10,18 +9,21 @@ export default function AccountLayout({
   return (
     <>
       <nav className={styles.nav}>
-        <Link href="personal-details">
-          <Icon name="account" />
-          Personal Details
-        </Link>
-        <Link href="addresses">
-          <Icon name="address" />
-          Addresses
-        </Link>
-        <Link href="favorites">
-          <Icon name="favorite" />
-          Favorites
-        </Link>
+        <LayoutLink
+          href="/account/personal-details"
+          icon="account"
+          title="Personal Details"
+        />
+        <LayoutLink
+          href="/account/addresses"
+          icon="address"
+          title="Addresses"
+        />
+        <LayoutLink
+          href="/account/favorites"
+          icon="favorite"
+          title="Favorites"
+        />
       </nav>
       {children}
     </>

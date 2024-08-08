@@ -9,18 +9,3 @@
   border-radius: 12px;
   border: solid 1px rgb(var(--border-color));
 }
-
-.nav a {
-  display: flex;
-  align-items: center;
-  column-gap: 1rem;
-  padding: 1rem;
-  height: 3rem;
-  font-size: 14px;
-  border-radius: 9999px;
-  transition: background-color 200ms ease-in-out;
-}
-
-.nav a:hover {
-  background-color: rgba(var(--foreground-color), 0.05);
-}

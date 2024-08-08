@@ -1,6 +1,5 @@
 import styles from "./layout.module.css";
-import Link from "next/link";
-import Icon from "@/components/Icon";
+import LayoutLink from "@/components/LayoutLink";
 
 export default function AdminLayout({
   children,
@@ -10,14 +9,12 @@ export default function AdminLayout({
   return (
     <>
       <nav className={styles.nav}>
-        <Link href="/admin/categories">
-          <Icon name="category" />
-          Categories
-        </Link>
-        <Link href="/admin/products">
-          <Icon name="product" />
-          Products
-        </Link>
+        <LayoutLink
+          href="/admin/categories"
+          icon="category"
+          title="Categories"
+        />
+        <LayoutLink href="/admin/products" icon="product" title="Products" />
       </nav>
       {children}
     </>
