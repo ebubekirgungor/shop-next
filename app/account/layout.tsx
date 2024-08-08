@@ -11,15 +11,15 @@ export default function AccountLayout({
     <>
       <nav className={styles.nav}>
         <Link href="personal-details">
-          <Icon name="account"></Icon>
+          <Icon name="account" />
           Personal Details
         </Link>
         <Link href="addresses">
-          <Icon name="address"></Icon>
+          <Icon name="address" />
           Addresses
         </Link>
         <Link href="favorites">
-          <Icon name="favorite"></Icon>
+          <Icon name="favorite" />
           Favorites
         </Link>
       </nav>

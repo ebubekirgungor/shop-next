@@ -10,6 +10,12 @@ import LayoutBox from "@/components/LayoutBox";
 import CheckBox from "@/components/CheckBox";
 import Link from "next/link";
 import CartLayout from "@/components/CartLayout";
+import NoItem from "@/components/NoItem";
+
+enum Operation {
+  increase = 1,
+  decrease = -1,
+}
 
 export default function Cart() {
   const [update, setUpdate] = useState(false);
@@ -18,7 +24,7 @@ export default function Cart() {
 
   useEffect(() => {
     fetch("/api/cart")
-      .then((response) => response.json())
+      .then((response) => (response.status === 200 ? response.json() : []))
       .then((data) => {
         setProducts(data);
         setLoading(false);
@@ -40,11 +46,6 @@ export default function Cart() {
       )
     );
     setUpdate(true);
-  }
-
-  enum Operation {
-    increase = 1,
-    decrease = -1,
   }
 
   function handleQuantity(id: number, operation: Operation) {
@@ -98,13 +99,15 @@ export default function Cart() {
       <LayoutContainer>
         <LayoutTitle>
           Cart
-          {!isLoading && (
+          {!isLoading && products.length !== 0 && (
             <span className={styles.itemsCount}>({products.length} items)</span>
           )}
         </LayoutTitle>
-        <LayoutBox minHeight="145px" className={styles.layoutBox}>
+        <LayoutBox minHeight="290px" className={styles.layoutBox}>
           {isLoading ? (
             <LoadingSpinner />
+          ) : products.length === 0 ? (
+            <NoItem icon="order" description="Your cart is empty" />
           ) : (
             <>
               {products.map((product) => (

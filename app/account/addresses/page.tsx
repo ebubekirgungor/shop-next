@@ -10,12 +10,7 @@ import Dialog from "@/components/Dialog";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 
-interface Address {
-  id: number | null;
-  title: string;
-  customer_name: string;
-  address: string;
-}
+type DialogType = "POST" | "PUT" | "DELETE";
 
 export default function Addresses() {
   const [addresses, setAddresses] = useState<Address[]>([]);
@@ -25,7 +20,7 @@ export default function Addresses() {
     await fetch("/api/addresses", {
       credentials: "include",
     })
-      .then((response) => response.json())
+      .then((response) => (response.status === 200 ? response.json() : []))
       .then((data) => {
         setAddresses(data);
         setLoading(false);
@@ -35,8 +30,6 @@ export default function Addresses() {
   useEffect(() => {
     getAllAddresses();
   }, []);
-
-  type DialogType = "POST" | "PUT" | "DELETE";
 
   const [dialogType, setDialogType] = useState<DialogType>();
   const [dialog, setDialog] = useState(false);
@@ -102,18 +95,17 @@ export default function Addresses() {
                   address: "",
                 })
               }
-            ></button>
-            {addresses &&
-              addresses.map((address) => (
-                <Address
-                  title={address.title}
-                  customerName={address.customer_name}
-                  address={address.address}
-                  editButton={() => openDialog("PUT", address)}
-                  deleteButton={() => openDialog("DELETE", address)}
-                  key={address.id}
-                ></Address>
-              ))}
+            />
+            {addresses.map((address) => (
+              <Address
+                title={address.title}
+                customerName={address.customer_name}
+                address={address.address}
+                editButton={() => openDialog("PUT", address)}
+                deleteButton={() => openDialog("DELETE", address)}
+                key={address.id}
+              />
+            ))}
           </div>
         )}
         {dialog && (

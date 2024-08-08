@@ -9,33 +9,31 @@ import Button from "@/components/Button";
 import LayoutTitle from "@/components/LayoutTitle";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
-export default function PersonalDetails() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [birthDate, setBirthDate] = useState({
-    day: "",
-    month: "",
-    year: "",
-  });
-  const [gender, setGender] = useState("");
+interface User {
+  first_name: string;
+  last_name: string;
+  phone: string;
+  email: string;
+  birth_date: {
+    day: string;
+    month: string;
+    year: string;
+  };
+  gender: string;
+}
 
+export default function PersonalDetails() {
+  const [user, setUser] = useState<User>();
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch("/api/users/me", {
       credentials: "include",
     })
-      .then((response) => response.json())
+      .then((response) => response.status === 200 && response.json())
       .then((data) => {
-        setFirstName(data.first_name);
-        setLastName(data.last_name);
-        setPhone(data.phone);
+        setUser(data);
         formatPhone(data.phone);
-        setEmail(data.email);
-        setBirthDate(data.birth_date);
-        setGender(data.gender.toString());
         setLoading(false);
       });
   }, []);
@@ -45,58 +43,48 @@ export default function PersonalDetails() {
       .replace(/\D/g, "")
       .match(/(\d{0,3})(\d{0,3})(\d{0,4})/)!;
 
-    setPhone(
-      !value[2]
+    setUser((prevState) => ({
+      ...prevState!,
+      phone: !value[2]
         ? value[1]
-        : "(" + value[1] + ") " + value[2] + (value[3] ? "-" + value[3] : "")
-    );
+        : "(" + value[1] + ") " + value[2] + (value[3] ? "-" + value[3] : ""),
+    }));
+  }
+
+  function handleUser(e: ChangeEvent<HTMLInputElement>) {
+    const copy = { ...user } as any;
+    copy[e.target.name] = e.target.value;
+    setUser(copy);
   }
 
   function handlePhone(e: ChangeEvent<HTMLInputElement>) {
     formatPhone(e.target.value);
   }
 
-  function handleBirthDateDay(e: ChangeEvent<HTMLInputElement>) {
-    const value = e.target.value;
-
-    if (
-      value === "" ||
-      (value.length <= 2 && value.match(/^(0[1-9]|[12][0-9]|3[01]|\d)$/))
-    ) {
-      setBirthDate((prevState) => ({
-        ...prevState,
-        day: value,
-      }));
+  function birthDateRegex(field: string, value: string) {
+    if (field === "day") {
+      return (
+        value === "" ||
+        (value.length <= 2 && value.match(/^(0[1-9]|[12][0-9]|3[01]|\d)$/))
+      );
+    } else if (field === "month") {
+      return (
+        value === "" ||
+        (value.length <= 2 && value.match(/^(0[1-9]|1[0-2]|\d)$/))
+      );
+    } else if (field === "year") {
+      return value === "" || (value.length <= 4 && value.match(/^\d{0,4}$/));
     }
   }
 
-  function handleBirthDateMonth(e: ChangeEvent<HTMLInputElement>) {
+  function handleBirthDate(e: ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
+    const copy = { ...user! } as any;
 
-    if (
-      value === "" ||
-      (value.length <= 2 && value.match(/^(0[1-9]|1[0-2]|\d)$/))
-    ) {
-      setBirthDate((prevState) => ({
-        ...prevState,
-        month: value,
-      }));
+    if (birthDateRegex(e.target.name, value)) {
+      copy.birth_date[e.target.name] = value;
+      setUser(copy);
     }
-  }
-
-  function handleBirthDateYear(e: ChangeEvent<HTMLInputElement>) {
-    const value = e.target.value;
-
-    if (value === "" || (value.length <= 4 && value.match(/^\d{0,4}$/))) {
-      setBirthDate((prevState) => ({
-        ...prevState,
-        year: e.target.value,
-      }));
-    }
-  }
-
-  function handleGender(e: ChangeEvent<HTMLInputElement>) {
-    setGender(e.target.value);
   }
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -108,17 +96,13 @@ export default function PersonalDetails() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        first_name: firstName,
-        last_name: lastName,
-        phone: phone.replace(/\D/g, ""),
-        birth_date: `${birthDate.year}-${birthDate.month}-${birthDate.day}`,
-        gender: gender,
+        first_name: user?.first_name,
+        last_name: user?.last_name,
+        phone: user?.phone.replace(/\D/g, ""),
+        birth_date: `${user?.birth_date.year}-${user?.birth_date.month}-${user?.birth_date.day}`,
+        gender: user?.gender,
       }),
     });
-
-    /*if (response.status == 200) {
-      
-    }*/
   }
 
   return (
@@ -133,29 +117,29 @@ export default function PersonalDetails() {
               <Input
                 label="First name"
                 type="text"
-                name="firstName"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                name="first_name"
+                value={user?.first_name}
+                onChange={handleUser}
               />
               <Input
                 label="Last name"
                 type="text"
-                name="lastName"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                name="last_name"
+                value={user?.last_name}
+                onChange={handleUser}
               />
               <Input
                 label="Phone number"
                 type="text"
                 name="phone"
-                value={phone}
+                value={user?.phone}
                 onChange={handlePhone}
               />
               <Input
                 label="E-mail"
                 type="text"
                 name="email"
-                defaultValue={email}
+                defaultValue={user?.email}
                 disabled
               />
               <div className={styles.row}>
@@ -163,22 +147,22 @@ export default function PersonalDetails() {
                   label="Day"
                   type="text"
                   name="day"
-                  value={birthDate.day}
-                  onChange={handleBirthDateDay}
+                  value={user?.birth_date.day}
+                  onChange={handleBirthDate}
                 />
                 <Input
                   label="Month"
                   type="text"
                   name="month"
-                  value={birthDate.month}
-                  onChange={handleBirthDateMonth}
+                  value={user?.birth_date.month}
+                  onChange={handleBirthDate}
                 />
                 <Input
                   label="Year"
                   type="text"
                   name="year"
-                  value={birthDate.year}
-                  onChange={handleBirthDateYear}
+                  value={user?.birth_date.year}
+                  onChange={handleBirthDate}
                 />
               </div>
               <div className={styles.column} style={{ width: "50%" }}>
@@ -188,15 +172,15 @@ export default function PersonalDetails() {
                     label="Male"
                     name="gender"
                     value="true"
-                    checked={gender === "true"}
-                    onChange={handleGender}
+                    checked={user?.gender === "true"}
+                    onChange={handleUser}
                   />
                   <Radio
                     label="Female"
                     name="gender"
                     value="false"
-                    checked={gender === "false"}
-                    onChange={handleGender}
+                    checked={user?.gender === "false"}
+                    onChange={handleUser}
                   />
                 </div>
               </div>

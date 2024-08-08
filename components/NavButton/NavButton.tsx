@@ -17,7 +17,7 @@ const NavButton: FC<Props> = ({ href, icon, children }) => {
         alt="icon"
         width={24}
         height={24}
-      ></Image>
+      />
       {children}
     </Link>
   );

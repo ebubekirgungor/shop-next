@@ -11,12 +11,6 @@ const {
   V4: { verify },
 } = require("paseto");
 
-interface Cart {
-  id: number;
-  quantity: number;
-  selected: boolean;
-}
-
 async function add(_req: Request, { params }: { params: { id: string } }) {
   const id = (await verify(cookies().get("token")?.value, getPublicKey())).id;
 

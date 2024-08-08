@@ -10,13 +10,7 @@ import Input from "@/components/Input";
 import Button from "@/components/Button";
 import Icon from "@/components/Icon";
 
-interface Category {
-  id: number | null;
-  title: string;
-  url: string;
-  filters: string[];
-  image: string;
-}
+type DialogType = "POST" | "PUT" | "DELETE";
 
 export default function Categories() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -34,8 +28,6 @@ export default function Categories() {
   useEffect(() => {
     getAllCategories();
   }, []);
-
-  type DialogType = "POST" | "PUT" | "DELETE";
 
   const [dialogType, setDialogType] = useState<DialogType>();
   const [dialog, setDialog] = useState(false);
@@ -137,7 +129,7 @@ export default function Categories() {
                   image: "",
                 })
               }
-            ></button>
+            />
             {categories &&
               categories.map((category) => (
                 <div className={styles.categoryBox} key={category.id}>
@@ -236,7 +228,7 @@ export default function Categories() {
                         accept=".jpg,.jpeg,.png"
                         onChange={handleNewImage}
                       />
-                      <div className={styles.uploadIcon}></div>
+                      <div className={styles.uploadIcon} />
                       Click to upload
                     </label>
                   )}

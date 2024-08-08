@@ -10,15 +10,7 @@ import Button from "@/components/Button";
 import Image from "next/image";
 import Link from "next/link";
 import Icon from "@/components/Icon";
-
-interface Product {
-  id: number | null;
-  title: string;
-  url: string;
-  list_price: number;
-  images: string[];
-  is_favorite: boolean;
-}
+import NoItem from "@/components/NoItem";
 
 export default function Favorites() {
   const [favorites, setFavorites] = useState<Product[]>([]);
@@ -26,7 +18,7 @@ export default function Favorites() {
 
   async function getFavorites() {
     await fetch("/api/favorites")
-      .then((response) => response.json())
+      .then((response) => (response.status === 200 ? response.json() : []))
       .then((data) => {
         setFavorites(data);
         setLoading(false);
@@ -73,27 +65,28 @@ export default function Favorites() {
       <LayoutBox minHeight="402px">
         {isLoading ? (
           <LoadingSpinner />
+        ) : favorites.length === 0 ? (
+          <NoItem icon="favorite" description="You don't have a favorite yet" />
         ) : (
           <div className={styles.row}>
-            {favorites &&
-              favorites.map((product) => (
-                <div className={styles.product} key={product.id}>
-                  <button onClick={() => openDialog(product.id!)}>
-                    <Icon name="delete" disableFilter />
-                  </button>
-                  <Link href={"/product/" + product.url}>
-                    <Image
-                      src={"/images/products/" + product.images[0]}
-                      alt={product.images[0]}
-                      width="0"
-                      height="0"
-                      sizes="14rem"
-                    />
-                    <div className={styles.title}>{product.title}</div>
-                  </Link>
-                  <div className={styles.price}>{product.list_price} TL</div>
-                </div>
-              ))}
+            {favorites.map((product) => (
+              <div className={styles.product} key={product.id}>
+                <button onClick={() => openDialog(product.id!)}>
+                  <Icon name="delete" disableFilter />
+                </button>
+                <Link href={"/product/" + product.url}>
+                  <Image
+                    src={"/images/products/" + product.images[0]}
+                    alt={product.images[0]}
+                    width="0"
+                    height="0"
+                    sizes="14rem"
+                  />
+                  <div className={styles.title}>{product.title}</div>
+                </Link>
+                <div className={styles.price}>{product.list_price} TL</div>
+              </div>
+            ))}
           </div>
         )}
         {dialog && (

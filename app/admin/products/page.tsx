@@ -8,15 +8,6 @@ import { DataTable } from "@/components/DataTable";
 import Chip from "@/components/Chip";
 import Link from "next/link";
 
-interface Product {
-  id: number | null;
-  title: string;
-  url: string;
-  category: string;
-  list_price: number;
-  stock_quantity: number;
-}
-
 const columns = [
   {
     key: "title",

@@ -12,12 +12,6 @@ const {
   V4: { verify },
 } = require("paseto");
 
-interface Cart {
-  id: number;
-  quantity: number;
-  selected: boolean;
-}
-
 interface Product {
   id: number;
   title: string;

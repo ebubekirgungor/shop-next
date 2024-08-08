@@ -78,12 +78,12 @@ export const DataTable = ({ columns, data }: DataTableProps) => {
                         : styles.arrowActive
                     }
                   >
-                    <Icon name="arrow"></Icon>
+                    <Icon name="arrow" />
                   </span>
                 </div>
               </th>
             ))}
-            <th style={{ width: "3rem" }}></th>
+            <th style={{ width: "3rem" }} />
           </tr>
         </thead>
         <tbody>

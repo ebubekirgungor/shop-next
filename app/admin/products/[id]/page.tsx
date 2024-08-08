@@ -15,12 +15,6 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Chip from "@/components/Chip";
 
-interface Category {
-  id: number | null;
-  title: string;
-  filters: string[];
-}
-
 interface Filter {
   name: string;
   value: string;
@@ -29,10 +23,6 @@ interface Filter {
 interface ProductImage {
   url: string;
   name: string;
-}
-
-interface EventTarget {
-  files: unknown;
 }
 
 interface Product {
@@ -46,6 +36,8 @@ interface Product {
   filters: Filter[];
   images: ProductImage[];
 }
+
+type DialogType = "product" | "image";
 
 export default function Product({ params }: { params: { id: string } }) {
   const router = useRouter();
@@ -91,8 +83,6 @@ export default function Product({ params }: { params: { id: string } }) {
         });
     }
   }, []);
-
-  type DialogType = "product" | "image";
 
   const [dialogType, setDialogType] = useState<DialogType>();
   const [dialog, setDialog] = useState(false);
@@ -152,7 +142,13 @@ export default function Product({ params }: { params: { id: string } }) {
     const imagesToUploadCopy = [...imagesToUpload];
 
     Array.prototype.slice
-      .call((e.target as EventTarget).files)
+      .call(
+        (
+          e.target as {
+            files: unknown;
+          }
+        ).files
+      )
       .forEach((file: File) => {
         copy.push({
           url: URL.createObjectURL(file),

@@ -26,7 +26,7 @@ async function me(_req: Request) {
       month: user?.birth_date.split("-")[1],
       year: user?.birth_date.split("-")[0],
     },
-    gender: user?.gender,
+    gender: user?.gender.toString(),
   });
 }
 

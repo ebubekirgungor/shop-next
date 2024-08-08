@@ -32,11 +32,11 @@ export default function RootLayout({
                 width={200}
                 height={100}
                 priority={true}
-              ></Image>
+              />
             </Link>
           </div>
           <div className={styles.search}>
-            <input placeholder="Search products"></input>
+            <input placeholder="Search products" />
           </div>
           <div className={styles.nav_buttons}>
             <NavButton

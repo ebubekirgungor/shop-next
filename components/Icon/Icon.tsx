@@ -14,7 +14,7 @@ const Icon: FC<Props> = ({ name, disableFilter }) => {
         backgroundImage: `url("/icons/${name}.svg")`,
         filter: disableFilter ? "none" : undefined,
       }}
-    ></div>
+    />
   );
 };
 
