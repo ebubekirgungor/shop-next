@@ -6,6 +6,7 @@ import { admin, user } from "@/app/middleware/auth";
 import prisma from "@/lib/prisma";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
+import { titleToUrl } from "@/lib/utils";
 
 async function all(_req: Request) {
   return NextResponse.json(await prisma.category.findMany());
@@ -38,17 +39,7 @@ async function create(req: Request) {
     await prisma.category.create({
       data: {
         title: formData.get("title") as string,
-        url: formData
-          .get("title")!
-          .toString()
-          .toLowerCase()
-          .replaceAll(" ", "-")
-          .replaceAll("ç", "c")
-          .replaceAll("ğ", "g")
-          .replaceAll("ı", "i")
-          .replaceAll("ö", "o")
-          .replaceAll("ş", "s")
-          .replaceAll("ü", "u"),
+        url: titleToUrl(formData.get("title") as string),
         filters: JSON.parse(formData.get("filters") as string),
         image: "/images/categories/" + image.name,
       },
@@ -98,17 +89,7 @@ async function update(req: Request) {
       where: { id: Number(formData.get("id")!) },
       data: {
         title: formData.get("title") as string,
-        url: formData
-          .get("title")!
-          .toString()
-          .toLowerCase()
-          .replaceAll(" ", "-")
-          .replaceAll("ç", "c")
-          .replaceAll("ğ", "g")
-          .replaceAll("ı", "i")
-          .replaceAll("ö", "o")
-          .replaceAll("ş", "s")
-          .replaceAll("ü", "u"),
+        url: titleToUrl(formData.get("title") as string),
         filters: JSON.parse(formData.get("filters") as string),
         image: "/images/categories/" + image.name,
       },

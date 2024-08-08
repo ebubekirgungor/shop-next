@@ -4,7 +4,7 @@ import LayoutContainer from "@/components/LayoutContainer";
 import LayoutBox from "@/components/LayoutBox";
 import LayoutTitle from "@/components/LayoutTitle";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { DataTable } from "@/components/DataTable";
+import DataTable from "@/components/DataTable";
 import Chip from "@/components/Chip";
 import Link from "next/link";
 
@@ -48,7 +48,7 @@ export default function Products() {
           <Chip>Add</Chip>
         </Link>
       </LayoutTitle>
-      <LayoutBox minHeight="220px">
+      <LayoutBox minHeight="304px">
         {isLoading ? (
           <LoadingSpinner />
         ) : (

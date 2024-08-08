@@ -6,6 +6,7 @@ import prisma from "@/lib/prisma";
 import { admin, user } from "@/app/middleware/auth";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
+import { titleToUrl } from "@/lib/utils";
 
 async function get(_req: Request, { params }: { params: { id: string } }) {
   return NextResponse.json(
@@ -52,17 +53,7 @@ async function update(req: Request, { params }: { params: { id: string } }) {
       where: { id: Number(params.id) },
       data: {
         title: formData.get("title") as string,
-        url: formData
-          .get("title")!
-          .toString()
-          .toLowerCase()
-          .replaceAll(" ", "-")
-          .replaceAll("ç", "c")
-          .replaceAll("ğ", "g")
-          .replaceAll("ı", "i")
-          .replaceAll("ö", "o")
-          .replaceAll("ş", "s")
-          .replaceAll("ü", "u"),
+        url: titleToUrl(formData.get("title") as string),
         list_price: Number(formData.get("list_price")),
         stock_quantity: Number(formData.get("stock_quantity")),
         filters: JSON.parse(formData.get("filters") as string),

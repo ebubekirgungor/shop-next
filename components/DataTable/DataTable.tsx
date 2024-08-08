@@ -21,7 +21,7 @@ interface DataTableProps {
 
 const itemsPerPageOptions = [5, 10, 25, 50, 100];
 
-export const DataTable = ({ columns, data }: DataTableProps) => {
+const DataTable = ({ columns, data }: DataTableProps) => {
   const [searchedData, setSearchedData] = useState(data);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);

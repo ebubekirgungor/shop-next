@@ -157,7 +157,9 @@ export default function Cart() {
                         <span>+</span>
                       </button>
                     </div>
-                    <h4>{product.list_price + " TL"}</h4>
+                    <h4>
+                      {product.list_price * product.cart.quantity + " TL"}
+                    </h4>
                     <button
                       className={styles.deleteButton}
                       onClick={() => handleDelete(product.id!)}
