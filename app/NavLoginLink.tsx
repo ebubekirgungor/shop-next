@@ -2,20 +2,22 @@
 
 import Box from "@/components/Box";
 import NavButton from "@/components/NavButton";
-import { getCookie } from "cookies-next";
+import { getCookie, hasCookie } from "cookies-next";
 import { useEffect, useState } from "react";
 import styles from "./layout.module.css";
-import { Role } from "@/enums";
+import { Role } from "@/lib/enums";
 import Icon from "@/components/Icon";
 import { useRouter } from "next/navigation";
 
 export default function NavLoginLink() {
   const router = useRouter();
   const [role, setRole] = useState<number | null>();
+  const [hasRole, setHasRole] = useState<boolean>();
 
   useEffect(() => {
     setRole(Number(getCookie("role")) || null);
-  }, []);
+    setHasRole(hasCookie("role"));
+  }, [role, hasRole]);
 
   async function logout() {
     const response = await fetch("/api/auth/logout");
@@ -26,7 +28,7 @@ export default function NavLoginLink() {
     }
   }
 
-  return role ? (
+  return hasRole ? (
     <div className={styles.accountBoxContainer}>
       <NavButton icon="account" href={"/account/personal-details"}>
         Account

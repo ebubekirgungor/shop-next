@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
-import { Role } from "@/enums";
+import { Role } from "@/lib/enums";
 
 const {
   V4: { sign },

@@ -9,27 +9,12 @@ import Button from "@/components/Button";
 import LayoutTitle from "@/components/LayoutTitle";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
-interface User {
-  first_name: string;
-  last_name: string;
-  phone: string;
-  email: string;
-  birth_date: {
-    day: string;
-    month: string;
-    year: string;
-  };
-  gender: string;
-}
-
 export default function PersonalDetails() {
   const [user, setUser] = useState<User>();
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/users/me", {
-      credentials: "include",
-    })
+    fetch("/api/users/me")
       .then((response) => response.status === 200 && response.json())
       .then((data) => {
         setUser(data);
@@ -98,7 +83,7 @@ export default function PersonalDetails() {
       body: JSON.stringify({
         first_name: user?.first_name,
         last_name: user?.last_name,
-        phone: user?.phone.replace(/\D/g, ""),
+        phone: user?.phone?.replace(/\D/g, ""),
         birth_date: `${user?.birth_date.year}-${user?.birth_date.month}-${user?.birth_date.day}`,
         gender: user?.gender,
       }),

@@ -17,9 +17,7 @@ export default function Addresses() {
   const [isLoading, setLoading] = useState(true);
 
   async function getAllAddresses() {
-    await fetch("/api/addresses", {
-      credentials: "include",
-    })
+    await fetch("/api/addresses")
       .then((response) => (response.status === 200 ? response.json() : []))
       .then((data) => {
         setAddresses(data);

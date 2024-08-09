@@ -15,6 +15,7 @@ export default function AdminLayout({
           title="Categories"
         />
         <LayoutLink href="/admin/products" icon="product" title="Products" />
+        <LayoutLink href="/admin/users" icon="account" title="Users" />
       </nav>
       {children}
     </>
