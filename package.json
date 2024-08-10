@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.17.0",
+    "@reduxjs/toolkit": "^2.2.7",
     "@types/bcryptjs": "^2.4.6",
     "bcryptjs": "^2.4.3",
     "cookies-next": "^4.2.1",
@@ -18,8 +19,8 @@
     "paseto": "^3.1.4",
     "react": "^18",
     "react-dom": "^18",
-    "shop": "file:",
-    "swr": "^2.2.5"
+    "react-redux": "^9.1.2",
+    "shop": "file:"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.7",

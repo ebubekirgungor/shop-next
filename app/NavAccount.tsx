@@ -1,47 +1,49 @@
 "use client";
-
-import Box from "@/components/Box";
-import NavButton from "@/components/NavButton";
-import { getCookie, hasCookie } from "cookies-next";
-import { useEffect, useState } from "react";
 import styles from "./layout.module.css";
-import { Role } from "@/lib/enums";
 import Icon from "@/components/Icon";
 import { useRouter } from "next/navigation";
+import NavButton from "@/components/NavButton";
+import Box from "@/components/Box";
+import { Role } from "@/lib/enums";
+import { useAppDispatch, useAppSelector } from "../lib/hooks";
+import { setRole } from "@/lib/userSlice";
+import { useEffect } from "react";
 
-export default function NavLoginLink() {
+export default function NavAccount() {
   const router = useRouter();
-  const [role, setRole] = useState<number | null>();
-  const [hasRole, setHasRole] = useState<boolean>();
+  const role = useAppSelector((user) => user.role).role;
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    setRole(Number(getCookie("role")) || null);
-    setHasRole(hasCookie("role"));
-  }, [role, hasRole]);
+    if (!role) {
+      dispatch(setRole(localStorage.getItem("role") ?? ""));
+    }
+  }, []);
 
   async function logout() {
     const response = await fetch("/api/auth/logout");
 
     if (response.status === 200) {
-      setRole(null);
+      dispatch(setRole(""));
       router.push("/");
     }
   }
 
-  return hasRole ? (
+  return role ? (
     <div className={styles.accountBoxContainer}>
       <NavButton icon="account" href={"/account/personal-details"}>
         Account
         <Icon name="expand_more" />
       </NavButton>
       <Box className={styles.accountBox} width="9rem" height="auto">
-        {role === Role.ADMIN && (
+        {role && Number(role) === Role.ADMIN && (
           <NavButton icon="admin" href={"/admin/categories"}>
             Admin
           </NavButton>
         )}
         <button type="button" onClick={logout}>
-          <Icon name="logout" /> Logout
+          <Icon name="logout" />
+          Logout
         </button>
       </Box>
     </div>

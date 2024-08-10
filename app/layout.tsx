@@ -5,7 +5,8 @@ import styles from "./layout.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import NavButton from "@/components/NavButton";
-import NavLoginLink from "./NavLoginLink";
+import NavAccount from "./NavAccount";
+import StoreProvider from "./StoreProvider";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500"] });
 
@@ -19,35 +20,37 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={poppins.className}>
-        <header className={styles.nav}>
-          <div className={styles.logo}>
-            <Link href="/">
-              <Image
-                src="/logo.png"
-                alt="Logo"
-                width={200}
-                height={100}
-                priority={true}
-              />
-            </Link>
-          </div>
-          <div className={styles.search}>
-            <input placeholder="Search products" />
-          </div>
-          <div className={styles.nav_buttons}>
-            <NavLoginLink />
-            <NavButton icon="favorite" href="/account/favorites">
-              Favorites
-            </NavButton>
-            <NavButton icon="cart" href="/cart">
-              Cart
-            </NavButton>
-          </div>
-        </header>
-        <main className={styles.main}>{children}</main>
-      </body>
-    </html>
+    <StoreProvider>
+      <html lang="en">
+        <body className={poppins.className}>
+          <nav className={styles.nav}>
+            <div className={styles.logo}>
+              <Link href="/">
+                <Image
+                  src="/logo.png"
+                  alt="Logo"
+                  width={200}
+                  height={100}
+                  priority={true}
+                />
+              </Link>
+            </div>
+            <div className={styles.search}>
+              <input placeholder="Search products" />
+            </div>
+            <div className={styles.nav_buttons}>
+              <NavAccount />
+              <NavButton icon="favorite" href="/account/favorites">
+                Favorites
+              </NavButton>
+              <NavButton icon="cart" href="/cart">
+                Cart
+              </NavButton>
+            </div>
+          </nav>
+          <main className={styles.main}>{children}</main>
+        </body>
+      </html>
+    </StoreProvider>
   );
 }

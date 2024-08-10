@@ -8,9 +8,13 @@ import Button from "@/components/Button";
 import Icon from "@/components/Icon";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useAppDispatch } from "../../lib/hooks";
+import { getCookie } from "cookies-next";
+import { setRole } from "../../lib/userSlice";
 
 export default function Login() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,7 +48,9 @@ export default function Login() {
     });
 
     if (response.status == 200) {
-      router.push("/");
+      const role = getCookie("role") ?? "";
+      dispatch(setRole(role));
+      router.push("/account/personal-details");
     }
   }
 
