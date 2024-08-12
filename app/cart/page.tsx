@@ -33,8 +33,8 @@ export default function Cart() {
   }, []);
 
   function handleProductChecked(id: number) {
-    setProducts((prevProducts) =>
-      prevProducts.map((product) =>
+    setProducts(
+      products.map((product) =>
         product.id === id
           ? {
               ...product,
@@ -50,8 +50,8 @@ export default function Cart() {
   }
 
   function handleQuantity(id: number, operation: Operation) {
-    setProducts((prevProducts) =>
-      prevProducts.map((product) =>
+    setProducts(
+      products.map((product) =>
         product.id === id
           ? {
               ...product,
@@ -67,9 +67,7 @@ export default function Cart() {
   }
 
   function handleDelete(id: number) {
-    setProducts((prevProducts) =>
-      prevProducts.filter((product) => product.id !== id)
-    );
+    setProducts(products.filter((product) => product.id !== id));
     setUpdate(true);
   }
 

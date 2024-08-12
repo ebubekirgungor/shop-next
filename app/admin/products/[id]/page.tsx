@@ -102,9 +102,10 @@ export default function Product({ params }: { params: { id: string } }) {
   }
 
   function handleProduct(e: ChangeEvent<HTMLInputElement>) {
-    const copy = { ...product } as any;
-    copy[e.target.name] = e.target.value;
-    setProduct(copy);
+    setProduct({
+      ...product!,
+      [e.target.name]: e.target.value,
+    });
   }
 
   function handleCategory(e: ChangeEvent<HTMLSelectElement>) {
@@ -120,18 +121,21 @@ export default function Product({ params }: { params: { id: string } }) {
         })
       );
 
-    setProduct((prevState) => ({
-      ...prevState!,
+    setProduct({
+      ...product!,
       filters:
         category_id === oldProduct?.category_id ? oldProduct.filters : filters,
       category_id,
-    }));
+    });
   }
 
   function handleFilter(e: ChangeEvent<HTMLInputElement>, index: number) {
-    const copy = { ...product } as any;
-    copy["filters"][index].value = e.target.value;
-    setProduct(copy);
+    setProduct({
+      ...product!,
+      filters: product!.filters.map((filter, i) =>
+        i === index ? { ...filter, value: e.target.value } : filter
+      ),
+    });
   }
 
   const [imagesToUpload, setImagesToUpload] = useState<File[]>([]);
@@ -207,11 +211,11 @@ export default function Product({ params }: { params: { id: string } }) {
   async function deleteImage(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const copy = [...productImages];
+    setProductImages([
+      ...productImages.slice(0, imageToDelete),
+      ...productImages.slice(imageToDelete! + 1),
+    ]);
 
-    copy.splice(imageToDelete!, 1);
-
-    setProductImages(copy);
     closeDialog();
   }
 

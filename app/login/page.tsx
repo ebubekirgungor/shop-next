@@ -1,5 +1,5 @@
 "use client";
-import { FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import styles from "./page.module.css";
 import Box from "@/components/Box";
 import Input from "@/components/Input";
@@ -12,15 +12,28 @@ import { useAppDispatch } from "../../lib/hooks";
 import { getCookie } from "cookies-next";
 import { setRole } from "../../lib/userSlice";
 
+interface Form {
+  email: string;
+  password: string;
+  remember_me: boolean;
+}
+
 export default function Login() {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
+  const [form, setForm] = useState<Form>();
+
   const [passwordType, setPasswordType] = useState("password");
   const [iconName, setIconName] = useState("eye_off");
+
+  function handleForm(e: ChangeEvent<HTMLInputElement>) {
+    setForm({
+      ...form!,
+      [e.target.name]:
+        e.target.name === "remember_me" ? e.target.checked : e.target.value,
+    });
+  }
 
   function handlePasswordType() {
     if (passwordType == "password") {
@@ -40,11 +53,7 @@ export default function Login() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-        remember_me: rememberMe,
-      }),
+      body: JSON.stringify(form),
     });
 
     if (response.status == 200) {
@@ -61,16 +70,16 @@ export default function Login() {
           label="E-mail"
           type="text"
           name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={form?.email ?? ""}
+          onChange={handleForm}
         />
         <div>
           <Input
             label="Password"
             type={passwordType}
             name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={form?.password ?? ""}
+            onChange={handleForm}
           />
           <span>
             <button
@@ -86,10 +95,10 @@ export default function Login() {
           label="Remember me"
           id="remember_me"
           name="remember_me"
-          checked={rememberMe}
-          onChange={(e) => setRememberMe(e.target.checked)}
+          checked={form?.remember_me ?? false}
+          onChange={handleForm}
         />
-        <Button disabled={!email || !password}>Sign In</Button>
+        <Button disabled={!form?.email || !form.password}>Sign In</Button>
         <Link
           href="/register"
           style={{ textAlign: "center", fontSize: "14px" }}

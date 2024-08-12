@@ -15,24 +15,29 @@ async function all(_req: Request) {
 async function create(req: Request) {
   const formData = await req.formData();
 
-  const image: any = formData.get("image");
+  const image: File = formData.get("image") as File;
 
-  try {
-    const buffer = Buffer.from(await image.arrayBuffer());
+  if (image) {
+    try {
+      const buffer = Buffer.from(await image.arrayBuffer());
 
-    const directoryPath = path.join(process.cwd(), "public/images/categories");
-    const filePath = path.join(directoryPath, image.name);
+      const directoryPath = path.join(
+        process.cwd(),
+        "public/images/categories"
+      );
+      const filePath = path.join(directoryPath, image.name);
 
-    await mkdir(directoryPath, { recursive: true });
+      await mkdir(directoryPath, { recursive: true });
 
-    await writeFile(filePath, buffer);
-  } catch {
-    return NextResponse.json(
-      { message: "Image can not uploaded" },
-      {
-        status: 500,
-      }
-    );
+      await writeFile(filePath, buffer);
+    } catch {
+      return NextResponse.json(
+        { message: "Image can not uploaded" },
+        {
+          status: 500,
+        }
+      );
+    }
   }
 
   try {
@@ -41,7 +46,7 @@ async function create(req: Request) {
         title: formData.get("title") as string,
         url: titleToUrl(formData.get("title") as string),
         filters: JSON.parse(formData.get("filters") as string),
-        image: "/images/categories/" + image.name,
+        image: "/images/categories/" + (image ? image.name : "category.png"),
       },
     });
 
@@ -64,35 +69,43 @@ async function create(req: Request) {
 async function update(req: Request) {
   const formData = await req.formData();
 
-  const image: any = formData.get("image")!;
+  const image: File = formData.get("image") as File;
 
-  try {
-    const buffer = Buffer.from(await image.arrayBuffer());
+  if (image) {
+    try {
+      const buffer = Buffer.from(await image.arrayBuffer());
 
-    const directoryPath = path.join(process.cwd(), "public/images/categories");
-    const filePath = path.join(directoryPath, image.name);
+      const directoryPath = path.join(
+        process.cwd(),
+        "public/images/categories"
+      );
+      const filePath = path.join(directoryPath, image.name);
 
-    await mkdir(directoryPath, { recursive: true });
+      await mkdir(directoryPath, { recursive: true });
 
-    await writeFile(filePath, buffer);
-  } catch {
-    return NextResponse.json(
-      { message: "Image can not uploaded" },
-      {
-        status: 500,
-      }
-    );
+      await writeFile(filePath, buffer);
+    } catch {
+      return NextResponse.json(
+        { message: "Image can not uploaded" },
+        {
+          status: 500,
+        }
+      );
+    }
   }
+
+  const data: Category = {
+    title: formData.get("title") as string,
+    url: titleToUrl(formData.get("title") as string),
+    filters: JSON.parse(formData.get("filters") as string),
+  };
+
+  if (image) data.image = "/images/categories/" + image.name;
 
   try {
     await prisma.category.update({
       where: { id: Number(formData.get("id")!) },
-      data: {
-        title: formData.get("title") as string,
-        url: titleToUrl(formData.get("title") as string),
-        filters: JSON.parse(formData.get("filters") as string),
-        image: "/images/categories/" + image.name,
-      },
+      data: data as any,
     });
 
     return NextResponse.json(

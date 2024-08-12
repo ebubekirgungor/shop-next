@@ -6,11 +6,11 @@ interface Address {
 }
 
 interface Category {
-  id: number | null;
+  id?: number | null;
   title: string;
   url: string;
   filters: string[];
-  image: string;
+  image?: string;
 }
 
 interface Cart {
@@ -47,4 +47,5 @@ interface User {
   };
   gender?: string;
   role?: Role;
+  password?: string;
 }

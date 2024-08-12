@@ -45,17 +45,13 @@ export default function Addresses() {
     setTimeout(() => setDialog(false), 300);
   }
 
-  const [newAddress, setNewAddress] = useState<Address | any>({
-    id: null,
-    title: "",
-    customer_name: "",
-    address: "",
-  });
+  const [newAddress, setNewAddress] = useState<Address>();
 
   function handleNewAddress(e: ChangeEvent<HTMLInputElement>) {
-    const copy = { ...newAddress };
-    copy[e.target.name] = e.target.value;
-    setNewAddress(copy);
+    setNewAddress({
+      ...newAddress!,
+      [e.target.name]: e.target.value,
+    });
   }
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -125,7 +121,7 @@ export default function Addresses() {
                     label="Title"
                     type="text"
                     name="title"
-                    value={newAddress.title}
+                    value={newAddress?.title}
                     required
                     onChange={handleNewAddress}
                   />
@@ -133,7 +129,7 @@ export default function Addresses() {
                     label="Customer name"
                     type="text"
                     name="customer_name"
-                    value={newAddress.customer_name}
+                    value={newAddress?.customer_name}
                     required
                     onChange={handleNewAddress}
                   />
@@ -141,7 +137,7 @@ export default function Addresses() {
                     label="Address"
                     type="text"
                     name="address"
-                    value={newAddress.address}
+                    value={newAddress?.address}
                     required
                     onChange={handleNewAddress}
                   />

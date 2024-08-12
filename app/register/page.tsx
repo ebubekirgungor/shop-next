@@ -8,79 +8,50 @@ import Radio from "@/components/Radio";
 import Icon from "@/components/Icon";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { birthDateRegex, formatPhone } from "@/lib/utils";
 
-export default function Login() {
+export default function Register() {
   const router = useRouter();
 
-  const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [birthDate, setBirthDate] = useState({
-    day: "",
-    month: "",
-    year: "",
+  const [form, setForm] = useState<User>({
+    birth_date: {
+      day: "",
+      month: "",
+      year: "",
+    },
   });
-  const [gender, setGender] = useState("");
-  const [password, setPassword] = useState("");
+
   const [passwordType, setPasswordType] = useState("password");
   const [iconName, setIconName] = useState("eye_off");
 
   const [step, setStep] = useState(1);
 
+  function handleForm(e: ChangeEvent<HTMLInputElement>) {
+    setForm({
+      ...form!,
+      [e.target.name]: e.target.value,
+    });
+  }
+
   function handlePhone(e: ChangeEvent<HTMLInputElement>) {
-    const value = e.target.value
-      .replace(/\D/g, "")
-      .match(/(\d{0,3})(\d{0,3})(\d{0,4})/)!;
-
-    setPhone(
-      !value[2]
-        ? value[1]
-        : "(" + value[1] + ") " + value[2] + (value[3] ? "-" + value[3] : "")
-    );
+    setForm((prev) => ({
+      ...prev!,
+      phone: formatPhone(e.target.value),
+    }));
   }
 
-  function handleBirthDateDay(e: ChangeEvent<HTMLInputElement>) {
+  function handleBirthDate(e: ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
 
-    if (
-      value === "" ||
-      (value.length <= 2 && value.match(/^(0[1-9]|[12][0-9]|3[01]|\d)$/))
-    ) {
-      setBirthDate((prevState) => ({
-        ...prevState,
-        day: value,
-      }));
+    if (birthDateRegex(e.target.name, value)) {
+      setForm({
+        ...form!,
+        birth_date: {
+          ...form?.birth_date!,
+          [e.target.name]: value,
+        },
+      });
     }
-  }
-
-  function handleBirthDateMonth(e: ChangeEvent<HTMLInputElement>) {
-    const value = e.target.value;
-
-    if (
-      value === "" ||
-      (value.length <= 2 && value.match(/^(0[1-9]|1[0-2]|\d)$/))
-    ) {
-      setBirthDate((prevState) => ({
-        ...prevState,
-        month: value,
-      }));
-    }
-  }
-
-  function handleBirthDateYear(e: ChangeEvent<HTMLInputElement>) {
-    const value = e.target.value;
-
-    if (value === "" || (value.length <= 4 && value.match(/^\d{0,4}$/))) {
-      setBirthDate((prevState) => ({
-        ...prevState,
-        year: value,
-      }));
-    }
-  }
-
-  function handleGender(e: ChangeEvent<HTMLInputElement>) {
-    setGender(e.target.value);
   }
 
   function handlePasswordType() {
@@ -108,15 +79,13 @@ export default function Login() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: email,
-        first_name: firstName,
-        last_name: lastName,
-        phone: phone,
-        birth_date: new Date(
-          `${birthDate.year}-${birthDate.month}-${birthDate.day}`
-        ),
-        gender: Boolean(gender),
-        password: password,
+        email: form?.email,
+        first_name: form?.first_name,
+        last_name: form?.last_name,
+        phone: form?.phone,
+        birth_date: `${form?.birth_date.year}-${form?.birth_date.month}-${form?.birth_date.day}`,
+        gender: form?.gender,
+        password: form?.password,
       }),
     });
 
@@ -133,24 +102,28 @@ export default function Login() {
             label="E-mail"
             type="text"
             name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={form?.email ?? ""}
+            onChange={handleForm}
           />
           <Input
             label="First name"
             type="text"
-            name="firstName"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
+            name="first_name"
+            value={form?.first_name ?? ""}
+            onChange={handleForm}
           />
           <Input
             label="Last name"
             type="text"
-            name="lastName"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
+            name="last_name"
+            value={form?.last_name ?? ""}
+            onChange={handleForm}
           />
-          <Button disabled={!email || !firstName || !lastName}>Next</Button>
+          <Button
+            disabled={!form?.email || !form.first_name || !form.last_name}
+          >
+            Next
+          </Button>
           <Link href="/login" style={{ textAlign: "center", fontSize: "14px" }}>
             Sign In
           </Link>
@@ -161,7 +134,7 @@ export default function Login() {
             label="Phone number"
             type="text"
             name="phone"
-            value={phone}
+            value={form?.phone ?? ""}
             onChange={handlePhone}
           />
           <div className={styles.row}>
@@ -169,22 +142,22 @@ export default function Login() {
               label="Day"
               type="text"
               name="day"
-              value={birthDate.day}
-              onChange={handleBirthDateDay}
+              value={form?.birth_date.day}
+              onChange={handleBirthDate}
             />
             <Input
               label="Month"
               type="text"
               name="month"
-              value={birthDate.month}
-              onChange={handleBirthDateMonth}
+              value={form?.birth_date.month}
+              onChange={handleBirthDate}
             />
             <Input
               label="Year"
               type="text"
               name="year"
-              value={birthDate.year}
-              onChange={handleBirthDateYear}
+              value={form?.birth_date.year}
+              onChange={handleBirthDate}
             />
           </div>
           <div className={styles.column}>
@@ -193,14 +166,16 @@ export default function Login() {
               <Radio
                 label="Male"
                 name="gender"
-                value={"true"}
-                onChange={handleGender}
+                value="true"
+                checked={form?.gender === "true"}
+                onChange={handleForm}
               />
               <Radio
                 label="Female"
                 name="gender"
-                value={"false"}
-                onChange={handleGender}
+                value="false"
+                checked={form?.gender === "false"}
+                onChange={handleForm}
               />
             </div>
           </div>
@@ -209,8 +184,8 @@ export default function Login() {
               label="Password"
               type={passwordType}
               name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={form?.password ?? ""}
+              onChange={handleForm}
             />
             <span>
               <button
@@ -224,12 +199,12 @@ export default function Login() {
           </div>
           <Button
             disabled={
-              !phone ||
-              !birthDate.day ||
-              !birthDate.month ||
-              !birthDate.year ||
-              !gender ||
-              !password
+              !form?.phone ||
+              !form.birth_date.day ||
+              !form.birth_date.month ||
+              !form.birth_date.year ||
+              !form.gender ||
+              !form.password
             }
           >
             Create Account

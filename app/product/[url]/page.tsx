@@ -65,10 +65,10 @@ export default function Product({ params }: { params: { url: string } }) {
     });
 
     if (response.status == 200) {
-      setProduct((prevState) => ({
-        ...prevState!,
+      setProduct({
+        ...product!,
         is_favorite: !product?.is_favorite,
-      }));
+      });
     }
   }
 

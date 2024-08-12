@@ -35,8 +35,7 @@ export default function Categories() {
 
   function openDialog(type: DialogType, category: Category) {
     setDialogType(type);
-    const copy = { ...category };
-    setNewCategory(copy);
+    setNewCategory({ ...category });
     setDialogStatus(true);
     setDialog(true);
   }
@@ -46,58 +45,60 @@ export default function Categories() {
     setTimeout(() => setDialog(false), 300);
   }
 
-  const [newCategory, setNewCategory] = useState<Category>({
-    id: null,
-    title: "",
-    url: "",
-    filters: [],
-    image: "",
-  });
+  const [newCategory, setNewCategory] = useState<Category>();
 
   const [newFilter, setNewFilter] = useState("");
 
   function handleNewFilter() {
-    const copy = { ...newCategory };
-    copy["filters"].push(newFilter);
-    setNewCategory(copy);
+    setNewCategory({
+      ...newCategory!,
+      filters: [...newCategory?.filters!, newFilter],
+    });
     setNewFilter("");
   }
 
   function deleteFilter(index: number) {
-    const copy = { ...newCategory };
-    copy["filters"].splice(index, 1);
-    setNewCategory(copy);
+    setNewCategory({
+      ...newCategory!,
+      filters: [
+        ...newCategory?.filters.slice(0, index)!,
+        ...newCategory?.filters.slice(index + 1)!,
+      ],
+    });
   }
 
-  const [newImage, setNewImage] = useState<Blob>();
+  const [newImage, setNewImage] = useState<File>();
 
   function handleNewImage(e: ChangeEvent<HTMLInputElement>) {
     setNewImage(e.target.files![0]);
-    const copy = { ...newCategory };
-    copy["image"] = URL.createObjectURL(e.target.files![0]);
-    setNewCategory(copy);
+    setNewCategory({
+      ...newCategory!,
+      image: URL.createObjectURL(e.target.files![0]),
+    });
   }
 
   function deleteNewImage() {
-    const copy = { ...newCategory };
-    copy["image"] = "";
-    setNewCategory(copy);
+    setNewCategory({
+      ...newCategory!,
+      image: "",
+    });
   }
 
   function handleNewCategory(e: ChangeEvent<HTMLInputElement>) {
-    const copy = { ...newCategory } as any;
-    copy[e.target.name] = e.target.value;
-    setNewCategory(copy);
+    setNewCategory({
+      ...newCategory!,
+      [e.target.name]: e.target.value,
+    });
   }
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const formData = new FormData();
-    formData.append("id", (newCategory.id || 0).toString());
-    formData.append("title", newCategory.title);
-    formData.append("filters", JSON.stringify(newCategory.filters));
-    formData.append("image", newImage!);
+    formData.append("id", (newCategory?.id || 0).toString());
+    formData.append("title", newCategory?.title!);
+    formData.append("filters", JSON.stringify(newCategory?.filters));
+    if (newImage) formData.append("image", newImage!);
 
     const response = await fetch("/api/categories", {
       method: dialogType,
@@ -113,7 +114,7 @@ export default function Categories() {
   return (
     <LayoutContainer>
       <LayoutTitle>Categories</LayoutTitle>
-      <LayoutBox minHeight="274px">
+      <LayoutBox minHeight="338px">
         {isLoading ? (
           <LoadingSpinner />
         ) : (
@@ -172,7 +173,7 @@ export default function Categories() {
                     label="Title"
                     type="text"
                     name="title"
-                    value={newCategory.title}
+                    value={newCategory?.title}
                     required
                     onChange={handleNewCategory}
                   />
@@ -194,7 +195,7 @@ export default function Categories() {
                     </button>
                   </div>
                   <div className={styles.filtersRow}>
-                    {newCategory.filters &&
+                    {newCategory?.filters &&
                       newCategory.filters.map((filter, index) => (
                         <div className={styles.filter} key={index}>
                           {filter}
@@ -207,7 +208,7 @@ export default function Categories() {
                         </div>
                       ))}
                   </div>
-                  {newCategory.image ? (
+                  {newCategory?.image ? (
                     <div className={styles.newImage}>
                       <div className={styles.actions}>
                         <button
@@ -236,7 +237,7 @@ export default function Categories() {
               ) : (
                 <div style={{ textAlign: "center" }}>Are you sure?</div>
               )}
-              <Button disabled={!newCategory.title}>
+              <Button disabled={!newCategory?.title}>
                 {
                   {
                     POST: "Create",

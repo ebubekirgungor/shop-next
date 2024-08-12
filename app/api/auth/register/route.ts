@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
         last_name,
         phone,
         birth_date,
-        gender,
+        gender: gender === "true",
         cart: [],
       },
     });

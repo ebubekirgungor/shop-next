@@ -8,6 +8,7 @@ import Radio from "@/components/Radio";
 import Button from "@/components/Button";
 import LayoutTitle from "@/components/LayoutTitle";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { birthDateRegex, formatPhone } from "@/lib/utils";
 
 export default function PersonalDetails() {
   const [user, setUser] = useState<User>();
@@ -23,52 +24,31 @@ export default function PersonalDetails() {
       });
   }, []);
 
-  function formatPhone(phoneNumber: string) {
-    const value = phoneNumber
-      .replace(/\D/g, "")
-      .match(/(\d{0,3})(\d{0,3})(\d{0,4})/)!;
-
-    setUser((prevState) => ({
-      ...prevState!,
-      phone: !value[2]
-        ? value[1]
-        : "(" + value[1] + ") " + value[2] + (value[3] ? "-" + value[3] : ""),
-    }));
-  }
-
   function handleUser(e: ChangeEvent<HTMLInputElement>) {
-    const copy = { ...user } as any;
-    copy[e.target.name] = e.target.value;
-    setUser(copy);
+    setUser({
+      ...user!,
+      [e.target.name]: e.target.value,
+    });
   }
 
   function handlePhone(e: ChangeEvent<HTMLInputElement>) {
-    formatPhone(e.target.value);
-  }
-
-  function birthDateRegex(field: string, value: string) {
-    if (field === "day") {
-      return (
-        value === "" ||
-        (value.length <= 2 && value.match(/^(0[1-9]|[12][0-9]|3[01]|\d)$/))
-      );
-    } else if (field === "month") {
-      return (
-        value === "" ||
-        (value.length <= 2 && value.match(/^(0[1-9]|1[0-2]|\d)$/))
-      );
-    } else if (field === "year") {
-      return value === "" || (value.length <= 4 && value.match(/^\d{0,4}$/));
-    }
+    setUser((prev) => ({
+      ...prev!,
+      phone: formatPhone(e.target.value),
+    }));
   }
 
   function handleBirthDate(e: ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
-    const copy = { ...user! } as any;
 
     if (birthDateRegex(e.target.name, value)) {
-      copy.birth_date[e.target.name] = value;
-      setUser(copy);
+      setUser({
+        ...user!,
+        birth_date: {
+          ...user?.birth_date!,
+          [e.target.name]: value,
+        },
+      });
     }
   }
 
