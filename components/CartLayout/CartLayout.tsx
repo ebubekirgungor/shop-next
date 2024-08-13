@@ -16,7 +16,9 @@ export default function CartLayout({
         <div className={styles.checkoutBox}>
           Selected items (
           {products.reduce((total: number, product: Product) => {
-            return total + (product.cart.selected ? product.cart.quantity : 0);
+            return (
+              total + (product?.cart?.selected ? product.cart.quantity : 0)
+            );
           }, 0)}
           )
           <div className={styles.price}>
@@ -24,7 +26,7 @@ export default function CartLayout({
               return (
                 total +
                 product.list_price *
-                  (product.cart.selected ? product.cart.quantity : 0)
+                  (product?.cart?.selected ? product.cart.quantity : 0)
               );
             }, 0) + shipping}
             <span> TL</span>
@@ -37,7 +39,7 @@ export default function CartLayout({
                   return (
                     total +
                     product.list_price *
-                      (product.cart.selected ? product.cart.quantity : 0)
+                      (product?.cart?.selected ? product.cart.quantity : 0)
                   );
                 }, 0)}
                 <span> TL</span>

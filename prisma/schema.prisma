@@ -14,6 +14,8 @@ enum Role {
 
 model User {
   id         Int       @id @default(autoincrement())
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
   email      String    @unique
   password   String
   first_name String
@@ -29,25 +31,31 @@ model User {
 }
 
 model Address {
-  id            Int    @id @default(autoincrement())
+  id            Int      @id @default(autoincrement())
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
   title         String
   customer_name String
   address       String
   user_id       Int
-  user          User   @relation(fields: [user_id], references: [id])
+  user          User     @relation(fields: [user_id], references: [id])
 }
 
 model Category {
-  id       Int       @id @default(autoincrement())
-  title    String
-  url      String    @unique
-  image    String
-  filters  Json
-  products Product[]
+  id         Int       @id @default(autoincrement())
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  title      String
+  url        String    @unique
+  image      String
+  filters    Json
+  products   Product[]
 }
 
 model Product {
   id             Int      @id @default(autoincrement())
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
   title          String
   url            String   @unique
   list_price     Float
@@ -68,6 +76,8 @@ enum DeliveryStatus {
 
 model Order {
   id               Int            @id @default(autoincrement())
+  created_at       DateTime       @default(now())
+  updated_at       DateTime       @updatedAt
   total_amount     Float
   customer_name    String
   delivery_address String

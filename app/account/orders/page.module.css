@@ -1,0 +1,79 @@
+.column {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.5rem;
+}
+
+.column input {
+  width: 16rem;
+  background-image: url("/icons/search.svg");
+  background-repeat: no-repeat;
+  background-position: 98%;
+  font-size: 16px;
+}
+
+.order {
+  padding: 0 !important;
+}
+
+.statusButton {
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
+.orderHeader {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.25rem;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  background-color: rgba(var(--foreground-color), 0.05);
+}
+
+.orderHeaderTitle {
+  font-size: 14px;
+  filter: contrast(0);
+}
+
+.orderHeaderInfo {
+  font-size: large;
+}
+
+.orderProducts {
+  display: flex;
+  column-gap: 1.5rem;
+  padding: 1.5rem;
+  overflow-x: auto;
+}
+
+.orderProducts a {
+  width: 6rem;
+  height: 6rem;
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.orderProducts img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border: 1px solid rgb(var(--border-color));
+  border-radius: 8px;
+}
+
+.quantityBadge {
+  width: 1.5rem;
+  height: 1.5rem;
+  bottom: -10%;
+  right: -10%;
+  font-size: 14px;
+  align-self: flex-end;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1px;
+  position: absolute;
+  background-color: rgb(var(--border-color));
+  border-radius: 100%;
+}

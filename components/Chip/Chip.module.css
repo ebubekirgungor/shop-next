@@ -13,3 +13,7 @@
 .chip:hover {
   background-color: rgba(var(--foreground-color), 0.1);
 }
+
+.selected {
+  background-color: rgba(var(--foreground-color), 0.1);
+}

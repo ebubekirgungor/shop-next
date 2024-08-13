@@ -14,6 +14,7 @@ export default function AccountLayout({
           icon="account"
           title="Personal Details"
         />
+        <LayoutLink href="/account/orders" icon="order" title="Orders" />
         <LayoutLink
           href="/account/addresses"
           icon="address"

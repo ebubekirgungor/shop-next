@@ -49,3 +49,28 @@ interface User {
   role?: Role;
   password?: string;
 }
+
+enum DeliveryStatus {
+  DELIVERED,
+  IN_PROGRESS,
+  RETURNED,
+  CANCELED,
+}
+
+interface OrderProduct {
+  title: string;
+  url: string;
+  list_price: number;
+  image: string;
+  quantity: number;
+}
+
+interface Order {
+  id: number;
+  created_at: Date;
+  total_amount: number;
+  customer_name: string;
+  delivery_address: string;
+  delivery_status: DeliveryStatus;
+  products: OrderProduct[];
+}

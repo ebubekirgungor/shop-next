@@ -20,6 +20,8 @@ enum Operation {
 
 export default function Cart() {
   const [update, setUpdate] = useState(false);
+  const updatePerSecond = 10;
+
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setLoading] = useState(true);
 
@@ -39,8 +41,8 @@ export default function Cart() {
           ? {
               ...product,
               cart: {
-                ...product.cart,
-                selected: !product.cart.selected,
+                ...product.cart!,
+                selected: !product.cart!.selected,
               },
             }
           : product
@@ -56,8 +58,8 @@ export default function Cart() {
           ? {
               ...product,
               cart: {
-                ...product.cart,
-                quantity: product.cart.quantity + operation,
+                ...product.cart!,
+                quantity: product.cart!.quantity + operation,
               },
             }
           : product
@@ -94,7 +96,7 @@ export default function Cart() {
       if (update) {
         if (await updateCart()) setUpdate(false);
       }
-    }, 10000);
+    }, updatePerSecond * 1000);
 
     return () => clearInterval(interval);
   }, [products, update]);
@@ -105,7 +107,13 @@ export default function Cart() {
         <LayoutTitle>
           Cart
           {!isLoading && products.length !== 0 && (
-            <span className={styles.itemsCount}>({products.length} items)</span>
+            <span className={styles.itemsCount}>
+              (
+              {products.reduce((total: number, product: Product) => {
+                return total + product.cart!.quantity;
+              }, 0)}{" "}
+              items)
+            </span>
           )}
         </LayoutTitle>
         <LayoutBox minHeight="145px" className={styles.layoutBox}>
@@ -119,7 +127,7 @@ export default function Cart() {
                 <div className={styles.product} key={product.id}>
                   <div className={styles.row}>
                     <CheckBox
-                      checked={product.cart.selected}
+                      checked={product.cart!.selected}
                       onChange={() => handleProductChecked(product.id!)}
                     />
                     <Image
@@ -136,17 +144,17 @@ export default function Cart() {
                   <div className={styles.longRow}>
                     <div className={styles.quantityBox}>
                       <button
-                        disabled={product.cart.quantity === 1}
+                        disabled={product.cart?.quantity === 1}
                         onClick={() =>
                           handleQuantity(product.id!, Operation.decrease)
                         }
                       >
                         <span>-</span>
                       </button>
-                      {product.cart.quantity}
+                      {product.cart?.quantity}
                       <button
                         disabled={
-                          product.cart.quantity === product.stock_quantity
+                          product.cart?.quantity === product.stock_quantity
                         }
                         onClick={() =>
                           handleQuantity(product.id!, Operation.increase)
@@ -156,7 +164,7 @@ export default function Cart() {
                       </button>
                     </div>
                     <h4>
-                      {product.list_price * product.cart.quantity + " TL"}
+                      {product.list_price * product.cart?.quantity! + " TL"}
                     </h4>
                     <button
                       className={styles.deleteButton}
