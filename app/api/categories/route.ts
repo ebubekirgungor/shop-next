@@ -7,6 +7,8 @@ import prisma from "@/lib/prisma";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 import { titleToUrl } from "@/lib/utils";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { handleServerError } from "@/lib/errorHandler";
 
 async function all(_req: Request) {
   return NextResponse.json(await prisma.category.findMany());
@@ -56,13 +58,8 @@ async function create(req: Request) {
         status: 200,
       }
     );
-  } catch (e: any) {
-    return NextResponse.json(
-      { message: e.message },
-      {
-        status: 500,
-      }
-    );
+  } catch (e) {
+    return handleServerError(e as PrismaClientKnownRequestError);
   }
 }
 
@@ -105,7 +102,7 @@ async function update(req: Request) {
   try {
     await prisma.category.update({
       where: { id: Number(formData.get("id")!) },
-      data: data as any,
+      data: data,
     });
 
     return NextResponse.json(
@@ -114,13 +111,8 @@ async function update(req: Request) {
         status: 200,
       }
     );
-  } catch (e: any) {
-    return NextResponse.json(
-      { message: e.message },
-      {
-        status: 500,
-      }
-    );
+  } catch (e) {
+    return handleServerError(e as PrismaClientKnownRequestError);
   }
 }
 
@@ -136,13 +128,8 @@ async function remove(req: Request) {
         status: 200,
       }
     );
-  } catch (e: any) {
-    return NextResponse.json(
-      { message: e.message },
-      {
-        status: 500,
-      }
-    );
+  } catch (e) {
+    return handleServerError(e as PrismaClientKnownRequestError);
   }
 }
 

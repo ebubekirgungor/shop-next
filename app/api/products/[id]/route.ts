@@ -7,6 +7,8 @@ import { admin, user } from "@/app/middleware/auth";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 import { titleToUrl } from "@/lib/utils";
+import { handleServerError } from "@/lib/errorHandler";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 async function get(_req: Request, { params }: { params: { id: string } }) {
   return NextResponse.json(
@@ -26,7 +28,7 @@ async function get(_req: Request, { params }: { params: { id: string } }) {
 async function update(req: Request, { params }: { params: { id: string } }) {
   const formData = await req.formData();
 
-  const images: any = formData.getAll("files");
+  const images: File[] = formData.getAll("files") as File[];
 
   try {
     for (let i = 0; i < images.length; i++) {
@@ -68,13 +70,8 @@ async function update(req: Request, { params }: { params: { id: string } }) {
         status: 200,
       }
     );
-  } catch (e: any) {
-    return NextResponse.json(
-      { message: e.message },
-      {
-        status: 500,
-      }
-    );
+  } catch (e) {
+    return handleServerError(e as PrismaClientKnownRequestError);
   }
 }
 
@@ -90,13 +87,8 @@ async function remove(_req: Request, { params }: { params: { id: string } }) {
         status: 200,
       }
     );
-  } catch (e: any) {
-    return NextResponse.json(
-      { message: e.message },
-      {
-        status: 500,
-      }
-    );
+  } catch (e) {
+    return handleServerError(e as PrismaClientKnownRequestError);
   }
 }
 

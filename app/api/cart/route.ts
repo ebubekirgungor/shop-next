@@ -6,23 +6,12 @@ import { user } from "@/app/middleware/auth";
 import { cookies } from "next/headers";
 import prisma from "@/lib/prisma";
 import { getPublicKey } from "@/lib/keyStore";
-import { JsonValue } from "@prisma/client/runtime/library";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { handleServerError } from "@/lib/errorHandler";
 
 const {
   V4: { verify },
 } = require("paseto");
-
-interface Product {
-  id: number;
-  title: string;
-  url: string;
-  list_price: number;
-  stock_quantity: number;
-  images: JsonValue;
-  filters: JsonValue;
-  category_id: number;
-  cart?: Cart;
-}
 
 async function cart(_req: Request) {
   const token = cookies().get("token")?.value;
@@ -53,8 +42,8 @@ async function cart(_req: Request) {
   });
 
   return NextResponse.json(
-    products.map((product: Product) => {
-      product.cart = cartDataById.get(product.id);
+    (products as Product[]).map((product: Product) => {
+      product.cart = cartDataById.get(product.id!);
       return product;
     })
   );
@@ -79,13 +68,8 @@ async function update(req: Request) {
         status: 200,
       }
     );
-  } catch (e: any) {
-    return NextResponse.json(
-      { message: e.message },
-      {
-        status: 500,
-      }
-    );
+  } catch (e) {
+    return handleServerError(e as PrismaClientKnownRequestError);
   }
 }
 

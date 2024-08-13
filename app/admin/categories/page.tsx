@@ -9,6 +9,7 @@ import Dialog from "@/components/Dialog";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 import Icon from "@/components/Icon";
+import Image from "next/image";
 
 type DialogType = "POST" | "PUT" | "DELETE";
 
@@ -123,7 +124,7 @@ export default function Categories() {
               className={styles.addBox}
               onClick={() =>
                 openDialog("POST", {
-                  id: null,
+                  id: undefined,
                   title: "",
                   url: "",
                   filters: [],
@@ -148,7 +149,13 @@ export default function Categories() {
                       <Icon name="delete" />
                     </button>
                   </div>
-                  <img src={category.image} />
+                  <Image
+                    src={category.image!}
+                    alt={category.image!}
+                    width="0"
+                    height="0"
+                    sizes="14rem"
+                  />
                   <div className={styles.title}>{category.title}</div>
                 </div>
               ))}
@@ -219,7 +226,13 @@ export default function Categories() {
                           <Icon name="delete" />
                         </button>
                       </div>
-                      <img src={newCategory.image} />
+                      <Image
+                        src={newCategory.image}
+                        alt="New image"
+                        width="0"
+                        height="0"
+                        sizes="14rem"
+                      />
                     </div>
                   ) : (
                     <label className={styles.uploadImageBox}>

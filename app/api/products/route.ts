@@ -7,6 +7,8 @@ import prisma from "@/lib/prisma";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 import { titleToUrl } from "@/lib/utils";
+import { handleServerError } from "@/lib/errorHandler";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 async function all(_req: Request) {
   return NextResponse.json(
@@ -36,7 +38,7 @@ async function all(_req: Request) {
 async function create(req: Request) {
   const formData = await req.formData();
 
-  const images: any = formData.getAll("files");
+  const images: File[] = formData.getAll("files") as File[];
 
   try {
     for (let i = 0; i < images.length; i++) {
@@ -77,13 +79,8 @@ async function create(req: Request) {
         status: 200,
       }
     );
-  } catch (e: any) {
-    return NextResponse.json(
-      { message: e.message },
-      {
-        status: 500,
-      }
-    );
+  } catch (e) {
+    return handleServerError(e as PrismaClientKnownRequestError);
   }
 }
 

@@ -37,6 +37,7 @@
   height: 14rem;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  object-fit: contain;
 }
 
 .title {
@@ -120,6 +121,7 @@
   width: calc(14rem - 2px);
   height: calc(14rem - 2px);
   border-radius: 8px;
+  object-fit: contain;
 }
 
 .uploadImageBox {

@@ -6,6 +6,8 @@ import { user } from "@/app/middleware/auth";
 import { cookies } from "next/headers";
 import prisma from "@/lib/prisma";
 import { getPublicKey } from "@/lib/keyStore";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { handleServerError } from "@/lib/errorHandler";
 
 const {
   V4: { verify },
@@ -46,13 +48,8 @@ async function create(req: Request) {
         status: 200,
       }
     );
-  } catch (e: any) {
-    return NextResponse.json(
-      { message: e.message },
-      {
-        status: 500,
-      }
-    );
+  } catch (e) {
+    return handleServerError(e as PrismaClientKnownRequestError);
   }
 }
 
@@ -75,13 +72,8 @@ async function update(req: Request) {
         status: 200,
       }
     );
-  } catch (e: any) {
-    return NextResponse.json(
-      { message: e.message },
-      {
-        status: 500,
-      }
-    );
+  } catch (e) {
+    return handleServerError(e as PrismaClientKnownRequestError);
   }
 }
 
@@ -97,13 +89,8 @@ async function remove(req: Request) {
         status: 200,
       }
     );
-  } catch (e: any) {
-    return NextResponse.json(
-      { message: e.message },
-      {
-        status: 500,
-      }
-    );
+  } catch (e) {
+    return handleServerError(e as PrismaClientKnownRequestError);
   }
 }
 

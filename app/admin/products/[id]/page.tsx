@@ -25,14 +25,9 @@ interface ProductImage {
   name: string;
 }
 
-interface Product {
-  id?: number | null;
-  title?: string;
-  url?: string;
+interface AdminProduct extends Omit<Product, "images"> {
   category_id?: number;
   category?: { title: string };
-  list_price?: number;
-  stock_quantity?: number;
   filters: Filter[];
   images: ProductImage[];
 }
@@ -43,7 +38,7 @@ export default function Product({ params }: { params: { id: string } }) {
   const router = useRouter();
   const isAdd = params.id === "create";
 
-  const [product, setProduct] = useState<Product>();
+  const [product, setProduct] = useState<AdminProduct>();
   const [productImages, setProductImages] = useState<ProductImage[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setLoading] = useState(!isAdd);
@@ -61,7 +56,7 @@ export default function Product({ params }: { params: { id: string } }) {
       });
 
     if (isAdd) {
-      setProduct({ images: [], filters: [] });
+      setProduct({ ...product!, images: [], filters: [] });
     } else {
       fetch("/api/products/" + params.id)
         .then((response) => response.json())

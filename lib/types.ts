@@ -6,7 +6,7 @@ interface Address {
 }
 
 interface Category {
-  id?: number | null;
+  id?: number;
   title: string;
   url: string;
   filters: string[];
@@ -26,8 +26,8 @@ interface Product {
   list_price: number;
   stock_quantity: number;
   images: string[];
-  cart: Cart;
-  is_favorite: boolean;
+  cart?: Cart;
+  is_favorite?: boolean;
 }
 
 enum Role {

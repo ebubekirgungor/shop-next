@@ -6,6 +6,8 @@ import { user } from "@/app/middleware/auth";
 import { cookies } from "next/headers";
 import prisma from "@/lib/prisma";
 import { getPublicKey } from "@/lib/keyStore";
+import { handleServerError } from "@/lib/errorHandler";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 const {
   V4: { verify },
@@ -53,13 +55,8 @@ async function update(req: Request) {
         status: 200,
       }
     );
-  } catch (e: any) {
-    return NextResponse.json(
-      { message: e.message },
-      {
-        status: 500,
-      }
-    );
+  } catch (e) {
+    return handleServerError(e as PrismaClientKnownRequestError);
   }
 }
 
