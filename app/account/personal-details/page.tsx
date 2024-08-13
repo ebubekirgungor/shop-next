@@ -18,8 +18,10 @@ export default function PersonalDetails() {
     fetch("/api/users/me")
       .then((response) => response.status === 200 && response.json())
       .then((data) => {
-        setUser(data);
-        formatPhone(data.phone);
+        setUser({
+          ...data!,
+          phone: formatPhone(data.phone),
+        });
         setLoading(false);
       });
   }, []);

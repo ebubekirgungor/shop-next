@@ -47,7 +47,10 @@ export default function User({ params }: { params: { id: string } }) {
       fetch("/api/users/" + params.id)
         .then((response) => response.status === 200 && response.json())
         .then((data) => {
-          setUser(data);
+          setUser({
+            ...data!,
+            phone: formatPhone(data.phone),
+          });
           formatPhone(data.phone);
           setLoading(false);
         });
