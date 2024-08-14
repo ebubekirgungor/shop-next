@@ -1,0 +1,118 @@
+.previousButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 100%;
+  transition: background-color 200ms ease-in-out;
+}
+
+.previousButton:hover {
+  background-color: rgba(var(--foreground-color), 0.1);
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.5rem;
+}
+
+.box {
+  width: 100%;
+  padding: 0 !important;
+}
+
+.boxHeader {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.25rem;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  background-color: rgba(var(--foreground-color), 0.05);
+}
+
+.deliveryStatus {
+  display: flex;
+  column-gap: 1rem;
+  padding-top: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.orderProducts {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1.5rem;
+}
+
+.product {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  width: 14rem;
+  height: 22rem;
+  background-color: rgb(var(--nav-background-color));
+  border: 1px solid rgb(var(--border-color));
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.product img {
+  width: calc(14rem - 2px);
+  height: 14rem;
+  object-fit: contain;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.product .title {
+  padding: 1rem;
+  font-size: medium;
+}
+
+.product .justifyBetween {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  padding-top: 0;
+}
+
+.product .price {
+  font-size: x-large;
+}
+
+.grayText {
+  filter: contrast(0);
+  font-size: 14px;
+}
+
+.row {
+  display: flex;
+  column-gap: 1.5rem;
+}
+
+.shipmentBox {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+.paymentBox {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+}
+
+.paymentBox .info {
+  height: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgb(var(--border-color));
+}
+
+.paymentBox .info:last-child {
+  border: none !important;
+}

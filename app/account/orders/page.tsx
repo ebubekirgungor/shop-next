@@ -13,8 +13,9 @@ import Input from "@/components/Input";
 import NoItem from "@/components/NoItem";
 import Icon from "@/components/Icon";
 import { DeliveryStatus } from "@/lib/enums";
+import Button from "@/components/Button";
 
-const dateOptions: Object = {
+export const dateOptions: Object = {
   day: "numeric",
   month: "long",
   year: "numeric",
@@ -22,7 +23,7 @@ const dateOptions: Object = {
   minute: "numeric",
 };
 
-const statusNames = [
+export const statusNames = [
   {
     title: "All",
     icon: "",
@@ -142,6 +143,9 @@ export default function Orders() {
                         0
                       )}
                     />
+                    <Link href={"orders/" + order.id}>
+                      <Button>Details</Button>
+                    </Link>
                   </div>
                   <div className={styles.deliveryStatus}>
                     <Icon name={statusNames[order.delivery_status + 1].icon} />
