@@ -131,6 +131,7 @@ export default function Cart() {
                       onChange={() => handleProductChecked(product.id!)}
                     />
                     <Image
+                      className={styles.productImage}
                       src={"/images/products/" + product.images[0]}
                       alt={product.images[0]}
                       width="0"

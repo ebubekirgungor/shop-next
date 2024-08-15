@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Button from "../Button";
 import styles from "./CartLayout.module.css";
 
@@ -53,7 +54,9 @@ export default function CartLayout({
               </div>
             </div>
           </div>
-          <Button type="button">Checkout</Button>
+          <Link href="/checkout">
+            <Button type="button">Checkout</Button>
+          </Link>
         </div>
       )}
     </>

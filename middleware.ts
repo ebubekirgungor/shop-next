@@ -17,4 +17,13 @@ export function middleware(request: NextRequest) {
       new URL("/account/personal-details", request.url)
     );
   }
+
+  if (
+    (pathName.startsWith("/login") || pathName.startsWith("/register")) &&
+    role
+  ) {
+    return NextResponse.redirect(
+      new URL("/account/personal-details", request.url)
+    );
+  }
 }

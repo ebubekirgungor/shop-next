@@ -40,7 +40,7 @@
   overflow-x: auto;
 }
 
-.imagesContainer img {
+.productImage {
   width: 11rem;
   height: 11rem;
   object-position: center;

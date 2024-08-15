@@ -326,6 +326,7 @@ export default function Product({ params }: { params: { id: string } }) {
                       <Icon name="delete" />
                     </button>
                     <Image
+                      className={styles.productImage}
                       src={image.url}
                       alt={image.url}
                       width="0"
