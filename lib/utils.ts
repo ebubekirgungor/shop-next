@@ -1,4 +1,5 @@
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { hasCookie, setCookie } from "cookies-next";
 import { NextResponse } from "next/server";
 
 function titleToUrl(title: string) {
@@ -38,4 +39,22 @@ function formatPhone(phoneNumber: string) {
     : "(" + value[1] + ") " + value[2] + (value[3] ? "-" + value[3] : "");
 }
 
-export { titleToUrl, birthDateRegex, formatPhone };
+async function updateCart(products: Product[]) {
+  const cart = products.map((product) => product.cart);
+
+  if (hasCookie("role")) {
+    const response = await fetch("/api/cart", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ cart: cart }),
+    });
+
+    return response.status === 200;
+  } else {
+    setCookie("cart", JSON.stringify(cart));
+  }
+}
+
+export { titleToUrl, birthDateRegex, formatPhone, updateCart };

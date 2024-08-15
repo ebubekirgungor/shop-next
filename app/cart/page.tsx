@@ -12,6 +12,7 @@ import Link from "next/link";
 import CartLayout from "@/components/CartLayout";
 import NoItem from "@/components/NoItem";
 import { hasCookie, setCookie } from "cookies-next";
+import { updateCart } from "@/lib/utils";
 
 enum Operation {
   increase = 1,
@@ -73,28 +74,10 @@ export default function Cart() {
     setUpdate(true);
   }
 
-  async function updateCart() {
-    const cart = products.map((product) => product.cart);
-
-    if (hasCookie("role")) {
-      const response = await fetch("/api/cart", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ cart: cart }),
-      });
-
-      return response.status === 200;
-    } else {
-      setCookie("cart", JSON.stringify(cart));
-    }
-  }
-
   useEffect(() => {
     const interval = setInterval(async () => {
       if (update) {
-        if (await updateCart()) setUpdate(false);
+        if (await updateCart(products)) setUpdate(false);
       }
     }, updatePerSecond * 1000);
 

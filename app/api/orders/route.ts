@@ -31,7 +31,13 @@ async function create(req: Request) {
   const user_id = (await verify(cookies().get("token")?.value, getPublicKey()))
     .id;
 
-  const user = await prisma.user.findUnique({ where: { id: user_id } });
+  const user = await prisma.user.findUnique({
+    where: { id: user_id },
+    include: {
+      addresses: true,
+    },
+  });
+
   const cart: Cart[] = JSON.parse(JSON.stringify(user?.cart));
 
   const cartQuantityById = new Map(
@@ -66,17 +72,28 @@ async function create(req: Request) {
     };
   });
 
-  const { customer_name, delivery_address } = await req.json();
+  const { address_id } = await req.json();
+
+  const selectedAddress = user?.addresses.find(
+    (address) => address.id === address_id
+  )!;
 
   try {
     await prisma.order.create({
       data: {
         total_amount,
-        customer_name,
-        delivery_address,
+        customer_name: selectedAddress.customer_name,
+        delivery_address: selectedAddress.address,
         delivery_status: DeliveryStatus.IN_PROGRESS,
         products,
         user_id,
+      },
+    });
+
+    await prisma.user.update({
+      where: { id: user_id },
+      data: {
+        cart: [],
       },
     });
 
