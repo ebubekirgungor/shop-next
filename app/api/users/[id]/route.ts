@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 import { handler } from "@/app/middleware/handler";
 import prisma from "@/lib/prisma";
 import { admin, user } from "@/app/middleware/auth";
-import { Role } from "@/lib/enums";
 import { handleServerError } from "@/lib/errorHandler";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
@@ -24,7 +23,7 @@ async function get(_req: Request, { params }: { params: { id: string } }) {
       year: user?.birth_date.split("-")[0],
     },
     gender: user?.gender.toString(),
-    role: Role[user?.role!],
+    role: user?.role,
   });
 }
 

@@ -4,7 +4,6 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
-import { Role } from "@/lib/enums";
 
 const {
   V4: { sign },
@@ -29,7 +28,7 @@ export async function POST(req: NextRequest) {
   }
 
   const token = await sign(
-    { id: user.id, email: email, role: Role[user.role] },
+    { id: user.id, email: email, role: user.role },
     getSecretKey(),
     {
       expiresIn: remember_me ? "30d" : "1h",
@@ -51,7 +50,7 @@ export async function POST(req: NextRequest) {
 
   cookies().set({
     name: "role",
-    value: Role[user.role].toString(),
+    value: user.role,
     expires: expires,
     path: "/",
   });

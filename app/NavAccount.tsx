@@ -36,7 +36,7 @@ export default function NavAccount() {
         <Icon name="expand_more" />
       </NavButton>
       <Box className={styles.accountBox} width="9rem" height="auto">
-        {role && Number(role) === Role.ADMIN && (
+        {role && role === Role.ADMIN && (
           <NavButton icon="admin" href={"/admin/categories"}>
             Admin
           </NavButton>

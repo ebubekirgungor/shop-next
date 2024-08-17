@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { Role } from "./lib/enums";
 
 export function middleware(request: NextRequest) {
   const pathName = request.nextUrl.pathname;
@@ -12,7 +13,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  if (pathName.startsWith("/admin") && role === "0") {
+  if (pathName.startsWith("/admin") && role !== Role.ADMIN) {
     return NextResponse.redirect(
       new URL("/account/personal-details", request.url)
     );

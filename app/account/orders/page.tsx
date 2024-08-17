@@ -14,42 +14,7 @@ import NoItem from "@/components/NoItem";
 import Icon from "@/components/Icon";
 import { DeliveryStatus } from "@/lib/enums";
 import Button from "@/components/Button";
-
-export const dateOptions: Object = {
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-  hour: "numeric",
-  minute: "numeric",
-};
-
-export const statusNames = [
-  {
-    title: "All",
-    icon: "",
-    status: null,
-  },
-  {
-    title: "Delivered",
-    icon: "check",
-    status: DeliveryStatus.DELIVERED,
-  },
-  {
-    title: "In progress",
-    icon: "progress",
-    status: DeliveryStatus.IN_PROGRESS,
-  },
-  {
-    title: "Returned",
-    icon: "return",
-    status: DeliveryStatus.RETURNED,
-  },
-  {
-    title: "Canceled",
-    icon: "close",
-    status: DeliveryStatus.CANCELED,
-  },
-];
+import { dateOptions, statusNames } from "./orderUtils";
 
 function OrderInfo({ title, info }: { title: string; info: string | number }) {
   return (
@@ -68,12 +33,7 @@ export default function Orders() {
     fetch("/api/orders")
       .then((response) => (response.status === 200 ? response.json() : []))
       .then((data) => {
-        setOrders(
-          data.map((order: any) => {
-            order.delivery_status = DeliveryStatus[order.delivery_status];
-            return order;
-          })
-        );
+        setOrders(data);
         setLoading(false);
       });
   }, []);
@@ -97,14 +57,14 @@ export default function Orders() {
     <LayoutContainer>
       <LayoutTitle>
         Orders
-        {statusNames.map((status) =>
-          status.status !== DeliveryStatus.DELIVERED ? (
+        {Array.from(statusNames.keys()).map((status) =>
+          status !== DeliveryStatus.DELIVERED ? (
             <Chip
-              selected={statusFilter === status.status}
-              onClick={() => setStatusFilter(status.status)}
-              key={status.status}
+              selected={statusFilter === status}
+              onClick={() => setStatusFilter(status)}
+              key={status}
             >
-              {status.title}
+              {statusNames.get(status)?.title}
             </Chip>
           ) : null
         )}
@@ -148,8 +108,10 @@ export default function Orders() {
                     </Link>
                   </div>
                   <div className={styles.deliveryStatus}>
-                    <Icon name={statusNames[order.delivery_status + 1].icon} />
-                    {statusNames[order.delivery_status + 1].title}
+                    <Icon
+                      name={statusNames.get(order.delivery_status)?.icon!}
+                    />
+                    {statusNames.get(order.delivery_status)?.title}
                   </div>
                   <div className={styles.orderProducts}>
                     {order.products.map((product: OrderProduct) => (

@@ -9,8 +9,7 @@ import Icon from "@/components/Icon";
 import Link from "next/link";
 import Box from "@/components/Box";
 import Image from "next/image";
-import { dateOptions, statusNames } from "../page";
-import { DeliveryStatus } from "@/lib/enums";
+import { dateOptions, statusNames } from "../orderUtils";
 
 const shipping = 50;
 
@@ -22,7 +21,6 @@ export default function Order({ params }: { params: { id: string } }) {
     fetch("/api/orders/" + params.id)
       .then((response) => response.json())
       .then((data) => {
-        data.delivery_status = DeliveryStatus[data.delivery_status];
         setOrder(data);
         setLoading(false);
       });
@@ -49,8 +47,8 @@ export default function Order({ params }: { params: { id: string } }) {
             <Box className={styles.box}>
               <div className={styles.boxHeader}>Items</div>
               <div className={styles.deliveryStatus}>
-                <Icon name={statusNames[order?.delivery_status! + 1].icon} />
-                {statusNames[order?.delivery_status! + 1].title}
+                <Icon name={statusNames.get(order?.delivery_status!)?.icon!} />
+                {statusNames.get(order?.delivery_status!)?.title}
               </div>
               <div className={styles.orderProducts}>
                 {order?.products.map((product: OrderProduct) => (

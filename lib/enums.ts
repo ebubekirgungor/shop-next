@@ -1,11 +1,11 @@
 export enum Role {
-  USER,
-  ADMIN,
+  USER = "USER",
+  ADMIN = "ADMIN",
 }
 
 export enum DeliveryStatus {
-  DELIVERED,
-  IN_PROGRESS,
-  RETURNED,
-  CANCELED,
+  DELIVERED = "DELIVERED",
+  IN_PROGRESS = "IN_PROGRESS",
+  RETURNED = "RETURNED",
+  CANCELED = "CANCELED",
 }

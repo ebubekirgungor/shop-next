@@ -31,8 +31,8 @@ interface Product {
 }
 
 enum Role {
-  USER,
-  ADMIN,
+  USER = "USER",
+  ADMIN = "ADMIN",
 }
 
 interface User {
@@ -50,19 +50,19 @@ interface User {
   password?: string;
 }
 
-enum DeliveryStatus {
-  DELIVERED,
-  IN_PROGRESS,
-  RETURNED,
-  CANCELED,
-}
-
 interface OrderProduct {
   title: string;
   url: string;
   list_price: number;
   image: string;
   quantity: number;
+}
+
+enum DeliveryStatus {
+  DELIVERED = "DELIVERED",
+  IN_PROGRESS = "IN_PROGRESS",
+  RETURNED = "RETURNED",
+  CANCELED = "CANCELED",
 }
 
 interface Order {

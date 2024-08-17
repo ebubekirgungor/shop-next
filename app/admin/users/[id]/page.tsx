@@ -114,7 +114,7 @@ export default function User({ params }: { params: { id: string } }) {
         phone: user?.phone?.replace(/\D/g, ""),
         birth_date: `${user?.birth_date.year}-${user?.birth_date.month}-${user?.birth_date.day}`,
         gender: user?.gender,
-        role: Role[user?.role!],
+        role: user?.role,
       }),
     });
   }
