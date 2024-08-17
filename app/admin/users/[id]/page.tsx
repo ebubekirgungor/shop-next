@@ -37,14 +37,8 @@ export default function User({ params }: { params: { id: string } }) {
     }
   }
 
-  useEffect(() => {
-    if (isAdd) {
-      /*setUser((prev) => ({
-        ...prev!,
-        birth_date: { day: "", month: "", year: "" },
-        role: Role.USER,
-      }));*/
-    } else {
+  if (!isAdd) {
+    useEffect(() => {
       fetch("/api/users/" + params.id)
         .then((response) => response.status === 200 && response.json())
         .then((data) => {
@@ -55,8 +49,8 @@ export default function User({ params }: { params: { id: string } }) {
           formatPhone(data.phone);
           setLoading(false);
         });
-    }
-  }, []);
+    }, []);
+  }
 
   const [dialog, setDialog] = useState(false);
   const [dialogStatus, setDialogStatus] = useState(false);

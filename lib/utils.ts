@@ -1,6 +1,4 @@
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { hasCookie, setCookie } from "cookies-next";
-import { NextResponse } from "next/server";
 
 function titleToUrl(title: string) {
   return title

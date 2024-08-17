@@ -26,7 +26,7 @@ async function cart(_req: Request) {
       cart = JSON.parse(JSON.stringify(user?.cart));
     } catch {}
   } else {
-    cart = JSON.parse(cookies().get("cart")?.value!) || [];
+    cart = JSON.parse(cookies().get("cart")?.value || JSON.stringify([]));
   }
 
   const cartDataById = new Map(
