@@ -12,7 +12,7 @@ import Chip from "@/components/Chip";
 import Input from "@/components/Input";
 import NoItem from "@/components/NoItem";
 import Icon from "@/components/Icon";
-import { DeliveryStatus } from "@/lib/enums";
+import { DeliveryStatus } from "@/lib/types";
 import Button from "@/components/Button";
 import { dateOptions, statusNames } from "./orderUtils";
 

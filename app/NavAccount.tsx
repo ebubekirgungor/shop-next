@@ -4,7 +4,7 @@ import Icon from "@/components/Icon";
 import { useRouter } from "next/navigation";
 import NavButton from "@/components/NavButton";
 import Box from "@/components/Box";
-import { Role } from "@/lib/enums";
+import { Role } from "@/lib/types";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import { setRole } from "@/lib/userSlice";
 import { useEffect } from "react";

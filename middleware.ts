@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { Role } from "./lib/enums";
+import { Role } from "./lib/types";
 
 export function middleware(request: NextRequest) {
   const pathName = request.nextUrl.pathname;

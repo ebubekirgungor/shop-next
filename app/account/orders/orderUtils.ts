@@ -1,4 +1,4 @@
-import { DeliveryStatus } from "@/lib/enums";
+import { DeliveryStatus } from "@/lib/types";
 
 export const dateOptions: Object = {
   day: "numeric",

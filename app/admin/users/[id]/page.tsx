@@ -13,7 +13,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Dialog from "@/components/Dialog";
 import Select from "@/components/Select";
-import { Role } from "@/lib/enums";
+import { Role } from "@/lib/types";
 import { birthDateRegex, formatPhone } from "@/lib/utils";
 import { jsonFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";

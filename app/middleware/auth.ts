@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { Middleware } from "./handler";
 import { cookies } from "next/headers";
 import { getPublicKey } from "@/lib/keyStore";
-import { Role } from "@/lib/enums";
+import { Role } from "@/lib/types";
 
 const {
   V4: { verify },
