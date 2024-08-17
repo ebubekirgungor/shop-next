@@ -17,7 +17,7 @@ async function all(_req: Request) {
 async function create(req: Request) {
   const formData = await req.formData();
 
-  const image: File = formData.get("image") as File;
+  const image = formData.get("image") as File;
 
   if (image) {
     try {
@@ -43,7 +43,7 @@ async function create(req: Request) {
   }
 
   try {
-    await prisma.category.create({
+    const newCategory = await prisma.category.create({
       data: {
         title: formData.get("title") as string,
         url: titleToUrl(formData.get("title") as string),
@@ -53,7 +53,7 @@ async function create(req: Request) {
     });
 
     return NextResponse.json(
-      { message: "Category created" },
+      { message: "Category created", body: newCategory },
       {
         status: 200,
       }
@@ -66,7 +66,7 @@ async function create(req: Request) {
 async function update(req: Request) {
   const formData = await req.formData();
 
-  const image: File = formData.get("image") as File;
+  const image = formData.get("image") as File;
 
   if (image) {
     try {

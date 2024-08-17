@@ -15,6 +15,8 @@ import Dialog from "@/components/Dialog";
 import Select from "@/components/Select";
 import { Role } from "@/lib/enums";
 import { birthDateRegex, formatPhone } from "@/lib/utils";
+import { jsonFetcher } from "@/lib/fetchers";
+import { toast } from "react-toastify";
 
 export default function User({ params }: { params: { id: string } }) {
   const router = useRouter();
@@ -96,12 +98,10 @@ export default function User({ params }: { params: { id: string } }) {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    await fetch(isAdd ? "/api/users" : `/api/users/${params.id}`, {
-      method: isAdd ? "POST" : "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    const response = await jsonFetcher(
+      isAdd ? "/api/users" : `/api/users/${params.id}`,
+      isAdd ? "POST" : "PUT",
+      {
         email: user?.email,
         password: isAdd ? password : null,
         first_name: user?.first_name,
@@ -110,19 +110,27 @@ export default function User({ params }: { params: { id: string } }) {
         birth_date: `${user?.birth_date.year}-${user?.birth_date.month}-${user?.birth_date.day}`,
         gender: user?.gender,
         role: user?.role,
-      }),
-    });
+      }
+    );
+
+    if (response.status === 200) {
+      toast.success(response.message);
+      router.push("/admin/users");
+    } else {
+      toast.error(response.message);
+    }
   }
 
   async function deleteUser(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const response = await fetch("/api/users/" + params.id, {
-      method: "DELETE",
-    });
+    const response = await jsonFetcher("/api/users/" + params.id, "DELETE");
 
-    if (response.status == 200) {
+    if (response.status === 200) {
+      toast.success(response.message);
       router.push("/admin/users");
+    } else {
+      toast.error(response.message);
     }
   }
 

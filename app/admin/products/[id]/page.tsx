@@ -14,6 +14,8 @@ import Dialog from "@/components/Dialog";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Chip from "@/components/Chip";
+import { formFetcher, jsonFetcher } from "@/lib/fetchers";
+import { toast } from "react-toastify";
 
 interface Filter {
   name: string;
@@ -185,21 +187,30 @@ export default function Product({ params }: { params: { id: string } }) {
       formData.append("files", imagesToUpload[image]);
     }
 
-    await fetch(`/api/products${!isAdd ? "/" + params.id : ""}`, {
-      method: isAdd ? "POST" : "PUT",
-      body: formData,
-    });
+    const response = await formFetcher(
+      `/api/products${!isAdd ? "/" + params.id : ""}`,
+      isAdd ? "POST" : "PUT",
+      formData
+    );
+
+    if (response.status === 200) {
+      toast.success(response.message);
+      isAdd && router.push("/admin/products");
+    } else {
+      toast.error(response.message);
+    }
   }
 
   async function deleteProduct(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const response = await fetch("/api/products/" + params.id, {
-      method: "DELETE",
-    });
+    const response = await jsonFetcher("/api/products/" + params.id, "DELETE");
 
-    if (response.status == 200) {
+    if (response.status === 200) {
+      toast.success(response.message);
       router.push("/admin/products");
+    } else {
+      toast.error(response.message);
     }
   }
 
@@ -210,6 +221,8 @@ export default function Product({ params }: { params: { id: string } }) {
       ...productImages.slice(0, imageToDelete),
       ...productImages.slice(imageToDelete! + 1),
     ]);
+
+    toast.success("Image deleted");
 
     closeDialog();
   }

@@ -33,7 +33,7 @@ async function create(req: Request) {
   const { title, customer_name, address } = await req.json();
 
   try {
-    await prisma.address.create({
+    const newAddress = await prisma.address.create({
       data: {
         title,
         customer_name,
@@ -43,7 +43,7 @@ async function create(req: Request) {
     });
 
     return NextResponse.json(
-      { message: "Address created" },
+      { message: "Address created", body: newAddress },
       {
         status: 200,
       }

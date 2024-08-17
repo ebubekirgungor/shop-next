@@ -28,7 +28,7 @@ async function get(_req: Request, { params }: { params: { id: string } }) {
 async function update(req: Request, { params }: { params: { id: string } }) {
   const formData = await req.formData();
 
-  const images: File[] = formData.getAll("files") as File[];
+  const images = formData.getAll("files") as File[];
 
   try {
     for (let i = 0; i < images.length; i++) {

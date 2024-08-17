@@ -11,6 +11,8 @@ import Link from "next/link";
 import { useAppDispatch } from "../../lib/hooks";
 import { getCookie } from "cookies-next";
 import { setRole } from "../../lib/userSlice";
+import { jsonFetcher } from "@/lib/fetchers";
+import { toast } from "react-toastify";
 
 interface Form {
   email: string;
@@ -48,18 +50,15 @@ export default function Login() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const response = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(form),
-    });
+    const response = await jsonFetcher("/api/auth/login", "POST", form);
 
-    if (response.status == 200) {
+    if (response.status === 200) {
       const role = getCookie("role") ?? "";
       dispatch(setRole(role));
+      toast.success(response.message);
       router.push("/account/personal-details");
+    } else {
+      toast.error(response.message);
     }
   }
 

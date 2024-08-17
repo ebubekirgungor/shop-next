@@ -9,6 +9,8 @@ import Button from "@/components/Button";
 import LayoutTitle from "@/components/LayoutTitle";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { birthDateRegex, formatPhone } from "@/lib/utils";
+import { jsonFetcher } from "@/lib/fetchers";
+import { toast } from "react-toastify";
 
 export default function PersonalDetails() {
   const [user, setUser] = useState<User>();
@@ -57,19 +59,19 @@ export default function PersonalDetails() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    await fetch("/api/users/me", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        first_name: user?.first_name,
-        last_name: user?.last_name,
-        phone: user?.phone?.replace(/\D/g, ""),
-        birth_date: `${user?.birth_date.year}-${user?.birth_date.month}-${user?.birth_date.day}`,
-        gender: user?.gender,
-      }),
+    const response = await jsonFetcher("/api/users/me", "PUT", {
+      first_name: user?.first_name,
+      last_name: user?.last_name,
+      phone: user?.phone?.replace(/\D/g, ""),
+      birth_date: `${user?.birth_date.year}-${user?.birth_date.month}-${user?.birth_date.day}`,
+      gender: user?.gender,
     });
+
+    if (response.status === 200) {
+      toast.success(response.message);
+    } else {
+      toast.error(response.message);
+    }
   }
 
   return (

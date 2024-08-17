@@ -10,6 +10,8 @@ import Input from "@/components/Input";
 import Button from "@/components/Button";
 import Icon from "@/components/Icon";
 import Image from "next/image";
+import { formFetcher } from "@/lib/fetchers";
+import { toast } from "react-toastify";
 
 type DialogType = "POST" | "PUT" | "DELETE";
 
@@ -101,14 +103,35 @@ export default function Categories() {
     formData.append("filters", JSON.stringify(newCategory?.filters));
     if (newImage) formData.append("image", newImage!);
 
-    const response = await fetch("/api/categories", {
-      method: dialogType,
-      body: formData,
-    });
+    const response = await formFetcher(
+      "/api/categories",
+      dialogType!,
+      formData
+    );
 
-    if (response.status == 200) {
-      await getAllCategories();
-      closeDialog();
+    closeDialog();
+
+    if (response.status === 200) {
+      switch (dialogType) {
+        case "POST":
+          setCategories((prev) => [...prev, response.body]);
+          break;
+        case "PUT":
+          setCategories((prev) =>
+            prev.map((category) => {
+              return category.id === newCategory?.id ? newCategory! : category;
+            })
+          );
+          break;
+        case "DELETE":
+          setCategories((prev) =>
+            prev.filter((category) => category.id !== newCategory?.id)
+          );
+          break;
+      }
+      toast.success(response.message);
+    } else {
+      toast.error(response.message);
     }
   }
 

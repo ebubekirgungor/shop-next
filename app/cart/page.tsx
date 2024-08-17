@@ -13,6 +13,7 @@ import CartLayout from "@/components/CartLayout";
 import NoItem from "@/components/NoItem";
 import { hasCookie, setCookie } from "cookies-next";
 import { updateCart } from "@/lib/utils";
+import { toast } from "react-toastify";
 
 enum Operation {
   increase = 1,
@@ -72,6 +73,7 @@ export default function Cart() {
   function handleDelete(id: number) {
     setProducts(products.filter((product) => product.id !== id));
     setUpdate(true);
+    toast.success("Product deleted");
   }
 
   useEffect(() => {

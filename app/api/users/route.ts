@@ -44,7 +44,7 @@ async function create(req: Request) {
     return NextResponse.json(
       { message: "User created" },
       {
-        status: 201,
+        status: 200,
       }
     );
   } catch (e) {

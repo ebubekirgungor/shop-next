@@ -6,6 +6,8 @@ import Image from "next/image";
 import Icon from "@/components/Icon";
 import Button from "@/components/Button";
 import { hasCookie } from "cookies-next";
+import { jsonFetcher } from "@/lib/fetchers";
+import { toast } from "react-toastify";
 
 export default function Product({ params }: { params: { url: string } }) {
   const [product, setProduct] = useState<Product>();
@@ -50,25 +52,29 @@ export default function Product({ params }: { params: { url: string } }) {
   }
 
   async function addProductToCart() {
-    const response = await fetch("/api/cart/" + product?.id, {
-      method: "POST",
-    });
+    const response = await jsonFetcher("/api/cart/" + product?.id, "POST");
 
-    if (response.status == 200) {
-      //
+    if (response.status === 200) {
+      toast.success(response.message);
+    } else {
+      toast.error(response.message);
     }
   }
 
   async function toggleFavorite() {
-    const response = await fetch("/api/favorites/" + product?.id, {
-      method: product?.is_favorite ? "DELETE" : "POST",
-    });
+    const response = await jsonFetcher(
+      "/api/favorites/" + product?.id,
+      product?.is_favorite ? "DELETE" : "POST"
+    );
 
-    if (response.status == 200) {
+    if (response.status === 200) {
       setProduct({
         ...product!,
         is_favorite: !product?.is_favorite,
       });
+      toast.success(response.message);
+    } else {
+      toast.error(response.message);
     }
   }
 

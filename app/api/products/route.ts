@@ -38,7 +38,7 @@ async function all(_req: Request) {
 async function create(req: Request) {
   const formData = await req.formData();
 
-  const images: File[] = formData.getAll("files") as File[];
+  const images = formData.getAll("files") as File[];
 
   try {
     for (let i = 0; i < images.length; i++) {

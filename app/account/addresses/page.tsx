@@ -9,6 +9,8 @@ import Address from "@/components/Address";
 import Dialog from "@/components/Dialog";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
+import { toast } from "react-toastify";
+import { jsonFetcher } from "@/lib/fetchers";
 
 type DialogType = "POST" | "PUT" | "DELETE";
 
@@ -57,17 +59,35 @@ export default function Addresses() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const response = await fetch("/api/addresses", {
-      method: dialogType,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newAddress),
-    });
+    const response = await jsonFetcher(
+      "/api/addresses",
+      dialogType!,
+      newAddress!
+    );
 
-    if (response.status == 200) {
-      await getAllAddresses();
-      closeDialog();
+    closeDialog();
+
+    if (response.status === 200) {
+      switch (dialogType) {
+        case "POST":
+          setAddresses((prev) => [...prev, response.body]);
+          break;
+        case "PUT":
+          setAddresses((prev) =>
+            prev.map((address) => {
+              return address.id === newAddress?.id ? newAddress : address;
+            })
+          );
+          break;
+        case "DELETE":
+          setAddresses((prev) =>
+            prev.filter((address) => address.id !== newAddress?.id)
+          );
+          break;
+      }
+      toast.success(response.message);
+    } else {
+      toast.error(response.message);
     }
   }
 

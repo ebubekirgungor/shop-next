@@ -7,6 +7,7 @@ import Image from "next/image";
 import NavButton from "@/components/NavButton";
 import NavAccount from "./NavAccount";
 import StoreProvider from "./StoreProvider";
+import ToastProvider from "./ToastProvider";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500"] });
 
@@ -23,32 +24,34 @@ export default function RootLayout({
     <StoreProvider>
       <html lang="en">
         <body className={poppins.className}>
-          <nav className={styles.nav}>
-            <div className={styles.logo}>
-              <Link href="/">
-                <Image
-                  src="/logo.png"
-                  alt="Logo"
-                  width={200}
-                  height={100}
-                  priority={true}
-                />
-              </Link>
-            </div>
-            <div className={styles.search}>
-              <input placeholder="Search products" />
-            </div>
-            <div className={styles.nav_buttons}>
-              <NavAccount />
-              <NavButton icon="favorite" href="/account/favorites">
-                Favorites
-              </NavButton>
-              <NavButton icon="cart" href="/cart">
-                Cart
-              </NavButton>
-            </div>
-          </nav>
-          <main className={styles.main}>{children}</main>
+          <ToastProvider className={poppins.className}>
+            <nav className={styles.nav}>
+              <div className={styles.logo}>
+                <Link href="/">
+                  <Image
+                    src="/logo.png"
+                    alt="Logo"
+                    width={200}
+                    height={100}
+                    priority
+                  />
+                </Link>
+              </div>
+              <div className={styles.search}>
+                <input placeholder="Search products" />
+              </div>
+              <div className={styles.nav_buttons}>
+                <NavAccount />
+                <NavButton icon="favorite" href="/account/favorites">
+                  Favorites
+                </NavButton>
+                <NavButton icon="cart" href="/cart">
+                  Cart
+                </NavButton>
+              </div>
+            </nav>
+            <main className={styles.main}>{children}</main>
+          </ToastProvider>
         </body>
       </html>
     </StoreProvider>

@@ -9,6 +9,8 @@ import Icon from "@/components/Icon";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { birthDateRegex, formatPhone } from "@/lib/utils";
+import { jsonFetcher } from "@/lib/fetchers";
+import { toast } from "react-toastify";
 
 export default function Register() {
   const router = useRouter();
@@ -67,24 +69,21 @@ export default function Register() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const response = await fetch("/api/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: form?.email,
-        first_name: form?.first_name,
-        last_name: form?.last_name,
-        phone: form?.phone.replace(/\D/g, ""),
-        birth_date: `${form?.birth_date.year}-${form?.birth_date.month}-${form?.birth_date.day}`,
-        gender: form?.gender,
-        password: form?.password,
-      }),
+    const response = await jsonFetcher("/api/auth/register", "POST", {
+      email: form?.email,
+      first_name: form?.first_name,
+      last_name: form?.last_name,
+      phone: form?.phone.replace(/\D/g, ""),
+      birth_date: `${form?.birth_date.year}-${form?.birth_date.month}-${form?.birth_date.day}`,
+      gender: form?.gender,
+      password: form?.password,
     });
 
-    if (response.status == 200) {
-      router.push("/");
+    if (response.status === 200) {
+      toast.success(response.message);
+      router.push("/login");
+    } else {
+      toast.error(response.message);
     }
   }
 

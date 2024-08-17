@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       { message: "User created" },
       {
-        status: 201,
+        status: 200,
       }
     );
   } catch (e) {

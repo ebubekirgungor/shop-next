@@ -11,6 +11,8 @@ import Image from "next/image";
 import Link from "next/link";
 import Icon from "@/components/Icon";
 import NoItem from "@/components/NoItem";
+import { toast } from "react-toastify";
+import { jsonFetcher } from "@/lib/fetchers";
 
 export default function Favorites() {
   const [favorites, setFavorites] = useState<Product[]>([]);
@@ -47,15 +49,20 @@ export default function Favorites() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const response = await fetch("/api/favorites/" + productToRemove, {
-      method: "DELETE",
-    });
+    const response = await jsonFetcher(
+      "/api/favorites/" + productToRemove,
+      "DELETE"
+    );
 
-    if (response.status == 200) {
+    closeDialog();
+
+    if (response.status === 200) {
       setFavorites((prevProducts) =>
         prevProducts.filter((product) => product.id !== productToRemove)
       );
-      closeDialog();
+      toast.success(response.message);
+    } else {
+      toast.error(response.message);
     }
   }
 
