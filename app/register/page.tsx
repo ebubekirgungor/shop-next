@@ -13,13 +13,7 @@ import { birthDateRegex, formatPhone } from "@/lib/utils";
 export default function Register() {
   const router = useRouter();
 
-  const [form, setForm] = useState<User>({
-    birth_date: {
-      day: "",
-      month: "",
-      year: "",
-    },
-  });
+  const [form, setForm] = useState<User>();
 
   const [passwordType, setPasswordType] = useState("password");
   const [iconName, setIconName] = useState("eye_off");
@@ -82,7 +76,7 @@ export default function Register() {
         email: form?.email,
         first_name: form?.first_name,
         last_name: form?.last_name,
-        phone: form?.phone,
+        phone: form?.phone.replace(/\D/g, ""),
         birth_date: `${form?.birth_date.year}-${form?.birth_date.month}-${form?.birth_date.day}`,
         gender: form?.gender,
         password: form?.password,
@@ -142,21 +136,21 @@ export default function Register() {
               label="Day"
               type="text"
               name="day"
-              value={form?.birth_date.day}
+              value={form?.birth_date?.day ?? ""}
               onChange={handleBirthDate}
             />
             <Input
               label="Month"
               type="text"
               name="month"
-              value={form?.birth_date.month}
+              value={form?.birth_date?.month ?? ""}
               onChange={handleBirthDate}
             />
             <Input
               label="Year"
               type="text"
               name="year"
-              value={form?.birth_date.year}
+              value={form?.birth_date?.year ?? ""}
               onChange={handleBirthDate}
             />
           </div>
@@ -200,9 +194,9 @@ export default function Register() {
           <Button
             disabled={
               !form?.phone ||
-              !form.birth_date.day ||
-              !form.birth_date.month ||
-              !form.birth_date.year ||
+              !form.birth_date?.day ||
+              !form.birth_date?.month ||
+              !form.birth_date?.year ||
               !form.gender ||
               !form.password
             }

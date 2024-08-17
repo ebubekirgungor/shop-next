@@ -39,10 +39,11 @@ export default function User({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     if (isAdd) {
-      setUser({
+      /*setUser((prev) => ({
+        ...prev!,
         birth_date: { day: "", month: "", year: "" },
         role: Role.USER,
-      });
+      }));*/
     } else {
       fetch("/api/users/" + params.id)
         .then((response) => response.status === 200 && response.json())
@@ -178,21 +179,21 @@ export default function User({ params }: { params: { id: string } }) {
                   label="Day"
                   type="text"
                   name="day"
-                  value={user?.birth_date.day ?? ""}
+                  value={user?.birth_date?.day ?? ""}
                   onChange={handleBirthDate}
                 />
                 <Input
                   label="Month"
                   type="text"
                   name="month"
-                  value={user?.birth_date.month ?? ""}
+                  value={user?.birth_date?.month ?? ""}
                   onChange={handleBirthDate}
                 />
                 <Input
                   label="Year"
                   type="text"
                   name="year"
-                  value={user?.birth_date.year ?? ""}
+                  value={user?.birth_date?.year ?? ""}
                   onChange={handleBirthDate}
                 />
               </div>

@@ -36,18 +36,18 @@ enum Role {
 }
 
 interface User {
-  first_name?: string;
-  last_name?: string;
-  phone?: string;
-  email?: string;
+  first_name: string;
+  last_name: string;
+  phone: string;
+  email: string;
   birth_date: {
     day: string;
     month: string;
     year: string;
   };
-  gender?: string;
-  role?: Role;
-  password?: string;
+  gender: string;
+  role: Role;
+  password: string;
 }
 
 interface OrderProduct {
