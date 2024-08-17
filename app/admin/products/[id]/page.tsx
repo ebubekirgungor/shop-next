@@ -323,7 +323,7 @@ export default function Product({ params }: { params: { id: string } }) {
                       type="button"
                       onClick={() => openDialog("image", index)}
                     >
-                      <Icon name="delete" />
+                      <Icon name="delete" disableFilter />
                     </button>
                     <Image
                       className={styles.productImage}

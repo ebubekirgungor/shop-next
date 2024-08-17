@@ -21,14 +21,14 @@
   position: absolute;
   margin: 0.5rem;
   padding: 0.5rem;
-  border: 1px solid rgb(var(--border-color));
   border-radius: 100%;
-  background-color: white;
+  border: 2px solid rgb(229, 231, 235);
+  background-color: rgb(255, 255, 255);
   transition: background-color 200ms ease-in-out;
 }
 
 .product button:hover {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgb(229, 231, 235);
 }
 
 .product img {

@@ -60,12 +60,13 @@
   justify-content: center;
   align-items: center;
   border-radius: 100%;
-  background-color: rgba(var(--button-text-color), 0.5);
+  border: 2px solid rgb(229, 231, 235);
+  background-color: rgb(255, 255, 255);
   transition: background-color 200ms ease-in-out;
 }
 
 .button:hover {
-  background-color: rgba(var(--button-text-color), 0.8);
+  background-color: rgb(229, 231, 235);
 }
 
 .filtersContainer {

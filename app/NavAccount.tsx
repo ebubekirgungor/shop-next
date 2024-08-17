@@ -1,5 +1,5 @@
 "use client";
-import styles from "./layout.module.css";
+import styles from "./NavAccount.module.css";
 import Icon from "@/components/Icon";
 import { useRouter } from "next/navigation";
 import NavButton from "@/components/NavButton";
@@ -36,6 +36,7 @@ export default function NavAccount() {
         <Icon name="expand_more" />
       </NavButton>
       <Box className={styles.accountBox} width="9rem" height="auto">
+        <div className={styles.spacing} />
         {role && role === Role.ADMIN && (
           <NavButton icon="admin" href={"/admin/categories"}>
             Admin

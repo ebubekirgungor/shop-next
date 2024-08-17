@@ -6,6 +6,8 @@
   --search-input-color: 243, 244, 246;
   --input-color: 248, 249, 251;
   --button-text-color: 255, 255, 255;
+  --box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1);
 }
 
 @media (prefers-color-scheme: dark) {
