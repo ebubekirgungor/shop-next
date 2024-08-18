@@ -1,3 +1,5 @@
+@import "~react-toastify/dist/ReactToastify.min.css";
+
 :root {
   --foreground-color: 0, 0, 0;
   --background-color: 249, 250, 251;

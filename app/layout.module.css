@@ -4,14 +4,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  column-gap: 1rem;
   padding-left: 2rem;
   padding-right: 2rem;
   border-bottom: 1px solid rgb(var(--border-color));
 }
 
 .logo {
-  width: 33.333333%;
-  display: flex;
+  width: 100%;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -21,7 +21,8 @@
 }
 
 .search {
-  width: 33.333333%;
+  width: 100%;
+  min-width: 15rem;
   display: flex;
   justify-content: center;
 }
@@ -46,7 +47,7 @@
 }
 
 .nav_buttons {
-  width: 33.333333%;
+  width: 100%;
   display: flex;
   justify-content: flex-end;
   column-gap: 2rem;
