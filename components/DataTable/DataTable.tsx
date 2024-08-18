@@ -4,6 +4,7 @@ import { ChangeEvent, useState } from "react";
 import sortBy from "lodash/sortBy";
 import Input from "../Input";
 import Link from "next/link";
+import Image from "next/image";
 
 interface Column {
   key: string;
@@ -17,11 +18,12 @@ interface Data {
 interface DataTableProps {
   columns: Column[];
   data: Data[];
+  imageUrl?: string;
 }
 
 const itemsPerPageOptions = [5, 10, 25, 50, 100];
 
-const DataTable = ({ columns, data }: DataTableProps) => {
+const DataTable = ({ columns, data, imageUrl }: DataTableProps) => {
   const [searchedData, setSearchedData] = useState(data);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -62,6 +64,7 @@ const DataTable = ({ columns, data }: DataTableProps) => {
       <table className={styles.table}>
         <thead>
           <tr>
+            {imageUrl && <th style={{ width: "6rem" }}></th>}
             {columns.map((column) => (
               <th key={column.key}>
                 <div
@@ -90,6 +93,20 @@ const DataTable = ({ columns, data }: DataTableProps) => {
           {displayedData.length ? (
             displayedData.map((row) => (
               <tr key={row.id}>
+                {imageUrl && (
+                  <td>
+                    <Link href={"/product/" + row.url}>
+                      <Image
+                        className={styles.image}
+                        src={imageUrl + row.image}
+                        alt={row.image}
+                        width="0"
+                        height="0"
+                        sizes="4rem"
+                      />
+                    </Link>
+                  </td>
+                )}
                 {columns.map((column) => (
                   <td key={column.key}>{row[column.key]}</td>
                 ))}
@@ -113,7 +130,7 @@ const DataTable = ({ columns, data }: DataTableProps) => {
         </tbody>
         <tfoot>
           <tr>
-            <td colSpan={columns.length + 1}>
+            <td colSpan={columns.length + (imageUrl ? 2 : 1)}>
               <div className={styles.tableFooter}>
                 <div className={styles.actions}>
                   <label htmlFor={"itemsPerPage"}>Items per page:</label>

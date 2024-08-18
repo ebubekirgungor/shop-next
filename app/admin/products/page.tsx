@@ -52,7 +52,11 @@ export default function Products() {
         {isLoading ? (
           <LoadingSpinner />
         ) : (
-          <DataTable columns={columns} data={products} />
+          <DataTable
+            columns={columns}
+            data={products}
+            imageUrl="/images/products/"
+          />
         )}
       </LayoutBox>
     </LayoutContainer>
