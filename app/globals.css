@@ -8,6 +8,7 @@
   --button-text-color: 255, 255, 255;
   --box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
     0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --toastify-text-color-light: rgb(var(--foreground-color)) !important;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,6 +20,8 @@
     --search-input-color: 20, 20, 20;
     --input-color: 18, 18, 18;
     --button-text-color: 0, 0, 0;
+    --toastify-color-light: var(--toastify-color-dark) !important;
+    --toastify-text-color-light: var(--toastify-text-color-dark) !important;
   }
 }
 
@@ -111,4 +114,12 @@ form {
   display: flex;
   flex-direction: column;
   row-gap: 2rem;
+}
+
+.Toastify__toast {
+  border: 1px solid rgb(var(--border-color));
+}
+
+.Toastify__close-button--light {
+  color: rgb(var(--foreground-color)) !important;
 }
