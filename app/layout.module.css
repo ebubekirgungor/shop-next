@@ -14,6 +14,10 @@
   width: 100%;
 }
 
+.logo img {
+  background-color: unset !important;
+}
+
 @media (prefers-color-scheme: dark) {
   .logo img {
     filter: invert(100%);
@@ -21,6 +25,7 @@
 }
 
 .search {
+  position: relative;
   width: 100%;
   min-width: 15rem;
   display: flex;
@@ -46,7 +51,26 @@
   box-shadow: 0 0 0 2px rgb(var(--border-color));
 }
 
-.nav_buttons {
+.searchBox {
+  position: absolute;
+  width: 100%;
+  max-width: 40rem;
+  box-shadow: var(--box-shadow);
+  margin-top: 3rem;
+  visibility: hidden;
+  opacity: 0;
+  transition: margin 300ms ease-in-out, visibility 200ms ease-in-out,
+    opacity 200ms ease-in-out;
+}
+
+.search input:focus + .searchBox,
+.searchBox:hover {
+  margin-top: 4rem;
+  visibility: visible;
+  opacity: 1;
+}
+
+.navButtons {
   width: 100%;
   display: flex;
   justify-content: flex-end;

@@ -125,3 +125,7 @@ form {
 .Toastify__close-button--light {
   color: rgb(var(--foreground-color)) !important;
 }
+
+img {
+  background-color: white;
+}

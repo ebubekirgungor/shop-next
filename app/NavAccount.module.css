@@ -31,7 +31,7 @@
 .accountBox:hover {
   margin-top: 4rem;
   visibility: visible;
-  opacity: 100;
+  opacity: 1;
 }
 
 .accountBox .spacing {
