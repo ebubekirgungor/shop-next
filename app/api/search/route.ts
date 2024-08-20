@@ -1,5 +1,4 @@
 import meiliSearch from "@/lib/meiliSearch";
-import prisma from "@/lib/prisma";
 import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -18,32 +17,5 @@ export async function GET(req: NextRequest) {
         attributesToHighlight: ["title"],
       })
     ).hits.map((hit) => hit._formatted)
-  );
-}
-
-export async function POST() {
-  const index = meiliSearch.index("products");
-
-  return Response.json(
-    await index.addDocuments(
-      (
-        await prisma.product.findMany({
-          include: {
-            category: {
-              select: {
-                title: true,
-              },
-            },
-          },
-        })
-      ).map((product) => {
-        return {
-          id: product.id,
-          title: product.title,
-          url: product.url,
-          category: product.category.title,
-        };
-      })
-    )
   );
 }
