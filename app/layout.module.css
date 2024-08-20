@@ -37,3 +37,56 @@
   padding: 1rem;
   gap: 1rem;
 }
+
+.accountBoxContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.accountBoxContainer a {
+  height: 3rem;
+}
+
+.accountBoxContainer a:hover {
+  transform: none;
+}
+
+.accountBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 0.5rem;
+  padding: 1rem !important;
+  position: absolute;
+  margin-top: 3rem;
+  box-shadow: var(--box-shadow);
+  visibility: hidden;
+  opacity: 0;
+  transition: margin 300ms ease-in-out, visibility 200ms ease-in-out,
+    opacity 200ms ease-in-out;
+}
+
+.accountBoxContainer a:hover + .accountBox,
+.accountBox:hover {
+  margin-top: 4rem;
+  visibility: visible;
+  opacity: 1;
+}
+
+.accountBox .spacing {
+  position: absolute;
+  width: 9rem;
+  height: 2.5rem;
+  margin-top: -2rem;
+}
+
+.accountBox button {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: 14px;
+  font-weight: normal;
+}

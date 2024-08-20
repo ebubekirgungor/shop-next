@@ -6,11 +6,7 @@ import Input from "@/components/Input";
 import CheckBox from "@/components/CheckBox";
 import Button from "@/components/Button";
 import Icon from "@/components/Icon";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useAppDispatch } from "../../lib/hooks";
-import { getCookie } from "cookies-next";
-import { setRole } from "../../lib/userSlice";
 import { jsonFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";
 
@@ -21,9 +17,6 @@ interface Form {
 }
 
 export default function Login() {
-  const router = useRouter();
-  const dispatch = useAppDispatch();
-
   const [form, setForm] = useState<Form>();
 
   const [passwordType, setPasswordType] = useState("password");
@@ -53,10 +46,8 @@ export default function Login() {
     const response = await jsonFetcher("/api/auth/login", "POST", form);
 
     if (response.status === 200) {
-      const role = getCookie("role") ?? "";
-      dispatch(setRole(role));
+      window.location.href = "/account/personal-details";
       toast.success(response.message);
-      router.push("/account/personal-details");
     } else {
       toast.error(response.message);
     }
