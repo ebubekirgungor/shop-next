@@ -11,6 +11,9 @@ export async function GET(req: NextRequest) {
     (
       await index.search(query, {
         attributesToHighlight: ["title"],
+        attributesToSearchOn: ["title", "category"],
+        highlightPreTag: "<b>",
+        highlightPostTag: "</b>",
       })
     ).hits.map((hit) => hit._formatted)
   );

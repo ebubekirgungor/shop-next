@@ -3,6 +3,7 @@ import { ChangeEvent, useState } from "react";
 import Box from "../Box";
 import styles from "./NavSearch.module.css";
 import Link from "next/link";
+import DOMPurify from "dompurify";
 
 interface SearchedProduct {
   id: number;
@@ -37,7 +38,11 @@ const NavSearch = () => {
         {searchedData.map((data) => (
           <div key={data.id}>
             <Link href={"/product/" + data.url}>
-              <div dangerouslySetInnerHTML={{ __html: data.title }} />
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(data.title),
+                }}
+              />
               <span>{data.category}</span>
             </Link>
           </div>

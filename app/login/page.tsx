@@ -47,7 +47,6 @@ export default function Login() {
 
     if (response.status === 200) {
       window.location.href = "/account/personal-details";
-      toast.success(response.message);
     } else {
       toast.error(response.message);
     }
