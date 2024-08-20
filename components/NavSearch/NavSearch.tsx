@@ -15,11 +15,15 @@ const NavSearch = () => {
   const [searchedData, setSearchedData] = useState<SearchedProduct[]>([]);
 
   async function handleSearch(e: ChangeEvent<HTMLInputElement>) {
-    fetch(`/api/search?q=${e.target.value}`)
-      .then((response) => response.status === 200 && response.json())
-      .then((data) => {
-        setSearchedData(data);
-      });
+    if (e.target.value.length > 1) {
+      fetch(`/api/search?q=${e.target.value}`)
+        .then((response) => response.status === 200 && response.json())
+        .then((data) => {
+          setSearchedData(data);
+        });
+    } else {
+      setSearchedData([]);
+    }
   }
 
   return (
