@@ -24,52 +24,6 @@
   }
 }
 
-.search {
-  position: relative;
-  width: 100%;
-  min-width: 15rem;
-  display: flex;
-  justify-content: center;
-}
-
-.search input {
-  width: 100%;
-  max-width: 40rem;
-  height: 2.5rem;
-  background-color: rgb(var(--search-input-color));
-  background-image: url("/icons/search.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-position-x: calc(100% - 4px);
-  border: 1px solid rgb(var(--border-color));
-  border-radius: 6px;
-  outline: none;
-  transition: box-shadow 300ms ease-in-out;
-}
-
-.search input:focus {
-  box-shadow: 0 0 0 2px rgb(var(--border-color));
-}
-
-.searchBox {
-  position: absolute;
-  width: 100%;
-  max-width: 40rem;
-  box-shadow: var(--box-shadow);
-  margin-top: 3rem;
-  visibility: hidden;
-  opacity: 0;
-  transition: margin 300ms ease-in-out, visibility 200ms ease-in-out,
-    opacity 200ms ease-in-out;
-}
-
-.search input:focus + .searchBox,
-.searchBox:hover {
-  margin-top: 4rem;
-  visibility: visible;
-  opacity: 1;
-}
-
 .navButtons {
   width: 100%;
   display: flex;

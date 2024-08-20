@@ -9,6 +9,7 @@ import path from "path";
 import { titleToUrl } from "@/lib/utils";
 import { handleServerError } from "@/lib/errorHandler";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import meiliSearch from "@/lib/meiliSearch";
 
 async function all(_req: Request) {
   return NextResponse.json(
@@ -62,7 +63,7 @@ async function create(req: Request) {
   }
 
   try {
-    await prisma.product.create({
+    const product = await prisma.product.create({
       data: {
         title: formData.get("title") as string,
         url: titleToUrl(formData.get("title") as string),
@@ -72,7 +73,23 @@ async function create(req: Request) {
         images: JSON.parse(formData.get("images") as string),
         category_id: Number(formData.get("category_id")),
       },
+      include: {
+        category: {
+          select: {
+            title: true,
+          },
+        },
+      },
     });
+
+    meiliSearch.index("products").updateDocuments([
+      {
+        id: product.id,
+        title: product.title,
+        url: product.url,
+        category: product.category.title,
+      },
+    ]);
 
     return NextResponse.json(
       { message: "Product created" },

@@ -8,7 +8,7 @@ import NavButton from "@/components/NavButton";
 import NavAccount from "./NavAccount";
 import StoreProvider from "./StoreProvider";
 import ToastProvider from "./ToastProvider";
-import Box from "@/components/Box";
+import NavSearch from "@/components/NavSearch";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500"] });
 
@@ -38,10 +38,7 @@ export default function RootLayout({
                   />
                 </Link>
               </div>
-              <div className={styles.search}>
-                <input placeholder="Search products" />
-                <Box className={styles.searchBox}></Box>
-              </div>
+              <NavSearch />
               <div className={styles.navButtons}>
                 <NavAccount />
                 <NavButton icon="favorite" href="/account/favorites">
