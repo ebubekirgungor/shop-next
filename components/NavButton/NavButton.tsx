@@ -13,7 +13,7 @@ const NavButton: FC<Props> = ({ href, icon, children }) => {
   return (
     <Link href={href} className={styles.link}>
       <Icon name={icon} />
-      {children}
+      <span>{children}</span>
     </Link>
   );
 };

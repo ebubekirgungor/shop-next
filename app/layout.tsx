@@ -40,8 +40,14 @@ export default function RootLayout({
                 />
               </Link>
             </div>
+            <input id="search" type="checkbox" style={{ display: "none" }} />
             <NavSearch />
             <div className={styles.navButtons}>
+              <button type="button">
+                <label className={styles.searchButton} htmlFor="search">
+                  <Icon name="search_mobile" />
+                </label>
+              </button>
               {role ? (
                 <div className={styles.accountBoxContainer}>
                   <NavButton icon="account" href={"/account/personal-details"}>

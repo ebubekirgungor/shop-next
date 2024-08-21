@@ -10,12 +10,39 @@
   border-bottom: 1px solid rgb(var(--border-color));
 }
 
+@media screen and (max-width: 600px) {
+  .nav {
+    padding-left: 0;
+    padding-right: 1rem;
+  }
+}
+
 .logo {
   width: 100%;
 }
 
+.logo a {
+  display: block;
+  width: min-content;
+  line-height: 0;
+}
+
+@media screen and (max-width: 600px) {
+  .logo a {
+    width: 100%;
+    height: 100%;
+  }
+}
+
 .logo img {
   background-color: unset !important;
+}
+
+@media screen and (max-width: 600px) {
+  .logo img {
+    width: clamp(100px, 100%, 200px);
+    height: clamp(50px, 100%, 100px);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -29,6 +56,26 @@
   display: flex;
   justify-content: flex-end;
   column-gap: 2rem;
+}
+
+@media screen and (max-width: 600px) {
+  .navButtons {
+    column-gap: 1.5rem;
+  }
+}
+
+.searchCheckBox {
+  display: none;
+}
+
+.searchButton {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .searchButton {
+    display: block;
+  }
 }
 
 .main {

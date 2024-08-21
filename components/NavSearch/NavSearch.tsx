@@ -4,6 +4,7 @@ import Box from "../Box";
 import styles from "./NavSearch.module.css";
 import Link from "next/link";
 import DOMPurify from "dompurify";
+import Icon from "../Icon";
 
 interface SearchedProduct {
   id: number;
@@ -29,6 +30,9 @@ const NavSearch = () => {
 
   return (
     <div className={styles.search}>
+      <label className={styles.previousButton} htmlFor="search">
+        <Icon name="previous" />
+      </label>
       <input placeholder="Search products" onChange={handleSearch} />
       <Box
         className={`${styles.searchBox} ${

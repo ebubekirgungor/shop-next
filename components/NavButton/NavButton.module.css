@@ -12,3 +12,14 @@
 .link:hover {
   transform: translateY(-2px);
 }
+
+.link span {
+  display: flex;
+  align-items: center;
+}
+
+@media screen and (max-width: 600px) {
+  .link span {
+    display: none;
+  }
+}
