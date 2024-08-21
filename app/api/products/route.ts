@@ -31,7 +31,7 @@ async function all(_req: Request) {
         list_price: product.list_price,
         stock_quantity: product.stock_quantity,
         category: product.category.title,
-        image: (product.images as string[])[0],
+        image: (product.images as string[])[0] ?? "product.png",
       };
     })
   );

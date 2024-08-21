@@ -65,9 +65,7 @@ async function create(req: Request) {
       title: product.title,
       url: product.url,
       list_price: product.list_price,
-      image:
-        JSON.parse(JSON.stringify(product.images))[0] ??
-        "/images/products/product.png",
+      image: (product.images as string[])[0] ?? "product.png",
       quantity: cartQuantityById.get(product.id),
     };
   });

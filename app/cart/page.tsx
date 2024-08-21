@@ -11,7 +11,6 @@ import CheckBox from "@/components/CheckBox";
 import Link from "next/link";
 import CartLayout from "@/components/CartLayout";
 import NoItem from "@/components/NoItem";
-import { hasCookie, setCookie } from "cookies-next";
 import { updateCart } from "@/lib/utils";
 import { toast } from "react-toastify";
 
@@ -20,11 +19,15 @@ enum Operation {
   decrease = -1,
 }
 
+interface CartProduct extends Product {
+  image: string;
+}
+
 export default function Cart() {
   const [update, setUpdate] = useState(false);
   const updatePerSecond = 10;
 
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<CartProduct[]>([]);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -117,8 +120,8 @@ export default function Cart() {
                     />
                     <Image
                       className={styles.productImage}
-                      src={"/images/products/" + product.images[0]}
-                      alt={product.images[0]}
+                      src={"/images/products/" + product.image}
+                      alt={product.image}
                       width="0"
                       height="0"
                       sizes="6rem"

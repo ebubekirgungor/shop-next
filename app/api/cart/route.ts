@@ -42,9 +42,16 @@ async function cart(_req: Request) {
   });
 
   return NextResponse.json(
-    (products as Product[]).map((product: Product) => {
-      product.cart = cartDataById.get(product.id!);
-      return product;
+    (products as Product[]).map((product) => {
+      return {
+        id: product.id,
+        title: product.title,
+        url: product.url,
+        list_price: product.list_price,
+        stock_quantity: product.stock_quantity,
+        image: (product.images as string[])[0] ?? "product.png",
+        cart: cartDataById.get(product.id!),
+      };
     })
   );
 }

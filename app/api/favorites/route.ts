@@ -20,7 +20,15 @@ async function all(_req: Request) {
         where: { id: id },
         include: { favorites: true },
       })
-    )?.favorites
+    )?.favorites.map((product) => {
+      return {
+        id: product.id,
+        title: product.title,
+        url: product.url,
+        list_price: product.list_price,
+        image: (product.images as string[])[0] ?? "product.png",
+      };
+    })
   );
 }
 

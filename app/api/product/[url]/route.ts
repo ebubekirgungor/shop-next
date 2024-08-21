@@ -46,5 +46,9 @@ export async function GET(
     delete (product as ProductWithUsers).Users;
   }
 
+  if ((product?.images as string[]).length === 0) {
+    product!.images = ["product.png"];
+  }
+
   return Response.json(product);
 }

@@ -1,9 +1,10 @@
-import Link from "next/link";
 import Button from "../Button";
 import styles from "./CartLayout.module.css";
 import { usePathname, useRouter } from "next/navigation";
 import LoadingSpinner from "../LoadingSpinner";
 import { updateCart } from "@/lib/utils";
+import { jsonFetcher } from "@/lib/fetchers";
+import { toast } from "react-toastify";
 
 export default function CartLayout({
   products,
@@ -24,15 +25,15 @@ export default function CartLayout({
   }
 
   async function placeOrder() {
-    await fetch("/api/orders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        address_id: selectedAddress,
-      }),
+    const response = await jsonFetcher("/api/orders", "POST", {
+      address_id: selectedAddress,
     });
+
+    if (response.status === 200) {
+      toast.success(response.message);
+    } else {
+      toast.error(response.message);
+    }
   }
 
   return (

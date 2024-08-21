@@ -14,8 +14,12 @@ import NoItem from "@/components/NoItem";
 import { toast } from "react-toastify";
 import { jsonFetcher } from "@/lib/fetchers";
 
+interface FavoriteProduct extends Product {
+  image: string;
+}
+
 export default function Favorites() {
-  const [favorites, setFavorites] = useState<Product[]>([]);
+  const [favorites, setFavorites] = useState<FavoriteProduct[]>([]);
   const [isLoading, setLoading] = useState(true);
 
   async function getFavorites() {
@@ -83,8 +87,8 @@ export default function Favorites() {
                 </button>
                 <Link href={"/product/" + product.url}>
                   <Image
-                    src={"/images/products/" + product.images[0]}
-                    alt={product.images[0]}
+                    src={"/images/products/" + product.image}
+                    alt={product.image}
                     width="0"
                     height="0"
                     sizes="14rem"
