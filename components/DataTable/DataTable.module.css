@@ -4,11 +4,27 @@
   row-gap: 1.5rem;
 }
 
+@media screen and (max-width: 600px) {
+  .container {
+    margin-bottom: 4rem;
+  }
+}
+
 .container input {
   width: 16rem;
   background-image: url("/icons/search.svg");
   background-repeat: no-repeat;
   background-position: 98%;
+}
+
+@media screen and (max-width: 600px) {
+  .container input {
+    width: 100%;
+  }
+}
+
+.tableContainer {
+  overflow-x: auto;
 }
 
 .table {
@@ -27,9 +43,21 @@
   }
 }
 
+@media screen and (max-width: 600px) {
+  .table {
+    width: max-content;
+  }
+}
+
 .table thead tr {
   white-space: nowrap;
   background-color: rgb(229 231 235);
+}
+
+@media screen and (max-width: 600px) {
+  .table thead tr {
+    white-space: unset;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -88,12 +116,29 @@
   transform: rotate(180deg);
 }
 
+@media screen and (max-width: 600px) {
+  .table tfoot {
+    position: fixed;
+    height: 4rem;
+    left: 0;
+    bottom: 0;
+    border-top: 1px solid rgb(var(--border-color));
+    background-color: rgb(var(--nav-background-color));
+  }
+}
+
 .tableFooter {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   padding: 0.5rem;
   padding-left: 1rem;
+}
+
+@media screen and (max-width: 600px) {
+  .tableFooter {
+    justify-content: flex-start;
+  }
 }
 
 .actions {

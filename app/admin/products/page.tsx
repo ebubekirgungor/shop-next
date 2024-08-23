@@ -7,6 +7,7 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import DataTable from "@/components/DataTable";
 import Chip from "@/components/Chip";
 import Link from "next/link";
+import styles from "./page.module.css";
 
 const columns = [
   {
@@ -42,7 +43,7 @@ export default function Products() {
 
   return (
     <LayoutContainer>
-      <LayoutTitle>
+      <LayoutTitle className={styles.layoutTitle}>
         Products
         <Link href="products/create">
           <Chip>Add</Chip>

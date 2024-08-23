@@ -1,0 +1,6 @@
+@media screen and (max-width: 600px) {
+  .layoutTitle {
+    flex-direction: row !important;
+    justify-content: center;
+  }
+}

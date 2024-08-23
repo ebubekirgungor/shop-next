@@ -61,125 +61,127 @@ const DataTable = ({ columns, data, imageUrl }: DataTableProps) => {
   return (
     <div className={styles.container}>
       <Input placeholder="Search" onChange={handleSearch} />
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            {imageUrl && <th style={{ width: "6rem" }}></th>}
-            {columns.map((column) => (
-              <th key={column.key}>
-                <div
-                  className={styles.columnTitle}
-                  onClick={() => handleSort(column.key)}
-                >
-                  {column.title}
-                  <span
-                    className={
-                      sort.field === column.key && sort.isReverse
-                        ? styles.arrowRotate
-                        : sort.field !== column.key
-                        ? styles.arrow
-                        : styles.arrowActive
-                    }
+      <div className={styles.tableContainer}>
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              {imageUrl && <th style={{ width: "6rem" }}></th>}
+              {columns.map((column) => (
+                <th key={column.key}>
+                  <div
+                    className={styles.columnTitle}
+                    onClick={() => handleSort(column.key)}
                   >
-                    <Icon name="arrow" />
-                  </span>
-                </div>
-              </th>
-            ))}
-            <th style={{ width: "3rem" }} />
-          </tr>
-        </thead>
-        <tbody>
-          {displayedData.length ? (
-            displayedData.map((row) => (
-              <tr key={row.id}>
-                {imageUrl && (
-                  <td>
-                    <Link href={"/product/" + row.url}>
-                      <Image
-                        className={styles.image}
-                        src={imageUrl + row.image}
-                        alt={row.image}
-                        width="0"
-                        height="0"
-                        sizes="4rem"
-                      />
+                    {column.title}
+                    <span
+                      className={
+                        sort.field === column.key && sort.isReverse
+                          ? styles.arrowRotate
+                          : sort.field !== column.key
+                          ? styles.arrow
+                          : styles.arrowActive
+                      }
+                    >
+                      <Icon name="arrow" />
+                    </span>
+                  </div>
+                </th>
+              ))}
+              <th style={{ width: "3rem" }} />
+            </tr>
+          </thead>
+          <tbody>
+            {displayedData.length ? (
+              displayedData.map((row) => (
+                <tr key={row.id}>
+                  {imageUrl && (
+                    <td>
+                      <Link href={"/product/" + row.url}>
+                        <Image
+                          className={styles.image}
+                          src={imageUrl + row.image}
+                          alt={row.image}
+                          width="0"
+                          height="0"
+                          sizes="4rem"
+                        />
+                      </Link>
+                    </td>
+                  )}
+                  {columns.map((column) => (
+                    <td key={column.key}>{row[column.key]}</td>
+                  ))}
+                  <td style={{ padding: "0" }}>
+                    <Link
+                      href={window.location.pathname + "/" + row.id}
+                      className={styles.editButton}
+                    >
+                      <Icon name="edit" />
                     </Link>
                   </td>
-                )}
-                {columns.map((column) => (
-                  <td key={column.key}>{row[column.key]}</td>
-                ))}
-                <td style={{ padding: "0" }}>
-                  <Link
-                    href={window.location.pathname + "/" + row.id}
-                    className={styles.editButton}
-                  >
-                    <Icon name="edit" />
-                  </Link>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={columns.length + 1} className={styles.noResult}>
+                  No results
                 </td>
               </tr>
-            ))
-          ) : (
+            )}
+          </tbody>
+          <tfoot>
             <tr>
-              <td colSpan={columns.length + 1} className={styles.noResult}>
-                No results
+              <td colSpan={columns.length + (imageUrl ? 2 : 1)}>
+                <div className={styles.tableFooter}>
+                  <div className={styles.actions}>
+                    <label htmlFor={"itemsPerPage"}>Items per page:</label>
+                    <select
+                      id={"itemsPerPage"}
+                      style={{ width: "5rem" }}
+                      onChange={(e) => setItemsPerPage(Number(e.target.value))}
+                    >
+                      {itemsPerPageOptions.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                    <button
+                      onClick={() => setCurrentPage(1)}
+                      disabled={currentPage == 1}
+                    >
+                      <Icon name="first" />
+                    </button>
+                    <button
+                      onClick={() =>
+                        currentPage > 1 && setCurrentPage(currentPage - 1)
+                      }
+                      disabled={currentPage == 1}
+                    >
+                      <Icon name="previous" />
+                    </button>
+                    <button
+                      onClick={() =>
+                        currentPage < totalPages &&
+                        setCurrentPage(currentPage + 1)
+                      }
+                      disabled={currentPage == totalPages || totalPages == 0}
+                    >
+                      <Icon name="next" />
+                    </button>
+                    <button
+                      onClick={() => setCurrentPage(totalPages)}
+                      disabled={currentPage == totalPages || totalPages == 0}
+                    >
+                      <Icon name="last" />
+                    </button>
+                  </div>
+                </div>
               </td>
             </tr>
-          )}
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colSpan={columns.length + (imageUrl ? 2 : 1)}>
-              <div className={styles.tableFooter}>
-                <div className={styles.actions}>
-                  <label htmlFor={"itemsPerPage"}>Items per page:</label>
-                  <select
-                    id={"itemsPerPage"}
-                    style={{ width: "5rem" }}
-                    onChange={(e) => setItemsPerPage(Number(e.target.value))}
-                  >
-                    {itemsPerPageOptions.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                  <button
-                    onClick={() => setCurrentPage(1)}
-                    disabled={currentPage == 1}
-                  >
-                    <Icon name="first" />
-                  </button>
-                  <button
-                    onClick={() =>
-                      currentPage > 1 && setCurrentPage(currentPage - 1)
-                    }
-                    disabled={currentPage == 1}
-                  >
-                    <Icon name="previous" />
-                  </button>
-                  <button
-                    onClick={() =>
-                      currentPage < totalPages &&
-                      setCurrentPage(currentPage + 1)
-                    }
-                    disabled={currentPage == totalPages || totalPages == 0}
-                  >
-                    <Icon name="next" />
-                  </button>
-                  <button
-                    onClick={() => setCurrentPage(totalPages)}
-                    disabled={currentPage == totalPages || totalPages == 0}
-                  >
-                    <Icon name="last" />
-                  </button>
-                </div>
-              </div>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
+          </tfoot>
+        </table>
+      </div>
     </div>
   );
 };

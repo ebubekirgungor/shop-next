@@ -8,7 +8,6 @@
 @media screen and (max-width: 600px) {
   .box {
     background-color: unset;
-    border: unset;
     padding: unset;
   }
 }
