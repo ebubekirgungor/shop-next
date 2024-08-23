@@ -136,7 +136,7 @@ export default function User({ params }: { params: { id: string } }) {
 
   return (
     <LayoutContainer>
-      <LayoutTitle style={{ paddingLeft: "1rem" }}>
+      <LayoutTitle className={styles.layoutTitle}>
         <Link href={"/admin/users"} className={styles.previousButton}>
           <Icon name="previous" />
         </Link>
@@ -147,7 +147,7 @@ export default function User({ params }: { params: { id: string } }) {
           <LoadingSpinner />
         ) : (
           <form onSubmit={onSubmit}>
-            <div className={styles.grid}>
+            <div className={styles.formInputsContainer}>
               <Input
                 label="First name"
                 type="text"
@@ -199,7 +199,7 @@ export default function User({ params }: { params: { id: string } }) {
                   onChange={handleBirthDate}
                 />
               </div>
-              <div className={styles.row} style={{ width: "60%" }}>
+              <div className={`${styles.row} ${styles.shortRow}`}>
                 <div className={styles.genderColumn}>
                   <label>Gender</label>
                   <div className={styles.row} style={{ alignItems: "end" }}>
