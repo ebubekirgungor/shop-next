@@ -249,7 +249,7 @@ export default function Product({ params }: { params: { id: string } }) {
 
   return (
     <LayoutContainer>
-      <LayoutTitle style={{ paddingLeft: "1rem" }}>
+      <LayoutTitle className={styles.layoutTitle}>
         <Link href={"/admin/products"} className={styles.previousButton}>
           <Icon name="previous" />
         </Link>
@@ -260,7 +260,7 @@ export default function Product({ params }: { params: { id: string } }) {
           <LoadingSpinner />
         ) : (
           <form onSubmit={onSubmit}>
-            <div className={styles.grid}>
+            <div className={styles.formInputsContainer}>
               <Input
                 label="Title"
                 type="text"
