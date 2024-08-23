@@ -4,6 +4,12 @@
   gap: 1.5rem;
 }
 
+@media screen and (max-width: 600px) {
+  .row {
+    gap: 1rem;
+  }
+}
+
 .product {
   display: flex;
   flex-direction: column;
@@ -14,6 +20,12 @@
   border: 1px solid rgb(var(--border-color));
   border-radius: 8px;
   font-size: 14px;
+}
+
+@media screen and (max-width: 600px) {
+  .product {
+    width: 100%;
+  }
 }
 
 .product button {
@@ -37,6 +49,12 @@
   object-fit: contain;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+}
+
+@media screen and (max-width: 600px) {
+  .product img {
+    width: 100%;
+  }
 }
 
 .product .title {
