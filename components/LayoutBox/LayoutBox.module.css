@@ -12,5 +12,7 @@
     min-width: unset;
     border: unset;
     padding: unset;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }

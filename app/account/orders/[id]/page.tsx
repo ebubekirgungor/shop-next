@@ -28,7 +28,7 @@ export default function Order({ params }: { params: { id: string } }) {
 
   return (
     <LayoutContainer>
-      <LayoutTitle style={{ paddingLeft: "1rem" }}>
+      <LayoutTitle style={{ paddingLeft: "1rem", flexDirection: "row" }}>
         <Link href={"/account/orders"} className={styles.previousButton}>
           <Icon name="previous" />
         </Link>
@@ -39,7 +39,7 @@ export default function Order({ params }: { params: { id: string } }) {
           </div>
         )}
       </LayoutTitle>
-      <LayoutBox minHeight="825px">
+      <LayoutBox minHeight="825px" className={styles.noPadding}>
         {isLoading ? (
           <LoadingSpinner />
         ) : (

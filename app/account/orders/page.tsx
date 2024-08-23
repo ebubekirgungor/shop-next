@@ -57,17 +57,19 @@ export default function Orders() {
     <LayoutContainer>
       <LayoutTitle>
         Orders
-        {Array.from(statusNames.keys()).map((status) =>
-          status !== DeliveryStatus.DELIVERED ? (
-            <Chip
-              selected={statusFilter === status}
-              onClick={() => setStatusFilter(status)}
-              key={status}
-            >
-              {statusNames.get(status)?.title}
-            </Chip>
-          ) : null
-        )}
+        <div className={styles.row}>
+          {Array.from(statusNames.keys()).map((status) =>
+            status !== DeliveryStatus.DELIVERED ? (
+              <Chip
+                selected={statusFilter === status}
+                onClick={() => setStatusFilter(status)}
+                key={status}
+              >
+                {statusNames.get(status)?.title}
+              </Chip>
+            ) : null
+          )}
+        </div>
       </LayoutTitle>
       <LayoutBox minHeight="360px">
         {isLoading ? (

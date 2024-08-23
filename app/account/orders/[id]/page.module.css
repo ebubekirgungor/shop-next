@@ -1,3 +1,9 @@
+@media screen and (max-width: 600px) {
+  .noPadding {
+    padding: 0 !important;
+  }
+}
+
 .previousButton {
   display: flex;
   justify-content: center;
@@ -18,6 +24,12 @@
   row-gap: 1.5rem;
 }
 
+@media screen and (max-width: 600px) {
+  .column {
+    row-gap: 1rem;
+  }
+}
+
 .box {
   width: 100%;
   padding: 0 !important;
@@ -32,11 +44,27 @@
   background-color: rgba(var(--foreground-color), 0.05);
 }
 
+@media screen and (max-width: 600px) {
+  .boxHeader {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+}
+
 .deliveryStatus {
   display: flex;
+  align-items: center;
   column-gap: 1rem;
   padding-top: 1.5rem;
   padding-left: 1.5rem;
+}
+
+@media screen and (max-width: 600px) {
+  .deliveryStatus {
+    padding: 0.5rem;
+    padding-top: 1rem;
+    font-size: 14px;
+  }
 }
 
 .orderProducts {
@@ -44,6 +72,13 @@
   flex-wrap: wrap;
   gap: 1.5rem;
   padding: 1.5rem;
+}
+
+@media screen and (max-width: 600px) {
+  .orderProducts {
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
 }
 
 .product {
@@ -58,6 +93,14 @@
   font-size: 14px;
 }
 
+@media screen and (max-width: 600px) {
+  .product {
+    width: calc(50vw - 0.75rem);
+    height: 16rem;
+    row-gap: 0.2rem;
+  }
+}
+
 .product img {
   width: calc(14rem - 2px);
   height: 14rem;
@@ -66,9 +109,22 @@
   border-top-right-radius: 8px;
 }
 
+@media screen and (max-width: 600px) {
+  .product img {
+    width: calc(50vw - 0.75rem - 2px);
+    height: calc(50vw - 0.75rem - 2px);
+  }
+}
+
 .product .title {
   padding: 1rem;
   font-size: medium;
+}
+
+@media screen and (max-width: 600px) {
+  .product .title {
+    padding: 0.5rem;
+  }
 }
 
 .product .justifyBetween {
@@ -79,8 +135,21 @@
   padding-top: 0;
 }
 
+@media screen and (max-width: 600px) {
+  .product .justifyBetween {
+    padding: 0.5rem;
+    padding-top: 0;
+  }
+}
+
 .product .price {
   font-size: x-large;
+}
+
+@media screen and (max-width: 600px) {
+  .product .price {
+    font-size: large;
+  }
 }
 
 .grayText {
@@ -88,9 +157,21 @@
   font-size: 14px;
 }
 
+@media screen and (max-width: 600px) {
+  .product .grayText {
+    font-size: small;
+  }
+}
+
 .row {
   display: flex;
   column-gap: 1.5rem;
+}
+
+@media screen and (max-width: 600px) {
+  .row {
+    flex-direction: column;
+  }
 }
 
 .shipmentBox {
@@ -100,10 +181,22 @@
   padding: 1.5rem;
 }
 
+@media screen and (max-width: 600px) {
+  .shipmentBox {
+    padding: 1rem;
+  }
+}
+
 .paymentBox {
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
+}
+
+@media screen and (max-width: 600px) {
+  .paymentBox {
+    padding: 1rem;
+  }
 }
 
 .paymentBox .info {
