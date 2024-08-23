@@ -11,6 +11,7 @@ import Box from "@/components/Box";
 import Icon from "@/components/Icon";
 import { Role } from "@/lib/types";
 import { cookies } from "next/headers";
+import LogoutButton from "@/components/LogoutButton";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500"] });
 
@@ -61,12 +62,7 @@ export default function RootLayout({
                         Admin
                       </NavButton>
                     )}
-                    <form action="/api/auth/logout">
-                      <button type="submit">
-                        <Icon name="logout" />
-                        Logout
-                      </button>
-                    </form>
+                    <LogoutButton />
                   </Box>
                 </div>
               ) : (

@@ -9,8 +9,10 @@
   will-change: transform;
 }
 
-.link:hover {
-  transform: translateY(-2px);
+@media screen and (min-width: 600px) {
+  .link:hover {
+    transform: translateY(-2px);
+  }
 }
 
 .link span {

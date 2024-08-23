@@ -104,14 +104,24 @@ export default function Product({ params }: { params: { url: string } }) {
               ))}
             </div>
             {product!.images!.length > 1 && (
-              <div className={styles.slideButtons}>
-                <button type="button" onClick={() => gotoSlide(slideIndex - 1)}>
+              <>
+                <button
+                  style={{ left: "1rem" }}
+                  className={styles.slideButton}
+                  type="button"
+                  onClick={() => gotoSlide(slideIndex - 1)}
+                >
                   <Icon name="previous" />
                 </button>
-                <button type="button" onClick={() => gotoSlide(slideIndex + 1)}>
+                <button
+                  style={{ left: "calc(100% - (40px + 1rem))" }}
+                  className={styles.slideButton}
+                  type="button"
+                  onClick={() => gotoSlide(slideIndex + 1)}
+                >
                   <Icon name="next" />
                 </button>
-              </div>
+              </>
             )}
             <div className={styles.miniImages}>
               {product?.images.map((image, index) => (

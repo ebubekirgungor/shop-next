@@ -27,6 +27,12 @@
   }
 }
 
+@media screen and (max-width: 600px) {
+  :root {
+    --background-color: var(--nav-background-color);
+  }
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -104,6 +110,7 @@ button {
 a {
   color: inherit;
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -116,6 +123,12 @@ form {
   display: flex;
   flex-direction: column;
   row-gap: 2rem;
+}
+
+@media screen and (max-width: 600px) {
+  form {
+    row-gap: 1rem;
+  }
 }
 
 .Toastify__toast {

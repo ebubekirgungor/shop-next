@@ -4,3 +4,9 @@
   row-gap: 1rem;
   width: clamp(30rem, 65rem, 65rem);
 }
+
+@media screen and (max-width: 600px) {
+  .column {
+    width: auto;
+  }
+}

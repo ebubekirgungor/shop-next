@@ -6,3 +6,11 @@
   border-radius: 12px;
   padding: 1.5rem;
 }
+
+@media screen and (max-width: 600px) {
+  .box {
+    min-width: unset;
+    border: unset;
+    padding: unset;
+  }
+}

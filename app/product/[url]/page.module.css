@@ -19,24 +19,17 @@
   touch-action: pan-y;
 }
 
-.slideButtons {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
+.slideButton {
   position: absolute;
-  width: 100%;
-  height: 35rem;
-}
-
-.slideButtons button {
+  top: calc(50% - 40px);
+  transform: translateY(-50%);
   padding: 0.5rem;
   background-color: rgb(var(--border-color));
   border-radius: 100%;
   transition: background-color 200ms ease-in-out;
 }
 
-.slideButtons button:hover {
+.slideButton:hover {
   background-color: rgba(var(--border-color), 0.7);
 }
 

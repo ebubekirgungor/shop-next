@@ -82,7 +82,7 @@ export default function PersonalDetails() {
           <LoadingSpinner />
         ) : (
           <form onSubmit={onSubmit}>
-            <div className={styles.grid}>
+            <div className={styles.formInputsContainer}>
               <Input
                 label="First name"
                 type="text"

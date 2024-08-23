@@ -25,16 +25,15 @@
 }
 
 .previousButton {
-  display: none;
   position: absolute;
   top: 1.5rem;
   left: 1.5rem;
   filter: contrast(0);
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (min-width: 600px) {
   .previousButton {
-    display: block;
+    display: none;
   }
 }
 

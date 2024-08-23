@@ -41,7 +41,14 @@ const NavSearch = () => {
       >
         {searchedData.map((data) => (
           <div key={data.id}>
-            <Link href={"/product/" + data.url}>
+            <Link
+              href={"/product/" + data.url}
+              onClick={() =>
+                ((
+                  document.getElementById("search") as HTMLInputElement
+                ).checked = false)
+              }
+            >
               <div
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(data.title),

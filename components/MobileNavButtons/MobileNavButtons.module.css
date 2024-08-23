@@ -1,0 +1,27 @@
+.mobileNavButtons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mobileNavButtons .row {
+  display: flex;
+  column-gap: 1rem;
+}
+
+@media screen and (min-width: 600px) {
+  .mobileNavButtons {
+    display: none;
+  }
+}
+
+.mobileNavButtons label div,
+.mobileNavButtons a,
+.mobileNavButtons a div,
+.mobileNavButtons button div {
+  width: 2rem !important;
+  height: 2rem !important;
+}
+
+.mobileNavButtons span {
+  display: none;
+}

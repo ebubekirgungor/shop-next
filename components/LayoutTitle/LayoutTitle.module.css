@@ -12,3 +12,14 @@
   padding-right: 1.5rem;
   font-size: large;
 }
+
+@media screen and (max-width: 600px) {
+  .box {
+    justify-content: center;
+    min-width: unset;
+    height: unset;
+    border: unset;
+    background-color: unset;
+    padding: unset;
+  }
+}

@@ -19,6 +19,9 @@ const LayoutLink: FC<Props> = ({ href, icon, title }) => {
         usePathname() === href ? styles.active : ""
       }`}
       href={href}
+      onClick={() =>
+        ((document.getElementById("nav") as HTMLInputElement).checked = false)
+      }
     >
       <Icon name={icon} />
       {title}

@@ -9,3 +9,32 @@
   border-radius: 12px;
   border: solid 1px rgb(var(--border-color));
 }
+
+@media screen and (max-width: 600px) {
+  .nav {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 100vw;
+    transition: right 400ms ease-in-out;
+  }
+}
+
+:global(#nav:checked) + .nav {
+  right: 0;
+}
+
+.closeButton {
+  align-self: flex-end;
+  padding: 0.5rem;
+  border-radius: 100%;
+  background-color: rgb(var(--foreground-color), 0.05);
+}
+
+@media screen and (min-width: 600px) {
+  .closeButton {
+    display: none;
+  }
+}

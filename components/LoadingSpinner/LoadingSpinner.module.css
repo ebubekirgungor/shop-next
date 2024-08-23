@@ -5,6 +5,15 @@
   align-items: center;
 }
 
+@media screen and (max-width: 600px) {
+  .container {
+    position: absolute;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+  }
+}
+
 .loader {
   width: 6rem;
   height: 6rem;

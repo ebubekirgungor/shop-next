@@ -14,6 +14,7 @@
   .nav {
     padding-left: 0;
     padding-right: 1rem;
+    border-bottom: unset;
   }
 }
 
@@ -29,8 +30,8 @@
 
 @media screen and (max-width: 600px) {
   .logo a {
-    width: 100%;
-    height: 100%;
+    width: 85%;
+    height: 85%;
   }
 }
 
@@ -68,13 +69,9 @@
   display: none;
 }
 
-.searchButton {
-  display: none;
-}
-
-@media screen and (max-width: 600px) {
+@media screen and (min-width: 600px) {
   .searchButton {
-    display: block;
+    display: none;
   }
 }
 
@@ -83,6 +80,12 @@
   justify-content: center;
   padding: 1rem;
   gap: 1rem;
+}
+
+@media screen and (max-width: 600px) {
+  .main {
+    flex-direction: column;
+  }
 }
 
 .accountBoxContainer {
@@ -114,11 +117,13 @@
     opacity 200ms ease-in-out;
 }
 
-.accountBoxContainer a:hover + .accountBox,
-.accountBox:hover {
-  margin-top: 4rem;
-  visibility: visible;
-  opacity: 1;
+@media screen and (min-width: 600px) {
+  .accountBoxContainer a:hover + .accountBox,
+  .accountBox:hover {
+    margin-top: 4rem;
+    visibility: visible;
+    opacity: 1;
+  }
 }
 
 .accountBox .spacing {
