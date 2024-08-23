@@ -1,7 +1,18 @@
+.layoutBox {
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+}
+
 .row {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
+}
+
+@media screen and (max-width: 600px) {
+  .row {
+    gap: 0.5rem;
+  }
 }
 
 .addBox {
@@ -18,6 +29,12 @@
   will-change: background-size;
 }
 
+@media screen and (max-width: 600px) {
+  .addBox {
+    width: calc(50vw - 0.75rem);
+  }
+}
+
 .addBox:hover {
   background-size: 144px;
 }
@@ -32,12 +49,24 @@
   border-radius: 8px;
 }
 
+@media screen and (max-width: 600px) {
+  .categoryBox {
+    width: calc(50vw - 0.75rem);
+  }
+}
+
 .categoryBox img {
   width: calc(14rem - 2px);
   height: 14rem;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   object-fit: contain;
+}
+
+@media screen and (max-width: 600px) {
+  .categoryBox img {
+    width: calc(50vw - 1rem - 2px);
+  }
 }
 
 .title {

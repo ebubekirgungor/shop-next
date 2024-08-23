@@ -138,7 +138,7 @@ export default function Categories() {
   return (
     <LayoutContainer>
       <LayoutTitle>Categories</LayoutTitle>
-      <LayoutBox minHeight="338px">
+      <LayoutBox minHeight="338px" className={styles.layoutBox}>
         {isLoading ? (
           <LoadingSpinner />
         ) : (

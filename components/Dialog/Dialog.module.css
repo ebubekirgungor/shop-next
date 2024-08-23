@@ -47,6 +47,7 @@
   background-color: rgb(var(--nav-background-color));
   border-radius: 12px;
   padding: 2rem;
+  overflow-y: auto;
   opacity: 0;
   animation: fadeIn 200ms ease-in-out forwards,
     slideIn 300ms ease-in-out forwards;
