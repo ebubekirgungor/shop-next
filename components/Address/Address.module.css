@@ -11,6 +11,12 @@
   font-size: 14px;
 }
 
+@media screen and (max-width: 600px) {
+  .box {
+    width: 100%;
+  }
+}
+
 .title {
   display: flex;
   justify-content: space-between;

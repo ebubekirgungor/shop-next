@@ -4,6 +4,12 @@
   gap: 1.5rem;
 }
 
+@media screen and (max-width: 600px) {
+  .row {
+    gap: 1rem;
+  }
+}
+
 .addBox {
   width: 14rem;
   height: 14rem;
@@ -16,6 +22,12 @@
   background-size: 96px;
   transition: background-size 200ms;
   will-change: background-size;
+}
+
+@media screen and (max-width: 600px) {
+  .addBox {
+    width: 100%;
+  }
 }
 
 .addBox:hover {

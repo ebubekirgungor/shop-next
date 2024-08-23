@@ -26,6 +26,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 1rem;
+}
+
+@media screen and (max-width: 600px) {
+  .container:has(input) {
+    height: 100%;
+    padding: 0;
+  }
+  .container:not(input) {
+    height: 100%;
+  }
 }
 
 .dialog {
@@ -39,6 +50,16 @@
   opacity: 0;
   animation: fadeIn 200ms ease-in-out forwards,
     slideIn 300ms ease-in-out forwards;
+}
+
+@media screen and (max-width: 600px) {
+  .dialog:has(input) {
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    padding: 1rem;
+  }
 }
 
 .dialog.close {
