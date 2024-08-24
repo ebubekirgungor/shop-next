@@ -1,6 +1,8 @@
-.layoutBox {
-  padding-left: 0.5rem !important;
-  padding-right: 0.5rem !important;
+@media screen and (max-width: 600px) {
+  .layoutBox {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
 }
 
 .row {

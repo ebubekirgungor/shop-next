@@ -92,7 +92,7 @@ export default function Cart() {
   return (
     <CartLayout products={products}>
       <LayoutContainer>
-        <LayoutTitle>
+        <LayoutTitle className={styles.layoutTitle}>
           Cart
           {!isLoading && products.length !== 0 && (
             <span className={styles.itemsCount}>
@@ -131,30 +131,35 @@ export default function Cart() {
                     </Link>
                   </div>
                   <div className={styles.longRow}>
-                    <div className={styles.quantityBox}>
-                      <button
-                        disabled={product.cart?.quantity === 1}
-                        onClick={() =>
-                          handleQuantity(product.id!, Operation.decrease)
-                        }
-                      >
-                        <span>-</span>
-                      </button>
-                      {product.cart?.quantity}
-                      <button
-                        disabled={
-                          product.cart?.quantity === product.stock_quantity
-                        }
-                        onClick={() =>
-                          handleQuantity(product.id!, Operation.increase)
-                        }
-                      >
-                        <span>+</span>
-                      </button>
+                    <Link href={"/product/" + product.url}>
+                      {product.title}
+                    </Link>
+                    <div className={styles.shortRow}>
+                      <div className={styles.quantityBox}>
+                        <button
+                          disabled={product.cart?.quantity === 1}
+                          onClick={() =>
+                            handleQuantity(product.id!, Operation.decrease)
+                          }
+                        >
+                          <span>-</span>
+                        </button>
+                        {product.cart?.quantity}
+                        <button
+                          disabled={
+                            product.cart?.quantity === product.stock_quantity
+                          }
+                          onClick={() =>
+                            handleQuantity(product.id!, Operation.increase)
+                          }
+                        >
+                          <span>+</span>
+                        </button>
+                      </div>
+                      <h4>
+                        {product.list_price * product.cart?.quantity! + " TL"}
+                      </h4>
                     </div>
-                    <h4>
-                      {product.list_price * product.cart?.quantity! + " TL"}
-                    </h4>
                     <button
                       className={styles.deleteButton}
                       onClick={() => handleDelete(product.id!)}

@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  row-gap: 1rem;
+  gap: 1rem;
   padding: 1.5rem;
   min-width: 16rem;
   min-height: 280px;
@@ -12,8 +12,85 @@
   border: solid 1px rgb(var(--border-color));
 }
 
+@media screen and (max-width: 600px) {
+  .checkoutBox {
+    flex-direction: row;
+    padding: 1rem;
+    padding-left: 0;
+    width: 100%;
+    min-height: unset;
+    height: 5rem;
+    position: fixed;
+    bottom: 0;
+    border-radius: 0;
+    transition: height 200ms ease-in-out;
+  }
+}
+
+.section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+@media screen and (max-width: 600px) {
+  .section {
+    row-gap: 0;
+  }
+}
+
+.title {
+  display: flex;
+  width: max-content;
+}
+
+@media screen and (max-width: 600px) {
+  .title {
+    padding-left: 2rem;
+    font-size: 14px;
+  }
+}
+
+.expandButton {
+  position: absolute;
+  top: 2.5rem;
+  transform: translateY(-50%);
+  left: 0.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-image: url("/icons/expand_less.svg");
+}
+
+@media screen and (min-width: 600px) {
+  .expandButton {
+    display: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .expandButton {
+    filter: invert(1);
+  }
+}
+
+.expandButton:focus {
+  background-image: url("/icons/expand_more.svg");
+}
+
+.checkoutBox:has(.expandButton:focus) {
+  height: 10rem;
+}
+
 .price {
   font-size: xx-large;
+}
+
+@media screen and (max-width: 600px) {
+  .price {
+    font-size: large;
+    padding-left: 2rem;
+  }
 }
 
 .price span {
@@ -25,6 +102,18 @@
   flex-direction: column;
   row-gap: 0.2rem;
   margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 600px) {
+  .column {
+    align-self: flex-end;
+    order: 1;
+    width: 100%;
+    position: absolute;
+    top: 5rem;
+    left: 0;
+    padding: 1rem;
+  }
 }
 
 .detail {

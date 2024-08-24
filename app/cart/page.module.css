@@ -1,3 +1,10 @@
+@media screen and (max-width: 600px) {
+  .layoutTitle {
+    flex-direction: row !important;
+    justify-content: center;
+  }
+}
+
 .itemsCount {
   padding-top: 2px;
   filter: contrast(0);
@@ -8,6 +15,16 @@
   display: flex;
   column-gap: 1rem;
   align-items: center;
+}
+
+@media screen and (max-width: 600px) {
+  .row {
+    column-gap: 0.5rem;
+  }
+  .row label,
+  .row a {
+    display: none;
+  }
 }
 
 .layoutBox {
@@ -24,8 +41,27 @@
   border-bottom: 1px solid rgb(var(--border-color));
 }
 
-.product:last-child {
-  border: none;
+@media screen and (max-width: 600px) {
+  .product {
+    position: relative;
+    column-gap: 1rem;
+    padding-top: 1rem;
+    padding-left: 0.5rem;
+    padding-bottom: 1rem;
+    padding-right: 0.5rem;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .product:last-child {
+    border: none;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .product:first-child {
+    border-top: 1px solid rgb(var(--border-color));
+  }
 }
 
 .productImage {
@@ -38,11 +74,37 @@
 
 .longRow {
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  column-gap: 1rem;
+  width: 100%;
+}
+
+@media screen and (min-width: 600px) {
+  .longRow {
+    flex-direction: row;
+    align-items: center;
+    min-width: 21rem;
+    width: unset;
+    margin: 1rem;
+  }
+  .longRow a {
+    display: none;
+  }
+}
+
+.shortRow {
+  width: 66.6666%;
+  display: flex;
   justify-content: space-between;
   align-items: center;
-  column-gap: 1rem;
-  min-width: 21rem;
-  margin: 1rem;
+}
+
+@media screen and (max-width: 600px) {
+  .shortRow {
+    width: unset;
+    margin-right: 0.5rem;
+  }
 }
 
 .quantityBox {
@@ -89,11 +151,15 @@
   transition: background-color 200ms ease-in-out;
 }
 
-.deleteButton:hover {
-  background-color: rgba(var(--foreground-color), 0.1);
+@media screen and (max-width: 600px) {
+  .deleteButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0.5rem;
+  }
 }
 
-.checkoutBox {
-  min-width: 16rem;
-  padding: 1.5rem !important;
+.deleteButton:hover {
+  background-color: rgba(var(--foreground-color), 0.1);
 }

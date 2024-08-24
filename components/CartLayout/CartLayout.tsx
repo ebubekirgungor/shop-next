@@ -5,6 +5,7 @@ import LoadingSpinner from "../LoadingSpinner";
 import { updateCart } from "@/lib/utils";
 import { jsonFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";
+import Icon from "../Icon";
 
 export default function CartLayout({
   products,
@@ -42,65 +43,72 @@ export default function CartLayout({
       <div className={styles.checkoutBox}>
         {products.length > 0 ? (
           <>
-            {isCart ? (
-              <>
-                Selected items (
+            <div className={styles.section}>
+              <div className={styles.title}>
+                <button className={styles.expandButton} type="button" />
+                {isCart ? (
+                  <>
+                    Selected items (
+                    {products.reduce((total: number, product: Product) => {
+                      return (
+                        total +
+                        (product?.cart?.selected ? product.cart.quantity : 0)
+                      );
+                    }, 0)}
+                    )
+                  </>
+                ) : (
+                  <>Total amount</>
+                )}
+              </div>
+              <div className={styles.price}>
                 {products.reduce((total: number, product: Product) => {
                   return (
                     total +
-                    (product?.cart?.selected ? product.cart.quantity : 0)
+                    product.list_price *
+                      (product?.cart?.selected ? product.cart.quantity : 0)
                   );
-                }, 0)}
-                )
-              </>
-            ) : (
-              <>Total amount</>
-            )}
-            <div className={styles.price}>
-              {products.reduce((total: number, product: Product) => {
-                return (
-                  total +
-                  product.list_price *
-                    (product?.cart?.selected ? product.cart.quantity : 0)
-                );
-              }, 0) + shipping}
-              <span> TL</span>
-            </div>
-            <div className={styles.column}>
-              <div className={styles.detail}>
-                Subtotal
-                <div>
-                  {products.reduce((total: number, product: Product) => {
-                    return (
-                      total +
-                      product.list_price *
-                        (product?.cart?.selected ? product.cart.quantity : 0)
-                    );
-                  }, 0)}
-                  <span> TL</span>
-                </div>
-              </div>
-              <div className={styles.detail}>
-                Shipping
-                <div>
-                  {shipping}
-                  <span> TL</span>
-                </div>
+                }, 0) + shipping}
+                <span> TL</span>
               </div>
             </div>
-            {isCart ? (
-              <Button type="button" onClick={goToCheckout}>
-                Checkout
-              </Button>
-            ) : (
-              <Button
-                type="button"
-                onClick={placeOrder}
-                disabled={!selectedAddress}
-              >
-                Place Order
-              </Button>
-            )}
+            <div className={styles.section}>
+              <div className={styles.column}>
+                <div className={styles.detail}>
+                  Subtotal
+                  <div>
+                    {products.reduce((total: number, product: Product) => {
+                      return (
+                        total +
+                        product.list_price *
+                          (product?.cart?.selected ? product.cart.quantity : 0)
+                      );
+                    }, 0)}
+                    <span> TL</span>
+                  </div>
+                </div>
+                <div className={styles.detail}>
+                  Shipping
+                  <div>
+                    {shipping}
+                    <span> TL</span>
+                  </div>
+                </div>
+              </div>
+              {isCart ? (
+                <Button type="button" onClick={goToCheckout}>
+                  Checkout
+                </Button>
+              ) : (
+                <Button
+                  type="button"
+                  onClick={placeOrder}
+                  disabled={!selectedAddress}
+                >
+                  Place Order
+                </Button>
+              )}
+            </div>
           </>
         ) : (
           <LoadingSpinner />
