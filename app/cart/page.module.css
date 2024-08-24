@@ -33,6 +33,12 @@
   padding: 0 !important;
 }
 
+@media screen and (max-width: 600px) {
+  .layoutBox {
+    margin-bottom: 4rem;
+  }
+}
+
 .product {
   display: flex;
   justify-content: space-between;

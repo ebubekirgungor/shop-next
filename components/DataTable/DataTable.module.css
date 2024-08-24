@@ -123,6 +123,7 @@
     left: 0;
     bottom: 0;
     border-top: 1px solid rgb(var(--border-color));
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     background-color: rgb(var(--nav-background-color));
   }
 }

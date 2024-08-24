@@ -65,7 +65,7 @@ export default function Cart() {
   return (
     <CartLayout products={products} selectedAddress={selectedAddress!}>
       <LayoutContainer>
-        <LayoutTitle style={{ paddingLeft: "1rem" }}>
+        <LayoutTitle className={styles.layoutTitle}>
           <Link href={"/cart"} className={styles.previousButton}>
             <Icon name="previous" />
           </Link>
@@ -94,7 +94,7 @@ export default function Cart() {
               <div className={styles.innerTitle}>Card</div>
               <div className={styles.cardContainer}>
                 <div className={styles.card}>
-                  <div style={{ fontSize: "xx-large" }}>
+                  <div className={styles.cardNumber}>
                     {card?.number ? card?.number : "**** **** **** ****"}
                   </div>
                   <div className={styles.spaceBetween}>

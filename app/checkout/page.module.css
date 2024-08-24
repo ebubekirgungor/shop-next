@@ -1,3 +1,10 @@
+@media screen and (max-width: 600px) {
+  .layoutTitle {
+    flex-direction: row !important;
+    justify-content: center;
+  }
+}
+
 .previousButton {
   display: flex;
   justify-content: center;
@@ -16,6 +23,12 @@
   display: flex;
   flex-direction: column;
   row-gap: 1.5rem !important;
+}
+
+@media screen and (max-width: 600px) {
+  .box {
+    margin-bottom: 5rem;
+  }
 }
 
 .innerTitle {
@@ -40,6 +53,12 @@
 .cardContainer {
   display: flex;
   gap: 1.5rem;
+}
+
+@media screen and (max-width: 600px) {
+  .cardContainer {
+    flex-direction: column;
+  }
 }
 
 .column {
@@ -67,6 +86,21 @@
   background-position-x: 7%;
   background-position-y: 15%;
   background-size: 14%;
+}
+
+.cardNumber {
+  font-size: xx-large;
+}
+
+@media screen and (max-width: 600px) {
+  .card {
+    width: 100%;
+    height: 12rem;
+  }
+}
+
+.cardNumber {
+  font-size: x-large;
 }
 
 .spaceBetween {
