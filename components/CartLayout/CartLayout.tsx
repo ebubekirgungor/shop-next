@@ -40,7 +40,11 @@ export default function CartLayout({
   return (
     <>
       {children}
-      <div className={styles.checkoutBox}>
+      <div
+        className={`${styles.checkoutBox} ${
+          products.length === 0 && styles.hide
+        }`}
+      >
         {products.length > 0 ? (
           <>
             <div className={styles.section}>
