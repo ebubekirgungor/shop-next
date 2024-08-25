@@ -53,48 +53,51 @@ export default function Login() {
   }
 
   return (
-    <Box width={"25rem"}>
-      <form onSubmit={onSubmit}>
-        <Input
-          label="E-mail"
-          type="text"
-          name="email"
-          value={form?.email ?? ""}
-          onChange={handleForm}
-        />
-        <div>
+    <div className={styles.boxContainer}>
+      Sign in to your account
+      <Box className={styles.box}>
+        <form onSubmit={onSubmit}>
           <Input
-            label="Password"
-            type={passwordType}
-            name="password"
-            value={form?.password ?? ""}
+            label="E-mail"
+            type="text"
+            name="email"
+            value={form?.email ?? ""}
             onChange={handleForm}
           />
-          <span>
-            <button
-              type="button"
-              className={styles.eye}
-              onClick={handlePasswordType}
-            >
-              <Icon name={iconName} />
-            </button>
-          </span>
-        </div>
-        <CheckBox
-          label="Remember me"
-          id="remember_me"
-          name="remember_me"
-          checked={form?.remember_me ?? false}
-          onChange={handleForm}
-        />
-        <Button disabled={!form?.email || !form.password}>Sign In</Button>
-        <Link
-          href="/register"
-          style={{ textAlign: "center", fontSize: "14px" }}
-        >
-          Create Account
-        </Link>
-      </form>
-    </Box>
+          <div>
+            <Input
+              label="Password"
+              type={passwordType}
+              name="password"
+              value={form?.password ?? ""}
+              onChange={handleForm}
+            />
+            <span>
+              <button
+                type="button"
+                className={styles.eye}
+                onClick={handlePasswordType}
+              >
+                <Icon name={iconName} />
+              </button>
+            </span>
+          </div>
+          <CheckBox
+            label="Remember me"
+            id="remember_me"
+            name="remember_me"
+            checked={form?.remember_me ?? false}
+            onChange={handleForm}
+          />
+          <Button disabled={!form?.email || !form.password}>Sign In</Button>
+          <Link
+            href="/register"
+            style={{ textAlign: "center", fontSize: "14px" }}
+          >
+            Create Account
+          </Link>
+        </form>
+      </Box>
+    </div>
   );
 }

@@ -88,122 +88,128 @@ export default function Register() {
   }
 
   return (
-    <Box width={"25rem"}>
-      {step == 1 ? (
-        <form onSubmit={next}>
-          <Input
-            label="E-mail"
-            type="text"
-            name="email"
-            value={form?.email ?? ""}
-            onChange={handleForm}
-          />
-          <Input
-            label="First name"
-            type="text"
-            name="first_name"
-            value={form?.first_name ?? ""}
-            onChange={handleForm}
-          />
-          <Input
-            label="Last name"
-            type="text"
-            name="last_name"
-            value={form?.last_name ?? ""}
-            onChange={handleForm}
-          />
-          <Button
-            disabled={!form?.email || !form.first_name || !form.last_name}
-          >
-            Next
-          </Button>
-          <Link href="/login" style={{ textAlign: "center", fontSize: "14px" }}>
-            Sign In
-          </Link>
-        </form>
-      ) : (
-        <form onSubmit={onSubmit}>
-          <Input
-            label="Phone number"
-            type="text"
-            name="phone"
-            value={form?.phone ?? ""}
-            onChange={handlePhone}
-          />
-          <div className={styles.row}>
+    <div className={styles.boxContainer}>
+      Create new account
+      <Box className={styles.box}>
+        {step == 1 ? (
+          <form onSubmit={next}>
             <Input
-              label="Day"
+              label="E-mail"
               type="text"
-              name="day"
-              value={form?.birth_date?.day ?? ""}
-              onChange={handleBirthDate}
-            />
-            <Input
-              label="Month"
-              type="text"
-              name="month"
-              value={form?.birth_date?.month ?? ""}
-              onChange={handleBirthDate}
-            />
-            <Input
-              label="Year"
-              type="text"
-              name="year"
-              value={form?.birth_date?.year ?? ""}
-              onChange={handleBirthDate}
-            />
-          </div>
-          <div className={styles.column}>
-            <label>Gender</label>
-            <div className={styles.row}>
-              <Radio
-                label="Male"
-                name="gender"
-                value="true"
-                checked={form?.gender === "true"}
-                onChange={handleForm}
-              />
-              <Radio
-                label="Female"
-                name="gender"
-                value="false"
-                checked={form?.gender === "false"}
-                onChange={handleForm}
-              />
-            </div>
-          </div>
-          <div>
-            <Input
-              label="Password"
-              type={passwordType}
-              name="password"
-              value={form?.password ?? ""}
+              name="email"
+              value={form?.email ?? ""}
               onChange={handleForm}
             />
-            <span>
-              <button
-                type="button"
-                className={styles.eye}
-                onClick={handlePasswordType}
-              >
-                <Icon name={iconName} />
-              </button>
-            </span>
-          </div>
-          <Button
-            disabled={
-              !form?.phone ||
-              !form.birth_date?.day ||
-              !form.birth_date?.month ||
-              !form.birth_date?.year ||
-              !form.gender ||
-              !form.password
-            }
-          >
-            Create Account
-          </Button>
-        </form>
-      )}
-    </Box>
+            <Input
+              label="First name"
+              type="text"
+              name="first_name"
+              value={form?.first_name ?? ""}
+              onChange={handleForm}
+            />
+            <Input
+              label="Last name"
+              type="text"
+              name="last_name"
+              value={form?.last_name ?? ""}
+              onChange={handleForm}
+            />
+            <Button
+              disabled={!form?.email || !form.first_name || !form.last_name}
+            >
+              Next
+            </Button>
+            <Link
+              href="/login"
+              style={{ textAlign: "center", fontSize: "14px" }}
+            >
+              Sign In
+            </Link>
+          </form>
+        ) : (
+          <form onSubmit={onSubmit}>
+            <Input
+              label="Phone number"
+              type="text"
+              name="phone"
+              value={form?.phone ?? ""}
+              onChange={handlePhone}
+            />
+            <div className={styles.row}>
+              <Input
+                label="Day"
+                type="text"
+                name="day"
+                value={form?.birth_date?.day ?? ""}
+                onChange={handleBirthDate}
+              />
+              <Input
+                label="Month"
+                type="text"
+                name="month"
+                value={form?.birth_date?.month ?? ""}
+                onChange={handleBirthDate}
+              />
+              <Input
+                label="Year"
+                type="text"
+                name="year"
+                value={form?.birth_date?.year ?? ""}
+                onChange={handleBirthDate}
+              />
+            </div>
+            <div className={styles.column}>
+              <label>Gender</label>
+              <div className={styles.row}>
+                <Radio
+                  label="Male"
+                  name="gender"
+                  value="true"
+                  checked={form?.gender === "true"}
+                  onChange={handleForm}
+                />
+                <Radio
+                  label="Female"
+                  name="gender"
+                  value="false"
+                  checked={form?.gender === "false"}
+                  onChange={handleForm}
+                />
+              </div>
+            </div>
+            <div>
+              <Input
+                label="Password"
+                type={passwordType}
+                name="password"
+                value={form?.password ?? ""}
+                onChange={handleForm}
+              />
+              <span>
+                <button
+                  type="button"
+                  className={styles.eye}
+                  onClick={handlePasswordType}
+                >
+                  <Icon name={iconName} />
+                </button>
+              </span>
+            </div>
+            <Button
+              disabled={
+                !form?.phone ||
+                !form.birth_date?.day ||
+                !form.birth_date?.month ||
+                !form.birth_date?.year ||
+                !form.gender ||
+                !form.password
+              }
+            >
+              Create Account
+            </Button>
+          </form>
+        )}
+      </Box>
+    </div>
   );
 }
