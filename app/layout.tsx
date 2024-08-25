@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <ToastProvider className={poppins.className}>
+        <ToastProvider className={`${poppins.className} ${styles.toast}`}>
           <nav className={styles.nav}>
             <div className={styles.logo}>
               <Link href="/">
