@@ -56,7 +56,7 @@ async function update(req: Request, { params }: { params: { id: string } }) {
       where: { id: Number(params.id) },
       data: {
         title: formData.get("title") as string,
-        url: titleToUrl(formData.get("title") as string),
+        url: titleToUrl(formData.get("title") as string) + "-" + params.id,
         list_price: Number(formData.get("list_price")),
         stock_quantity: Number(formData.get("stock_quantity")),
         filters: JSON.parse(formData.get("filters") as string),

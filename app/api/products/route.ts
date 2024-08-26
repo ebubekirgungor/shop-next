@@ -82,6 +82,15 @@ async function create(req: Request) {
       },
     });
 
+    await prisma.product.update({
+      where: {
+        id: product.id,
+      },
+      data: {
+        url: product.url + "-" + product.id,
+      },
+    });
+
     meiliSearch.index("products").updateDocuments([
       {
         id: product.id,

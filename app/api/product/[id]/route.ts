@@ -14,7 +14,7 @@ interface ProductWithUsers extends Product {
 
 export async function GET(
   _req: Request,
-  { params }: { params: { url: string } }
+  { params }: { params: { id: string } }
 ) {
   const token = cookies().get("token")?.value;
   let id = null;
@@ -26,7 +26,7 @@ export async function GET(
   }
 
   const product = await prisma.product.findUnique({
-    where: { url: params.url },
+    where: { id: Number(params.id) },
     include: id
       ? {
           Users: {

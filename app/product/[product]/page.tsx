@@ -9,12 +9,12 @@ import { hasCookie } from "cookies-next";
 import { jsonFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";
 
-export default function Product({ params }: { params: { url: string } }) {
+export default function Product({ params }: { params: { product: string } }) {
   const [product, setProduct] = useState<Product>();
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/product/" + params.url)
+    fetch("/api/product/" + params.product.match(/-(\d+)$/)![1])
       .then((response) => response.json())
       .then((data) => {
         setProduct(data);
