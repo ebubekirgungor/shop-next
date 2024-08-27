@@ -95,7 +95,9 @@ export default function Favorites() {
                   />
                   <div className={styles.title}>{product.title}</div>
                 </Link>
-                <div className={styles.price}>{product.list_price} TL</div>
+                <div className={styles.price}>
+                  {product.list_price.toLocaleString("tr-TR")} TL
+                </div>
               </div>
             ))}
           </div>

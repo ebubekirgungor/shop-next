@@ -65,7 +65,7 @@ export default function Order({ params }: { params: { id: string } }) {
                     </Link>
                     <div className={styles.justifyBetween}>
                       <div className={styles.price}>
-                        {product.list_price} TL
+                        {product.list_price.toLocaleString("tr-TR")} TL
                       </div>
                       <div className={styles.grayText}>
                         Quantity: {product.quantity}
@@ -94,7 +94,7 @@ export default function Order({ params }: { params: { id: string } }) {
                 <div className={styles.paymentBox}>
                   <div className={styles.info}>
                     <div className={styles.grayText}>Subtotal</div>
-                    {order?.total_amount} TL
+                    {order?.total_amount.toLocaleString("tr-TR")} TL
                   </div>
                   <div className={styles.info}>
                     <div className={styles.grayText}>Shipping cost</div>
@@ -102,7 +102,10 @@ export default function Order({ params }: { params: { id: string } }) {
                   </div>
                   <div className={styles.info}>
                     <div className={styles.grayText}>Total charge</div>
-                    {order?.total_amount! + shipping} TL
+                    {(order?.total_amount! + shipping).toLocaleString(
+                      "tr-TR"
+                    )}{" "}
+                    TL
                   </div>
                 </div>
               </Box>

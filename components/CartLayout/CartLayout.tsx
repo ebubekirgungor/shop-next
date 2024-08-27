@@ -66,13 +66,15 @@ export default function CartLayout({
                 )}
               </div>
               <div className={styles.price}>
-                {products.reduce((total: number, product: Product) => {
-                  return (
-                    total +
-                    product.list_price *
-                      (product?.cart?.selected ? product.cart.quantity : 0)
-                  );
-                }, 0) + shipping}
+                {(
+                  products.reduce((total: number, product: Product) => {
+                    return (
+                      total +
+                      product.list_price *
+                        (product?.cart?.selected ? product.cart.quantity : 0)
+                    );
+                  }, 0) + shipping
+                ).toLocaleString("tr-TR")}
                 <span> TL</span>
               </div>
             </div>
@@ -81,13 +83,17 @@ export default function CartLayout({
                 <div className={styles.detail}>
                   Subtotal
                   <div>
-                    {products.reduce((total: number, product: Product) => {
-                      return (
-                        total +
-                        product.list_price *
-                          (product?.cart?.selected ? product.cart.quantity : 0)
-                      );
-                    }, 0)}
+                    {products
+                      .reduce((total: number, product: Product) => {
+                        return (
+                          total +
+                          product.list_price *
+                            (product?.cart?.selected
+                              ? product.cart.quantity
+                              : 0)
+                        );
+                      }, 0)
+                      .toLocaleString("tr-TR")}
                     <span> TL</span>
                   </div>
                 </div>

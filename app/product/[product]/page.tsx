@@ -159,7 +159,9 @@ export default function Product({ params }: { params: { product: string } }) {
               )}
             </div>
             <div className={styles.priceAndButton}>
-              <div className={styles.listPrice}>{product?.list_price} TL</div>
+              <div className={styles.listPrice}>
+                {product?.list_price.toLocaleString("tr-TR")} TL
+              </div>
               <Button onClick={addProductToCart}>Add to Cart</Button>
             </div>
           </div>

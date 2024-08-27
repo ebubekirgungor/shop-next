@@ -95,7 +95,10 @@ export default function Orders() {
                       )}
                     />
                     <OrderInfo title="Customer" info={order.customer_name} />
-                    <OrderInfo title="Total amount" info={order.total_amount} />
+                    <OrderInfo
+                      title="Total amount"
+                      info={order.total_amount.toLocaleString("tr-TR") + " TL"}
+                    />
                     <OrderInfo
                       title="Total products"
                       info={order.products.reduce(

@@ -157,7 +157,9 @@ export default function Cart() {
                         </button>
                       </div>
                       <h4>
-                        {product.list_price * product.cart?.quantity! + " TL"}
+                        {(
+                          product.list_price * product.cart?.quantity!
+                        ).toLocaleString("tr-TR") + " TL"}
                       </h4>
                     </div>
                     <button
