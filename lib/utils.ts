@@ -9,7 +9,8 @@ function titleToUrl(title: string) {
     .replaceAll("ı", "i")
     .replaceAll("ö", "o")
     .replaceAll("ş", "s")
-    .replaceAll("ü", "u");
+    .replaceAll("ü", "u")
+    .replace(/[^a-zA-Z0-9-]/g, "");
 }
 
 function birthDateRegex(field: string, value: string) {

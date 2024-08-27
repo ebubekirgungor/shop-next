@@ -1,3 +1,5 @@
+export const fetchCache = "default-no-store";
+
 import meiliSearch from "@/lib/meiliSearch";
 import { NextRequest } from "next/server";
 
