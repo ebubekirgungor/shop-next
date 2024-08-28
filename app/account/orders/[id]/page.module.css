@@ -35,6 +35,14 @@
   padding: 0 !important;
 }
 
+@media screen and (max-width: 600px) {
+  .box {
+    border-radius: unset !important;
+    border-left: unset !important;
+    border-right: unset !important;
+  }
+}
+
 .boxHeader {
   display: flex;
   justify-content: space-between;
@@ -96,7 +104,7 @@
 @media screen and (max-width: 600px) {
   .product {
     width: calc(50vw - 0.75rem);
-    height: 16rem;
+    height: 15rem;
     row-gap: 0.2rem;
   }
 }
@@ -124,6 +132,9 @@
 @media screen and (max-width: 600px) {
   .product .title {
     padding: 0.5rem;
+    font-size: small;
+    white-space: nowrap;
+    overflow: hidden;
   }
 }
 
@@ -148,7 +159,7 @@
 
 @media screen and (max-width: 600px) {
   .product .price {
-    font-size: large;
+    font-size: medium;
   }
 }
 
@@ -159,7 +170,7 @@
 
 @media screen and (max-width: 600px) {
   .product .grayText {
-    font-size: small;
+    font-size: x-small;
   }
 }
 
