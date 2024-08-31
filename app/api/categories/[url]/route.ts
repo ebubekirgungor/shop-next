@@ -67,8 +67,7 @@ export async function GET(
 
   if (searchParams.size === 0) {
     return Response.json({
-      category_title: category?.title,
-      filters: category?.filters,
+      title: category?.title,
       products: categoryProducts,
     });
   } else {
@@ -79,8 +78,7 @@ export async function GET(
     });
 
     return Response.json({
-      category_title: category?.title,
-      filters: category?.filters,
+      title: category?.title,
       products: categoryProducts!.filter((product) =>
         (product.filters as ProductFilter[]).some((filter) =>
           filters.get(filter.name)?.includes(filter.value)
