@@ -119,6 +119,7 @@
   row-gap: 0.5rem;
   padding: 1rem !important;
   position: absolute;
+  z-index: 1;
   margin-top: 3rem;
   box-shadow: var(--box-shadow);
   visibility: hidden;

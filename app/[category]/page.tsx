@@ -13,6 +13,9 @@ import Button from "@/components/Button";
 import { hasCookie } from "cookies-next";
 import { jsonFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";
+import Box from "@/components/Box";
+import { SortValue } from "@/lib/types";
+import Chip from "@/components/Chip";
 
 interface ProductFilter {
   name: string;
@@ -24,6 +27,21 @@ interface CategoryProduct extends Product {
   filters: ProductFilter[];
   is_favorite: boolean;
 }
+
+const sortValues = [
+  {
+    name: "Newests",
+    value: SortValue.NEWEST,
+  },
+  {
+    name: "Lowest price",
+    value: SortValue.LOWEST,
+  },
+  {
+    name: "Highest price",
+    value: SortValue.HIGHEST,
+  },
+];
 
 export default function Category({ params }: { params: { category: string } }) {
   const [categoryTitle, setCategoryTitle] = useState("");
@@ -57,7 +75,7 @@ export default function Category({ params }: { params: { category: string } }) {
       });
   }, []);
 
-  async function filterProducts() {
+  async function filterProducts(sortValue?: SortValue) {
     const selectedFilters: { [index: string]: string } = {};
 
     Object.keys(filters).map((key) => {
@@ -66,6 +84,8 @@ export default function Category({ params }: { params: { category: string } }) {
         selectedFilters[key] = selected.map((f) => f.filter).join(",");
       }
     });
+
+    if (sortValue) selectedFilters["_sort"] = sortValue;
 
     await fetch(
       `/api/categories/${params.category}?${new URLSearchParams(
@@ -137,6 +157,16 @@ export default function Category({ params }: { params: { category: string } }) {
           <LoadingSpinner />
         ) : (
           <div className={styles.filtersContainer}>
+            <div className={styles.mobileSortMenu}>
+              {sortValues.map((sort) => (
+                <Chip
+                  onClick={() => filterProducts(sort.value)}
+                  key={sort.value}
+                >
+                  {sort.name}
+                </Chip>
+              ))}
+            </div>
             {Object.keys(filters).map((key) => (
               <div className={styles.filter} key={key}>
                 <input
@@ -166,12 +196,32 @@ export default function Category({ params }: { params: { category: string } }) {
           </div>
         )}
         <div className={styles.mobileShowResultsButton}>
-          <Button onClick={filterProducts}>Show results</Button>
+          <Button onClick={() => filterProducts()}>Show results</Button>
         </div>
       </nav>
       <LayoutContainer>
-        <LayoutTitle>{categoryTitle}</LayoutTitle>
-        <LayoutBox minHeight="402px" className={styles.layoutBox}>
+        {!isLoading && (
+          <LayoutTitle className={styles.layoutTitle}>
+            {categoryTitle}
+            <div className={styles.sortContainer}>
+              <button className={styles.sortButton}>
+                Sort
+                <Icon name="sort" />
+              </button>
+              <Box className={styles.sortValues}>
+                {sortValues.map((sort) => (
+                  <div
+                    onClick={() => filterProducts(sort.value)}
+                    key={sort.value}
+                  >
+                    {sort.name}
+                  </div>
+                ))}
+              </Box>
+            </div>
+          </LayoutTitle>
+        )}
+        <LayoutBox minHeight="454px" className={styles.layoutBox}>
           {isLoading ? (
             <LoadingSpinner />
           ) : (

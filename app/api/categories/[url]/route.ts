@@ -2,6 +2,7 @@ export const fetchCache = "default-no-store";
 
 import { getPublicKey } from "@/lib/keyStore";
 import prisma from "@/lib/prisma";
+import { SortValue } from "@/lib/types";
 import { JsonArray } from "@prisma/client/runtime/library";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
@@ -14,6 +15,20 @@ interface ProductFilter extends JsonArray {
   name: string;
   value: string;
 }
+
+interface SortProduct {
+  created_at: Date;
+  list_price: number;
+}
+
+const sortFunctions = {
+  [SortValue.NEWEST]: (a: SortProduct, b: SortProduct) =>
+    new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+  [SortValue.LOWEST]: (a: SortProduct, b: SortProduct) =>
+    a.list_price - b.list_price,
+  [SortValue.HIGHEST]: (a: SortProduct, b: SortProduct) =>
+    b.list_price - a.list_price,
+};
 
 export async function GET(
   req: NextRequest,
@@ -52,7 +67,8 @@ export async function GET(
     },
   });
 
-  const categoryProducts = category?.products.map((product) => ({
+  let categoryProducts = category?.products.map((product) => ({
+    created_at: product.created_at,
     id: product.id,
     title: product.title,
     url: product.url,
@@ -65,25 +81,29 @@ export async function GET(
 
   const searchParams = req.nextUrl.searchParams;
 
-  if (searchParams.size === 0) {
-    return Response.json({
-      title: category?.title,
-      products: categoryProducts,
-    });
-  } else {
-    const filters = new Map<string, string[]>();
+  const filters = new Map<string, string[]>();
 
-    searchParams.forEach((value, key) => {
-      filters.set(key, value.split(","));
-    });
+  const sortValue = searchParams.get("_sort")! as SortValue;
+  searchParams.delete("_sort");
 
-    return Response.json({
-      title: category?.title,
-      products: categoryProducts!.filter((product) =>
-        (product.filters as ProductFilter[]).some((filter) =>
-          filters.get(filter.name)?.includes(filter.value)
-        )
-      ),
-    });
+  searchParams.forEach((value, key) => {
+    filters.set(key, value.split(","));
+  });
+
+  if (filters.size > 0) {
+    categoryProducts = categoryProducts!.filter((product) =>
+      (product.filters as ProductFilter[]).some((filter) =>
+        filters.get(filter.name)?.includes(filter.value)
+      )
+    );
   }
+
+  if (sortValue) {
+    categoryProducts = categoryProducts!.sort(sortFunctions[sortValue]);
+  }
+
+  return Response.json({
+    title: category?.title,
+    products: categoryProducts,
+  });
 }

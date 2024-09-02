@@ -10,6 +10,12 @@ export enum Role {
   ADMIN = "ADMIN",
 }
 
+export enum SortValue {
+  NEWEST = "newest",
+  LOWEST = "lowest",
+  HIGHEST = "highest",
+}
+
 declare global {
   interface Address {
     id: number | null;
