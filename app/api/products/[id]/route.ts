@@ -10,7 +10,7 @@ import { titleToUrl } from "@/lib/utils";
 import { handleServerError } from "@/lib/errorHandler";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import meiliSearch from "@/lib/meiliSearch";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 async function get(_req: Request, { params }: { params: { id: string } }) {
   return NextResponse.json(
@@ -70,6 +70,7 @@ async function update(req: Request, { params }: { params: { id: string } }) {
         category: {
           select: {
             title: true,
+            url: true,
           },
         },
       },
@@ -84,7 +85,8 @@ async function update(req: Request, { params }: { params: { id: string } }) {
       },
     ]);
 
-    revalidatePath("/product/" + url);
+    revalidateTag("product-" + product.id);
+    revalidatePath("/" + product.category.url);
 
     return NextResponse.json(
       { message: "Product updated" },
@@ -99,11 +101,21 @@ async function update(req: Request, { params }: { params: { id: string } }) {
 
 async function remove(_req: Request, { params }: { params: { id: string } }) {
   try {
-    await prisma.product.delete({
+    const product = await prisma.product.delete({
       where: { id: Number(params.id) },
+      include: {
+        category: {
+          select: {
+            url: true,
+          },
+        },
+      },
     });
 
     meiliSearch.index("products").deleteDocument(Number(params.id));
+
+    revalidateTag("product-" + product.id);
+    revalidatePath("/" + product.category.url);
 
     return NextResponse.json(
       { message: "Product deleted" },

@@ -10,6 +10,7 @@ import { titleToUrl } from "@/lib/utils";
 import { handleServerError } from "@/lib/errorHandler";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import meiliSearch from "@/lib/meiliSearch";
+import { revalidatePath } from "next/cache";
 
 async function all(_req: Request) {
   return NextResponse.json(
@@ -77,6 +78,7 @@ async function create(req: Request) {
         category: {
           select: {
             title: true,
+            url: true,
           },
         },
       },
@@ -99,6 +101,8 @@ async function create(req: Request) {
         category: product.category.title,
       },
     ]);
+
+    revalidatePath("/" + product.category.url);
 
     return NextResponse.json(
       { message: "Product created" },

@@ -1,285 +1,58 @@
-"use client";
-import Image from "next/image";
-import styles from "./page.module.css";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import LayoutContainer from "@/components/layout/LayoutContainer";
-import LayoutTitle from "@/components/layout/LayoutTitle";
-import LayoutBox from "@/components/layout/LayoutBox";
-import Icon from "@/components/ui/Icon";
-import CheckBox from "@/components/ui/CheckBox";
-import Button from "@/components/ui/Button";
-import { hasCookie } from "cookies-next";
-import { jsonFetcher } from "@/lib/fetchers";
-import { toast } from "react-toastify";
-import Box from "@/components/ui/Box";
-import { SortValue } from "@/lib/types";
-import Chip from "@/components/ui/Chip";
+import { cookies } from "next/headers";
+import CategoryView from "./CategoryView";
 
 interface ProductFilter {
   name: string;
   value: string;
 }
 
-interface CategoryProduct extends Product {
+export interface CategoryProduct extends Product {
   image: string;
   filters: ProductFilter[];
   is_favorite: boolean;
 }
 
-const sortValues = [
-  {
-    name: "Newests",
-    value: SortValue.NEWEST,
-  },
-  {
-    name: "Lowest price",
-    value: SortValue.LOWEST,
-  },
-  {
-    name: "Highest price",
-    value: SortValue.HIGHEST,
-  },
-];
+interface Category {
+  title: string;
+  products: CategoryProduct[];
+}
 
-export default function Category({ params }: { params: { category: string } }) {
-  const [categoryTitle, setCategoryTitle] = useState("");
-  const [products, setProducts] = useState<CategoryProduct[]>([]);
+export interface CategoryFilters {
+  [key: string]: { filter: string; selected: boolean }[];
+}
 
-  const [filters, setFilters] = useState<{
-    [key: string]: { filter: string; selected: boolean }[];
-  }>({});
+export default async function CategoryPage({
+  params,
+}: {
+  params: { category: string };
+}) {
+  const data: Category = await fetch(
+    process.env.BASE_URL + "/api/categories/" + params.category
+  ).then((response) => response.json());
 
-  const [isLoading, setLoading] = useState(true);
+  const products = data.products ?? [];
+  const filters: CategoryFilters = {};
 
-  useEffect(() => {
-    fetch(`/api/categories/${params.category}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setCategoryTitle(data.title);
-        setProducts(data.products);
-        data.products.map((product: CategoryProduct) => {
-          product.filters.map((filter) => {
-            const existing = filters[filter.name] || [];
-            if (!existing.find((f) => f.filter == filter.value)) {
-              existing[existing.length] = {
-                filter: filter.value,
-                selected: false,
-              };
-              filters[filter.name] = existing;
-            }
-          });
-        });
-        setLoading(false);
-      });
-  }, []);
-
-  async function filterProducts(sortValue?: SortValue) {
-    const selectedFilters: { [index: string]: string } = {};
-
-    Object.keys(filters).map((key) => {
-      const selected = filters[key].filter((f) => f.selected === true);
-      if (selected.length > 0) {
-        selectedFilters[key] = selected.map((f) => f.filter).join(",");
+  products.map((product) => {
+    product.filters.map((filter) => {
+      const existing = filters[filter.name] || [];
+      if (!existing.find((f) => f.filter == filter.value)) {
+        existing[existing.length] = {
+          filter: filter.value,
+          selected: false,
+        };
+        filters[filter.name] = existing;
       }
     });
-
-    if (sortValue) selectedFilters["_sort"] = sortValue;
-
-    await fetch(
-      `/api/categories/${params.category}?${new URLSearchParams(
-        selectedFilters
-      )}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setProducts(data.products);
-        (document.getElementById("nav") as HTMLInputElement).checked = false;
-      });
-  }
-
-  async function handleChange(key: string, index: number) {
-    let filter = filters[key];
-    filter[index] = { ...filter[index], selected: !filter[index].selected };
-
-    const newFilters = { ...filters };
-    newFilters[key] = filter;
-
-    setFilters(newFilters);
-
-    if (!(document.getElementById("nav") as HTMLInputElement).checked) {
-      await filterProducts();
-    }
-  }
-
-  async function toggleFavorite(id: number, is_favorite: boolean) {
-    const response = await jsonFetcher(
-      "/api/favorites/" + id,
-      is_favorite ? "DELETE" : "POST"
-    );
-
-    if (response.status === 200) {
-      setProducts((prev) =>
-        prev.map((product) => {
-          return product.id === id
-            ? { ...product, is_favorite: !is_favorite }
-            : product;
-        })
-      );
-      toast.success(response.message);
-    } else {
-      toast.error(response.message);
-    }
-  }
-
-  async function addProductToCart(id: number) {
-    const response = await jsonFetcher("/api/cart/" + id, "POST");
-
-    if (response.status === 200) {
-      toast.success(response.message);
-    } else {
-      toast.error(response.message);
-    }
-  }
+  });
 
   return (
-    <>
-      <input id="nav" type="checkbox" style={{ display: "none" }} />
-      <nav className={styles.nav}>
-        <div className={styles.mobileFiltersTitle}>
-          Filters
-          <label className={styles.closeButton} htmlFor="nav">
-            <Icon name="close" />
-          </label>
-        </div>
-        {isLoading ? (
-          <LoadingSpinner />
-        ) : (
-          <div className={styles.filtersContainer}>
-            <div className={styles.mobileSortMenu}>
-              {sortValues.map((sort) => (
-                <Chip
-                  onClick={() => filterProducts(sort.value)}
-                  key={sort.value}
-                >
-                  {sort.name}
-                </Chip>
-              ))}
-            </div>
-            {Object.keys(filters).map((key) => (
-              <div className={styles.filter} key={key}>
-                <input
-                  id={key}
-                  type="checkbox"
-                  className={styles.accordionCheckbox}
-                />
-                <label className={styles.filterName} htmlFor={key}>
-                  {key}
-                  <span className={styles.expandIcon} />
-                </label>
-                <span className={styles.filterValuesContainer}>
-                  <div className={styles.filterValues}>
-                    {filters[key].map((filter, index) => (
-                      <CheckBox
-                        checked={filter.selected}
-                        onChange={() => handleChange(key, index)}
-                        label={filter.filter}
-                        id={filter.filter}
-                        key={filter.filter}
-                      />
-                    ))}
-                  </div>
-                </span>
-              </div>
-            ))}
-          </div>
-        )}
-        <div className={styles.mobileShowResultsButton}>
-          <Button onClick={() => filterProducts()}>Show results</Button>
-        </div>
-      </nav>
-      <LayoutContainer>
-        {!isLoading && (
-          <LayoutTitle className={styles.layoutTitle}>
-            {categoryTitle}
-            <div className={styles.sortContainer}>
-              <button className={styles.sortButton}>
-                Sort
-                <Icon name="sort" />
-              </button>
-              <Box className={styles.sortValues}>
-                {sortValues.map((sort) => (
-                  <div
-                    onClick={() => filterProducts(sort.value)}
-                    key={sort.value}
-                  >
-                    {sort.name}
-                  </div>
-                ))}
-              </Box>
-            </div>
-          </LayoutTitle>
-        )}
-        <LayoutBox minHeight="454px" className={styles.layoutBox}>
-          {isLoading ? (
-            <LoadingSpinner />
-          ) : (
-            <>
-              <div className={styles.mobileButtons}>
-                <label htmlFor="nav">
-                  <Icon name="filter" />
-                  Filters
-                </label>
-              </div>
-              <div className={styles.row}>
-                {products.map((product) => (
-                  <div className={styles.product} key={product.id}>
-                    {hasCookie("role") && (
-                      <button
-                        className={styles.favoriteButton}
-                        onClick={() =>
-                          toggleFavorite(product.id!, product.is_favorite)
-                        }
-                      >
-                        <Icon
-                          name={
-                            product?.is_favorite
-                              ? "favorite_filled"
-                              : "favorite"
-                          }
-                          disableFilter
-                        />
-                      </button>
-                    )}
-                    <Link href={"/product/" + product.url}>
-                      <Image
-                        src={"/images/products/" + product.image}
-                        alt={product.image}
-                        width="0"
-                        height="0"
-                        sizes="14rem"
-                      />
-                      <div className={styles.title}>{product.title}</div>
-                    </Link>
-                    <div className={styles.column}>
-                      <div className={styles.price}>
-                        {product.list_price.toLocaleString("tr-TR")} TL
-                      </div>
-                      <Button
-                        className={styles.addToCart}
-                        onClick={() => addProductToCart(product.id!)}
-                      >
-                        Add to Cart
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-        </LayoutBox>
-      </LayoutContainer>
-    </>
+    <CategoryView
+      title={data.title}
+      url={params.category}
+      products={products}
+      filters={filters}
+      isLoggedIn={cookies().has("role")}
+    />
   );
 }
