@@ -7,7 +7,7 @@ import Button from "@/components/ui/Button";
 import { jsonFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";
 
-export default function Product({
+export default function ProductView({
   product,
   isLoggedIn,
 }: {

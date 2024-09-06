@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import Product from "./Product";
+import ProductView from "./ProductView";
 
 export default async function ProductPage({
   params,
@@ -15,5 +15,5 @@ export default async function ProductPage({
     }
   ).then((response) => response.json());
 
-  return <Product product={data} isLoggedIn={cookies().has("role")} />;
+  return <ProductView product={data} isLoggedIn={cookies().has("role")} />;
 }
