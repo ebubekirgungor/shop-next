@@ -10,6 +10,7 @@ import { titleToUrl } from "@/lib/utils";
 import { handleServerError } from "@/lib/errorHandler";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import meiliSearch from "@/lib/meiliSearch";
+import { revalidatePath } from "next/cache";
 
 async function get(_req: Request, { params }: { params: { id: string } }) {
   return NextResponse.json(
@@ -52,11 +53,13 @@ async function update(req: Request, { params }: { params: { id: string } }) {
   }
 
   try {
+    const url = titleToUrl(formData.get("title") as string) + "-" + params.id;
+
     const product = await prisma.product.update({
       where: { id: Number(params.id) },
       data: {
         title: formData.get("title") as string,
-        url: titleToUrl(formData.get("title") as string) + "-" + params.id,
+        url,
         list_price: Number(formData.get("list_price")),
         stock_quantity: Number(formData.get("stock_quantity")),
         filters: JSON.parse(formData.get("filters") as string),
@@ -80,6 +83,8 @@ async function update(req: Request, { params }: { params: { id: string } }) {
         category: product.category.title,
       },
     ]);
+
+    revalidatePath("/product/" + url);
 
     return NextResponse.json(
       { message: "Product updated" },
