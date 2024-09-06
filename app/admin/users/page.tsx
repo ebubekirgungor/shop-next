@@ -1,11 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
-import LayoutContainer from "@/components/LayoutContainer";
-import LayoutBox from "@/components/LayoutBox";
-import LayoutTitle from "@/components/LayoutTitle";
-import LoadingSpinner from "@/components/LoadingSpinner";
-import DataTable from "@/components/DataTable";
-import Chip from "@/components/Chip";
+import LayoutContainer from "@/components/layout/LayoutContainer";
+import LayoutBox from "@/components/layout/LayoutBox";
+import LayoutTitle from "@/components/layout/LayoutTitle";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import DataTable from "@/components/ui/DataTable";
+import Chip from "@/components/ui/Chip";
 import Link from "next/link";
 import styles from "./page.module.css";
 

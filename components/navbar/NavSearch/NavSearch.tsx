@@ -1,10 +1,10 @@
 "use client";
 import { ChangeEvent, useState } from "react";
-import Box from "../Box";
+import Box from "../../ui/Box";
 import styles from "./NavSearch.module.css";
 import Link from "next/link";
 import DOMPurify from "dompurify";
-import Icon from "../Icon";
+import Icon from "../../ui/Icon";
 
 interface SearchedProduct {
   id: number;

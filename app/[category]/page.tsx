@@ -3,19 +3,19 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import LoadingSpinner from "@/components/LoadingSpinner";
-import LayoutContainer from "@/components/LayoutContainer";
-import LayoutTitle from "@/components/LayoutTitle";
-import LayoutBox from "@/components/LayoutBox";
-import Icon from "@/components/Icon";
-import CheckBox from "@/components/CheckBox";
-import Button from "@/components/Button";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import LayoutContainer from "@/components/layout/LayoutContainer";
+import LayoutTitle from "@/components/layout/LayoutTitle";
+import LayoutBox from "@/components/layout/LayoutBox";
+import Icon from "@/components/ui/Icon";
+import CheckBox from "@/components/ui/CheckBox";
+import Button from "@/components/ui/Button";
 import { hasCookie } from "cookies-next";
 import { jsonFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";
-import Box from "@/components/Box";
+import Box from "@/components/ui/Box";
 import { SortValue } from "@/lib/types";
-import Chip from "@/components/Chip";
+import Chip from "@/components/ui/Chip";
 
 interface ProductFilter {
   name: string;

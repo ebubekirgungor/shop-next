@@ -1,11 +1,11 @@
 "use client";
 import { ChangeEvent, FormEvent, useState } from "react";
 import styles from "./page.module.css";
-import Box from "@/components/Box";
-import Input from "@/components/Input";
-import Button from "@/components/Button";
-import Radio from "@/components/Radio";
-import Icon from "@/components/Icon";
+import Box from "@/components/ui/Box";
+import Input from "@/components/ui/Input";
+import Button from "@/components/ui/Button";
+import Radio from "@/components/ui/Radio";
+import Icon from "@/components/ui/Icon";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { birthDateRegex, formatPhone } from "@/lib/utils";

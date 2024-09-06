@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import Icon from "../Icon";
+import Icon from "../../ui/Icon";
 import LogoutButton from "../LogoutButton";
 import NavButton from "../NavButton";
 import styles from "./MobileNavButtons.module.css";

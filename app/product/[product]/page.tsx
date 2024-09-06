@@ -1,10 +1,10 @@
 "use client";
 import { useState, useEffect, TouchEvent } from "react";
 import styles from "./page.module.css";
-import LoadingSpinner from "@/components/LoadingSpinner";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import Image from "next/image";
-import Icon from "@/components/Icon";
-import Button from "@/components/Button";
+import Icon from "@/components/ui/Icon";
+import Button from "@/components/ui/Button";
 import { hasCookie } from "cookies-next";
 import { jsonFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";

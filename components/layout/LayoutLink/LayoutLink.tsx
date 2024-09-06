@@ -4,7 +4,7 @@ import { FC } from "react";
 import styles from "./LayoutLink.module.css";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import Icon from "../Icon";
+import Icon from "../../ui/Icon";
 
 interface Props {
   href: string;

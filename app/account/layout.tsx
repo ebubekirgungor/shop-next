@@ -1,7 +1,7 @@
-import Icon from "@/components/Icon";
+import Icon from "@/components/ui/Icon";
 import styles from "./layout.module.css";
-import LayoutLink from "@/components/LayoutLink";
-import MobileNavButtons from "@/components/MobileNavButtons";
+import LayoutLink from "@/components/layout/LayoutLink";
+import MobileNavButtons from "@/components/navbar/MobileNavButtons";
 
 export default function AccountLayout({
   children,

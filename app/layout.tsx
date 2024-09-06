@@ -4,14 +4,14 @@ import "./globals.css";
 import styles from "./layout.module.css";
 import Link from "next/link";
 import Image from "next/image";
-import NavButton from "@/components/NavButton";
+import NavButton from "@/components/navbar/NavButton";
 import ToastProvider from "./ToastProvider";
-import NavSearch from "@/components/NavSearch";
-import Box from "@/components/Box";
-import Icon from "@/components/Icon";
+import NavSearch from "@/components/navbar/NavSearch";
+import Box from "@/components/ui/Box";
+import Icon from "@/components/ui/Icon";
 import { Role } from "@/lib/types";
 import { cookies } from "next/headers";
-import LogoutButton from "@/components/LogoutButton";
+import LogoutButton from "@/components/navbar/LogoutButton";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500"] });
 

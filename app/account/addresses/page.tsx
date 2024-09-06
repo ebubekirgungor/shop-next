@@ -1,14 +1,14 @@
 "use client";
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import styles from "./page.module.css";
-import LayoutContainer from "@/components/LayoutContainer";
-import LayoutBox from "@/components/LayoutBox";
-import LayoutTitle from "@/components/LayoutTitle";
-import LoadingSpinner from "@/components/LoadingSpinner";
-import Address from "@/components/Address";
-import Dialog from "@/components/Dialog";
-import Input from "@/components/Input";
-import Button from "@/components/Button";
+import LayoutContainer from "@/components/layout/LayoutContainer";
+import LayoutBox from "@/components/layout/LayoutBox";
+import LayoutTitle from "@/components/layout/LayoutTitle";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import Address from "@/components/ui/Address";
+import Dialog from "@/components/ui/Dialog";
+import Input from "@/components/ui/Input";
+import Button from "@/components/ui/Button";
 import { toast } from "react-toastify";
 import { jsonFetcher } from "@/lib/fetchers";
 

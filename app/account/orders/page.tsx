@@ -1,19 +1,19 @@
 "use client";
 import { useState, useEffect } from "react";
 import styles from "./page.module.css";
-import LayoutContainer from "@/components/LayoutContainer";
-import LayoutBox from "@/components/LayoutBox";
-import LayoutTitle from "@/components/LayoutTitle";
-import LoadingSpinner from "@/components/LoadingSpinner";
-import Box from "@/components/Box";
+import LayoutContainer from "@/components/layout/LayoutContainer";
+import LayoutBox from "@/components/layout/LayoutBox";
+import LayoutTitle from "@/components/layout/LayoutTitle";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import Box from "@/components/ui/Box";
 import Image from "next/image";
 import Link from "next/link";
-import Chip from "@/components/Chip";
-import Input from "@/components/Input";
-import NoItem from "@/components/NoItem";
-import Icon from "@/components/Icon";
+import Chip from "@/components/ui/Chip";
+import Input from "@/components/ui/Input";
+import NoItem from "@/components/ui/NoItem";
+import Icon from "@/components/ui/Icon";
 import { DeliveryStatus } from "@/lib/types";
-import Button from "@/components/Button";
+import Button from "@/components/ui/Button";
 import { dateOptions, statusNames } from "./orderUtils";
 
 function OrderInfo({ title, info }: { title: string; info: string | number }) {

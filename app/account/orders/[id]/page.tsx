@@ -1,13 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
 import styles from "./page.module.css";
-import LayoutContainer from "@/components/LayoutContainer";
-import LayoutBox from "@/components/LayoutBox";
-import LayoutTitle from "@/components/LayoutTitle";
-import LoadingSpinner from "@/components/LoadingSpinner";
-import Icon from "@/components/Icon";
+import LayoutContainer from "@/components/layout/LayoutContainer";
+import LayoutBox from "@/components/layout/LayoutBox";
+import LayoutTitle from "@/components/layout/LayoutTitle";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import Icon from "@/components/ui/Icon";
 import Link from "next/link";
-import Box from "@/components/Box";
+import Box from "@/components/ui/Box";
 import Image from "next/image";
 import { dateOptions, statusNames } from "../orderUtils";
 

@@ -1,11 +1,11 @@
 "use client";
 import { ChangeEvent, FormEvent, useState } from "react";
 import styles from "./page.module.css";
-import Box from "@/components/Box";
-import Input from "@/components/Input";
-import CheckBox from "@/components/CheckBox";
-import Button from "@/components/Button";
-import Icon from "@/components/Icon";
+import Box from "@/components/ui/Box";
+import Input from "@/components/ui/Input";
+import CheckBox from "@/components/ui/CheckBox";
+import Button from "@/components/ui/Button";
+import Icon from "@/components/ui/Icon";
 import Link from "next/link";
 import { jsonFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";
