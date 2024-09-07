@@ -1,4 +1,5 @@
 import { hasCookie, setCookie } from "cookies-next";
+import { jsonFetcher } from "./fetchers";
 
 function titleToUrl(title: string) {
   return title
@@ -42,13 +43,7 @@ async function updateCart(products: Product[]) {
   const cart = products.map((product) => product.cart);
 
   if (hasCookie("role")) {
-    const response = await fetch("/api/cart", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ cart: cart }),
-    });
+    const response = await jsonFetcher("/api/cart", "POST", { cart: cart });
 
     return response.status === 200;
   } else {
