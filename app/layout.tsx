@@ -79,6 +79,12 @@ export default function RootLayout({
             </div>
           </nav>
           <main className={styles.main}>{children}</main>
+          <footer className={styles.footer}>
+            {new Date().getFullYear()} ebubekirgungor - No rights reserved
+            <Link href="https://github.com/ebubekirgungor/shop-next">
+              Source code
+            </Link>
+          </footer>
         </ToastProvider>
       </body>
     </html>

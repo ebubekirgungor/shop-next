@@ -75,7 +75,7 @@ export default function ProductView({
   async function toggleFavorite() {
     const response = await jsonFetcher(
       "/api/favorites/" + product?.id,
-      product?.is_favorite ? "DELETE" : "POST"
+      isFavorite ? "DELETE" : "POST"
     );
 
     if (response.status === 200) {
