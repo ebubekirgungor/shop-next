@@ -9,6 +9,7 @@ import path from "path";
 import { titleToUrl } from "@/lib/utils";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { handleServerError } from "@/lib/errorHandler";
+import { revalidatePath } from "next/cache";
 
 async function all(_req: Request) {
   return NextResponse.json(await prisma.category.findMany());
@@ -105,6 +106,8 @@ async function update(req: Request) {
       data: data,
     });
 
+    revalidatePath("/");
+
     return NextResponse.json(
       { message: "Category updated" },
       {
@@ -121,6 +124,8 @@ async function remove(req: Request) {
     await prisma.category.delete({
       where: { id: Number((await req.formData()).get("id")) },
     });
+
+    revalidatePath("/");
 
     return NextResponse.json(
       { message: "Category deleted" },
