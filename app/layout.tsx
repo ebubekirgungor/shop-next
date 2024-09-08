@@ -21,8 +21,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  auth,
 }: Readonly<{
   children: React.ReactNode;
+  auth: React.ReactNode;
 }>) {
   const role = cookies().get("role")?.value;
   return (
@@ -85,6 +87,7 @@ export default function RootLayout({
               Source code
             </Link>
           </footer>
+          {auth}
         </ToastProvider>
       </body>
     </html>
