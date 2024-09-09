@@ -1,0 +1,132 @@
+.nav {
+  width: 100%;
+  background-color: rgb(var(--nav-background-color));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 1rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  border-bottom: 1px solid rgb(var(--border-color));
+}
+
+@media screen and (max-width: 600px) {
+  .nav {
+    padding-left: 0;
+    padding-right: 1rem;
+    border-bottom: unset;
+  }
+}
+
+.logo {
+  width: 100%;
+}
+
+.logo a {
+  display: block;
+  width: min-content;
+  line-height: 0;
+}
+
+@media screen and (max-width: 600px) {
+  .logo a {
+    width: 85%;
+    height: 85%;
+  }
+}
+
+.logo img {
+  background-color: unset !important;
+}
+
+@media screen and (max-width: 600px) {
+  .logo img {
+    width: clamp(100px, 100%, 200px);
+    height: clamp(50px, 100%, 100px);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .logo img {
+    filter: invert(100%);
+  }
+}
+
+.navButtons {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  column-gap: 2rem;
+}
+
+@media screen and (max-width: 600px) {
+  .navButtons {
+    column-gap: 1.5rem;
+  }
+}
+
+.searchCheckBox {
+  display: none;
+}
+
+@media screen and (min-width: 600px) {
+  .searchButton {
+    display: none;
+  }
+}
+
+.accountBoxContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.accountBoxContainer a {
+  height: 3rem;
+}
+
+.accountBoxContainer a:hover {
+  transform: none;
+}
+
+.accountBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 0.5rem;
+  padding: 1rem !important;
+  position: absolute;
+  z-index: 1;
+  margin-top: 3rem;
+  box-shadow: var(--box-shadow);
+  visibility: hidden;
+  opacity: 0;
+  transition: margin 300ms ease-in-out, visibility 200ms ease-in-out,
+    opacity 200ms ease-in-out;
+}
+
+@media screen and (min-width: 600px) {
+  .accountBoxContainer a:hover + .accountBox,
+  .accountBox:hover {
+    margin-top: 4rem;
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.accountBox .spacing {
+  position: absolute;
+  width: 9rem;
+  height: 2.5rem;
+  margin-top: -2rem;
+}
+
+.accountBox button {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: 14px;
+  font-weight: normal;
+}
