@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import ProductView from "./ProductView";
+import meta from "@/config/meta.json";
 
 export default async function ProductPage({
   params,
@@ -15,5 +16,10 @@ export default async function ProductPage({
     }
   ).then((response) => response.json());
 
-  return <ProductView product={data} isLoggedIn={cookies().has("role")} />;
+  return (
+    <>
+      <title>{data.title + meta.titleTemplate}</title>
+      <ProductView product={data} isLoggedIn={cookies().has("role")} />
+    </>
+  );
 }

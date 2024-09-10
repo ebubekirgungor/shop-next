@@ -13,6 +13,7 @@ import Icon from "@/components/ui/Icon";
 import NoItem from "@/components/ui/NoItem";
 import { toast } from "react-toastify";
 import { jsonFetcher } from "@/lib/fetchers";
+import Meta from "@/components/layout/Meta";
 
 interface FavoriteProduct extends Product {
   image: string;
@@ -72,7 +73,9 @@ export default function Favorites() {
 
   return (
     <LayoutContainer>
-      <LayoutTitle>Favorites</LayoutTitle>
+      <LayoutTitle>
+        <Meta title="Favorites" />
+      </LayoutTitle>
       <LayoutBox minHeight="402px">
         {isLoading ? (
           <LoadingSpinner />

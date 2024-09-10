@@ -15,6 +15,7 @@ import Icon from "@/components/ui/Icon";
 import { DeliveryStatus } from "@/lib/types";
 import Button from "@/components/ui/Button";
 import { dateOptions, statusNames } from "./orderUtils";
+import Meta from "@/components/layout/Meta";
 
 function OrderInfo({ title, info }: { title: string; info: string | number }) {
   return (
@@ -56,7 +57,7 @@ export default function Orders() {
   return (
     <LayoutContainer>
       <LayoutTitle>
-        Orders
+        <Meta title="Orders" />
         <div className={styles.row}>
           {Array.from(statusNames.keys()).map((status) =>
             status !== DeliveryStatus.DELIVERED ? (

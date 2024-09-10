@@ -10,6 +10,7 @@ import Link from "next/link";
 import Box from "@/components/ui/Box";
 import Image from "next/image";
 import { dateOptions, statusNames } from "../orderUtils";
+import Meta from "@/components/layout/Meta";
 
 const shipping = 50;
 
@@ -32,7 +33,7 @@ export default function Order({ params }: { params: { id: string } }) {
         <Link href={"/account/orders"} className={styles.previousButton}>
           <Icon name="previous" />
         </Link>
-        Order detail
+        <Meta title="Order detail" />
         {!isLoading && (
           <div className={styles.grayText}>
             {new Date(order!.created_at).toLocaleString("tr-TR", dateOptions)}

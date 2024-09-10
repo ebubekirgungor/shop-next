@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import CategoryView from "./CategoryView";
+import meta from "@/config/meta.json";
 
 interface ProductFilter {
   name: string;
@@ -47,12 +48,15 @@ export default async function CategoryPage({
   });
 
   return (
-    <CategoryView
-      title={data.title}
-      url={params.category}
-      products={products}
-      filters={filters}
-      isLoggedIn={cookies().has("role")}
-    />
+    <>
+      <title>{data.title + meta.titleTemplate}</title>
+      <CategoryView
+        title={data.title}
+        url={params.category}
+        products={products}
+        filters={filters}
+        isLoggedIn={cookies().has("role")}
+      />
+    </>
   );
 }

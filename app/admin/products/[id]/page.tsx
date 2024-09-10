@@ -16,6 +16,7 @@ import Image from "next/image";
 import Chip from "@/components/ui/Chip";
 import { formFetcher, jsonFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";
+import Meta from "@/components/layout/Meta";
 
 interface Filter {
   name: string;
@@ -253,7 +254,7 @@ export default function Product({ params }: { params: { id: string } }) {
         <Link href={"/admin/products"} className={styles.previousButton}>
           <Icon name="previous" />
         </Link>
-        {isAdd ? "Create Product" : "Edit Product"}
+        <Meta title={isAdd ? "Create Product" : "Edit Product"} />
       </LayoutTitle>
       <LayoutBox minHeight={isAdd ? "400px" : "470px"}>
         {isLoading ? (

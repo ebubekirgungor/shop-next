@@ -11,6 +11,7 @@ import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import { toast } from "react-toastify";
 import { jsonFetcher } from "@/lib/fetchers";
+import Meta from "@/components/layout/Meta";
 
 type DialogType = "POST" | "PUT" | "DELETE";
 
@@ -93,7 +94,9 @@ export default function Addresses() {
 
   return (
     <LayoutContainer>
-      <LayoutTitle>Addresses</LayoutTitle>
+      <LayoutTitle>
+        <Meta title="Addresses" />
+      </LayoutTitle>
       <LayoutBox minHeight="274px">
         {isLoading ? (
           <LoadingSpinner />

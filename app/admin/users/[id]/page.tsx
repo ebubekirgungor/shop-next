@@ -17,6 +17,7 @@ import { Role } from "@/lib/types";
 import { birthDateRegex, formatPhone } from "@/lib/utils";
 import { jsonFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";
+import Meta from "@/components/layout/Meta";
 
 export default function User({ params }: { params: { id: string } }) {
   const router = useRouter();
@@ -140,7 +141,7 @@ export default function User({ params }: { params: { id: string } }) {
         <Link href={"/admin/users"} className={styles.previousButton}>
           <Icon name="previous" />
         </Link>
-        {isAdd ? "Create User" : "Edit User"}
+        <Meta title={isAdd ? "Create User" : "Edit User"} />
       </LayoutTitle>
       <LayoutBox minHeight={isAdd ? "413px" : "485px"}>
         {isLoading ? (

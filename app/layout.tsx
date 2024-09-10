@@ -5,11 +5,15 @@ import styles from "./layout.module.css";
 import Link from "next/link";
 import ToastProvider from "./ToastProvider";
 import Navbar from "@/components/navbar/Navbar";
+import meta from "@/config/meta.json";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500"] });
 
 export const metadata: Metadata = {
-  title: "Shop",
+  title: {
+    template: `%s | ${meta.title}`,
+    default: meta.title,
+  },
 };
 
 export default function RootLayout({

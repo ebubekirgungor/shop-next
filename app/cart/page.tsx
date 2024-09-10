@@ -13,6 +13,7 @@ import CartLayout from "@/components/cart/CartLayout";
 import NoItem from "@/components/ui/NoItem";
 import { updateCart } from "@/lib/utils";
 import { toast } from "react-toastify";
+import Meta from "@/components/layout/Meta";
 
 enum Operation {
   increase = 1,
@@ -93,7 +94,7 @@ export default function Cart() {
     <CartLayout products={products}>
       <LayoutContainer>
         <LayoutTitle className={styles.layoutTitle}>
-          Cart
+          <Meta title="Cart" />
           {!isLoading && products.length !== 0 && (
             <span className={styles.itemsCount}>
               (

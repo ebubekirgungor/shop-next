@@ -11,6 +11,7 @@ import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import { birthDateRegex, formatPhone } from "@/lib/utils";
 import { jsonFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";
+import Meta from "@/components/layout/Meta";
 
 export default function PersonalDetails() {
   const [user, setUser] = useState<User>();
@@ -76,7 +77,9 @@ export default function PersonalDetails() {
 
   return (
     <LayoutContainer>
-      <LayoutTitle>Personal Details</LayoutTitle>
+      <LayoutTitle>
+        <Meta title="Personal Details" />
+      </LayoutTitle>
       <LayoutBox minHeight="413px">
         {isLoading ? (
           <LoadingSpinner />

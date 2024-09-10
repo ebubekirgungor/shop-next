@@ -12,6 +12,7 @@ import Icon from "@/components/ui/Icon";
 import Image from "next/image";
 import { formFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";
+import Meta from "@/components/layout/Meta";
 
 type DialogType = "POST" | "PUT" | "DELETE";
 
@@ -137,7 +138,9 @@ export default function Categories() {
 
   return (
     <LayoutContainer>
-      <LayoutTitle>Categories</LayoutTitle>
+      <LayoutTitle>
+        <Meta title="Categories" />
+      </LayoutTitle>
       <LayoutBox minHeight="338px" className={styles.layoutBox}>
         {isLoading ? (
           <LoadingSpinner />

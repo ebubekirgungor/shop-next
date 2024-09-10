@@ -10,6 +10,7 @@ import Link from "next/link";
 import CartLayout from "@/components/cart/CartLayout";
 import Address from "@/components/ui/Address";
 import Input from "@/components/ui/Input";
+import Meta from "@/components/layout/Meta";
 
 interface Card {
   number: string;
@@ -69,7 +70,7 @@ export default function Cart() {
           <Link href={"/cart"} className={styles.previousButton}>
             <Icon name="previous" />
           </Link>
-          Checkout
+          <Meta title="Checkout" />
         </LayoutTitle>
         <LayoutBox className={styles.box} minHeight="660px">
           {isLoading ? (

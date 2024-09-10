@@ -8,6 +8,7 @@ import DataTable from "@/components/ui/DataTable";
 import Chip from "@/components/ui/Chip";
 import Link from "next/link";
 import styles from "./page.module.css";
+import Meta from "@/components/layout/Meta";
 
 const columns = [
   {
@@ -44,7 +45,7 @@ export default function Users() {
   return (
     <LayoutContainer>
       <LayoutTitle className={styles.layoutTitle}>
-        Users
+        <Meta title="Users" />
         <Link href="users/create">
           <Chip>Add</Chip>
         </Link>

@@ -11,6 +11,11 @@ import Link from "next/link";
 import { birthDateRegex, formatPhone } from "@/lib/utils";
 import { jsonFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Register",
+};
 
 export default function Register() {
   const router = useRouter();
