@@ -25,7 +25,7 @@ export default function Order({ params }: { params: { id: string } }) {
         setOrder(data);
         setLoading(false);
       });
-  }, []);
+  }, [params.id]);
 
   return (
     <LayoutContainer>

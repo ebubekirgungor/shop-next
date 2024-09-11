@@ -59,7 +59,7 @@ export default function Product({ params }: { params: { id: string } }) {
       });
 
     if (isAdd) {
-      setProduct({ ...product!, images: [], filters: [] });
+      setProduct((prev) => ({ ...prev!, images: [], filters: [] }));
     } else {
       fetch("/api/products/" + params.id)
         .then((response) => response.json())
@@ -80,7 +80,7 @@ export default function Product({ params }: { params: { id: string } }) {
           setLoading(false);
         });
     }
-  }, []);
+  }, [isAdd, params.id]);
 
   const [dialogType, setDialogType] = useState<DialogType>();
   const [dialog, setDialog] = useState(false);

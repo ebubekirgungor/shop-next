@@ -5,7 +5,6 @@ import Input from "@/components/ui/Input";
 import CheckBox from "@/components/ui/CheckBox";
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
-import Link from "next/link";
 import { jsonFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";
 
@@ -86,9 +85,9 @@ export default function LoginForm() {
         onChange={handleForm}
       />
       <Button disabled={!form?.email || !form.password}>Sign In</Button>
-      <Link href="/register" style={{ textAlign: "center", fontSize: "14px" }}>
+      <a href="/register" style={{ textAlign: "center", fontSize: "14px" }}>
         Create Account
-      </Link>
+      </a>
     </form>
   );
 }

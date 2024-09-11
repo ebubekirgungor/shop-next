@@ -17,15 +17,15 @@ export default function ProductView({
 }) {
   const [isFavorite, setIsFavorite] = useState(false);
 
-  if (isLoggedIn) {
-    useEffect(() => {
+  useEffect(() => {
+    if (isLoggedIn) {
       fetch("/api/product/is_favorite/" + product.id)
         .then((response) => response.json())
         .then((data) => {
           setIsFavorite(data);
         });
-    }, []);
-  }
+    }
+  }, [product.id]);
 
   const [loading, setLoading] = useState(true);
 

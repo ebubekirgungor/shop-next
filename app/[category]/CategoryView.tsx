@@ -50,15 +50,15 @@ export default function CategoryView({
 
   const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
 
-  if (isLoggedIn) {
-    useEffect(() => {
+  useEffect(() => {
+    if (isLoggedIn) {
       fetch("/api/users/favorite_ids")
         .then((response) => response.json())
         .then((data) => {
           setFavoriteIds(data);
         });
-    }, []);
-  }
+    }
+  }, []);
 
   const [loading, setLoading] = useState(true);
 

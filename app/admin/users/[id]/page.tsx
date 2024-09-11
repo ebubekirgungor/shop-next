@@ -40,8 +40,8 @@ export default function User({ params }: { params: { id: string } }) {
     }
   }
 
-  if (!isAdd) {
-    useEffect(() => {
+  useEffect(() => {
+    if (!isAdd) {
       fetch("/api/users/" + params.id)
         .then((response) => response.status === 200 && response.json())
         .then((data) => {
@@ -52,8 +52,8 @@ export default function User({ params }: { params: { id: string } }) {
           formatPhone(data.phone);
           setLoading(false);
         });
-    }, []);
-  }
+    }
+  }, []);
 
   const [dialog, setDialog] = useState(false);
   const [dialogStatus, setDialogStatus] = useState(false);
