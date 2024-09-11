@@ -64,13 +64,10 @@ declare global {
     password: string;
   }
 
-  interface OrderProduct {
-    title: string;
-    url: string;
-    list_price: number;
+  type OrderProduct = Pick<Product, "title" | "url" | "list_price"> & {
     image: string;
     quantity: number;
-  }
+  };
 
   interface Order {
     id: number;

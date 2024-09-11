@@ -6,12 +6,9 @@ import Link from "next/link";
 import DOMPurify from "dompurify";
 import Icon from "../../ui/Icon";
 
-interface SearchedProduct {
-  id: number;
-  title: string;
-  url: string;
+type SearchedProduct = Pick<Product, "id" | "title" | "url"> & {
   category: string;
-}
+};
 
 const NavSearch = () => {
   const [searchedData, setSearchedData] = useState<SearchedProduct[]>([]);
