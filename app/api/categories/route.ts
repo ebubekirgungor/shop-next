@@ -53,6 +53,8 @@ async function create(req: Request) {
       },
     });
 
+    revalidatePath("/");
+
     return NextResponse.json(
       { message: "Category created", body: newCategory },
       {

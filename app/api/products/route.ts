@@ -84,12 +84,14 @@ async function create(req: Request) {
       },
     });
 
+    const urlWithId = product.url + "-" + product.id;
+
     await prisma.product.update({
       where: {
         id: product.id,
       },
       data: {
-        url: product.url + "-" + product.id,
+        url: urlWithId,
       },
     });
 
@@ -97,7 +99,7 @@ async function create(req: Request) {
       {
         id: product.id,
         title: product.title,
-        url: product.url,
+        url: urlWithId,
         category: product.category.title,
       },
     ]);
