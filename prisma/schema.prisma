@@ -64,6 +64,7 @@ model Comment {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   content    String
+  star       Int      @db.SmallInt
   author_id  Int
   author     User     @relation(fields: [author_id], references: [id])
   product_id Int

@@ -234,6 +234,10 @@
   justify-content: space-between;
 }
 
+.comment .stars {
+  display: flex;
+}
+
 .comment .author {
   filter: contrast(0);
   font-size: small;

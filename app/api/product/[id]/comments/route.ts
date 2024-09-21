@@ -30,6 +30,7 @@ async function all(_req: Request, { params }: { params: { id: string } }) {
       return {
         date: comment.updated_at,
         content: comment.content,
+        star: comment.star,
         author: {
           first_name: (comment.author.first_name[0] ?? "*") + "***",
           last_name: (comment.author.last_name[0] ?? "*") + "***",
@@ -43,12 +44,13 @@ async function create(req: Request, { params }: { params: { id: string } }) {
   const user_id = (await verify(cookies().get("token")?.value, getPublicKey()))
     .id;
 
-  const { content } = await req.json();
+  const { content, star } = await req.json();
 
   try {
     const newComment = await prisma.comment.create({
       data: {
         content,
+        star,
         author_id: user_id,
         product_id: Number(params.id),
       },
@@ -63,6 +65,7 @@ async function create(req: Request, { params }: { params: { id: string } }) {
         body: {
           date: newComment.updated_at,
           content: newComment.content,
+          star: newComment.star,
           author: {
             first_name: (newComment.author.first_name[0] ?? "*") + "***",
             last_name: (newComment.author.last_name[0] ?? "*") + "***",

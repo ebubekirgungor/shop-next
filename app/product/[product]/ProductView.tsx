@@ -12,6 +12,7 @@ import Input from "@/components/ui/Input";
 interface Comment {
   date: Date;
   content: string;
+  star: number;
   author: User;
 }
 
@@ -32,6 +33,7 @@ export default function ProductView({
   const [comments, setComments] = useState<Comment[]>([]);
 
   const [newComment, setNewComment] = useState("");
+  const [newCommentStars, setNewCommentStars] = useState(1);
 
   useEffect(() => {
     fetch(`/api/product/${product.id}/comments`)
@@ -112,7 +114,7 @@ export default function ProductView({
     const response = await jsonFetcher(
       `/api/product/${product.id}/comments`,
       "POST",
-      { content: newComment }
+      { content: newComment, star: newCommentStars }
     );
 
     if (response.status === 200) {
@@ -218,10 +220,32 @@ export default function ProductView({
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
               />
+              <span>
+                {[...Array(newCommentStars)].map((_, i) => (
+                  <button onClick={() => setNewCommentStars(i + 1)}>
+                    <Icon name="star_filled" disableFilter />
+                  </button>
+                ))}
+                {[...Array(5 - newCommentStars)].map((_, i) => (
+                  <button
+                    onClick={() => setNewCommentStars((prev) => prev + (i + 1))}
+                  >
+                    <Icon name="star" disableFilter />
+                  </button>
+                ))}
+              </span>
               <Button onClick={addComment}>Create</Button>
             </div>
             {comments.map((comment, index) => (
               <div className={styles.comment} key={index}>
+                <div className={styles.stars}>
+                  {[...Array(comment.star)].map(() => (
+                    <Icon name="star_filled" disableFilter />
+                  ))}
+                  {[...Array(5 - comment.star)].map(() => (
+                    <Icon name="star" disableFilter />
+                  ))}
+                </div>
                 <div className={styles.spaceBetween}>
                   <span>{comment.content}</span>
                   <span>
