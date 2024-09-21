@@ -41,7 +41,7 @@ export default function ProductView({
       });
 
     if (isLoggedIn) {
-      fetch("/api/product/is_favorite/" + product.id)
+      fetch(`/api/product/${product.id}/is_favorite`)
         .then((response) => response.json())
         .then((data) => {
           setIsFavorite(data);
