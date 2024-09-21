@@ -222,15 +222,16 @@ export default function ProductView({
               />
               <span>
                 {[...Array(newCommentStars)].map((_, i) => (
-                  <button onClick={() => setNewCommentStars(i + 1)}>
+                  <button onClick={() => setNewCommentStars(i + 1)} key={i}>
                     <Icon name="star_filled" disableFilter />
                   </button>
                 ))}
                 {[...Array(5 - newCommentStars)].map((_, i) => (
                   <button
                     onClick={() => setNewCommentStars((prev) => prev + (i + 1))}
+                    key={i}
                   >
-                    <Icon name="star" disableFilter />
+                    <Icon name="star" />
                   </button>
                 ))}
               </span>
@@ -238,16 +239,15 @@ export default function ProductView({
             </div>
             {comments.map((comment, index) => (
               <div className={styles.comment} key={index}>
-                <div className={styles.stars}>
-                  {[...Array(comment.star)].map(() => (
-                    <Icon name="star_filled" disableFilter />
-                  ))}
-                  {[...Array(5 - comment.star)].map(() => (
-                    <Icon name="star" disableFilter />
-                  ))}
-                </div>
                 <div className={styles.spaceBetween}>
-                  <span>{comment.content}</span>
+                  <span className={styles.stars}>
+                    {[...Array(comment.star)].map((_, i) => (
+                      <Icon name="star_filled" disableFilter key={i} />
+                    ))}
+                    {[...Array(5 - comment.star)].map((_, i) => (
+                      <Icon name="star" key={i} />
+                    ))}
+                  </span>
                   <span>
                     {new Date(comment.date).toLocaleString(
                       "tr-TR",
@@ -255,6 +255,7 @@ export default function ProductView({
                     )}
                   </span>
                 </div>
+                <div>{comment.content}</div>
                 <div className={styles.author}>
                   {comment.author.first_name} {comment.author.last_name}
                 </div>
