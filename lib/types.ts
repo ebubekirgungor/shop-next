@@ -30,6 +30,7 @@ declare global {
     url: string;
     filters: string[];
     image?: string;
+    active: boolean;
   }
 
   interface Cart {
@@ -40,6 +41,7 @@ declare global {
 
   interface Product {
     id: number | null;
+    created_at: Date;
     title: string;
     url: string;
     list_price: number;
@@ -47,6 +49,7 @@ declare global {
     images: string[];
     cart?: Cart;
     is_favorite?: boolean;
+    active: boolean;
   }
 
   interface User {

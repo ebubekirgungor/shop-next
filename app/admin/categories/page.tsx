@@ -13,6 +13,7 @@ import Image from "next/image";
 import { formFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";
 import Meta from "@/components/layout/Meta";
+import CheckBox from "@/components/ui/CheckBox";
 
 type DialogType = "POST" | "PUT" | "DELETE";
 
@@ -91,7 +92,8 @@ export default function Categories() {
   function handleNewCategory(e: ChangeEvent<HTMLInputElement>) {
     setNewCategory({
       ...newCategory!,
-      [e.target.name]: e.target.value,
+      [e.target.name]:
+        e.target.name === "active" ? e.target.checked : e.target.value,
     });
   }
 
@@ -102,6 +104,7 @@ export default function Categories() {
     formData.append("id", (newCategory?.id || 0).toString());
     formData.append("title", newCategory?.title!);
     formData.append("filters", JSON.stringify(newCategory?.filters));
+    formData.append("active", newCategory!.active.toString());
     if (newImage) formData.append("image", newImage!);
 
     const response = await formFetcher(
@@ -155,6 +158,7 @@ export default function Categories() {
                   url: "",
                   filters: [],
                   image: "",
+                  active: true,
                 })
               }
             />
@@ -272,6 +276,13 @@ export default function Categories() {
                       Click to upload
                     </label>
                   )}
+                  <CheckBox
+                    label="Active"
+                    name="active"
+                    id="active"
+                    checked={newCategory!.active}
+                    onChange={handleNewCategory}
+                  />
                 </>
               ) : (
                 <div style={{ textAlign: "center" }}>Are you sure?</div>

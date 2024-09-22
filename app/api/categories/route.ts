@@ -50,6 +50,7 @@ async function create(req: Request) {
         url: titleToUrl(formData.get("title") as string),
         filters: JSON.parse(formData.get("filters") as string),
         image: "/images/categories/" + (image ? image.name : "category.png"),
+        active: Boolean(formData.get("active") === "true"),
       },
     });
 
@@ -98,6 +99,7 @@ async function update(req: Request) {
     title: formData.get("title") as string,
     url: titleToUrl(formData.get("title") as string),
     filters: JSON.parse(formData.get("filters") as string),
+    active: Boolean(formData.get("active") === "true"),
   };
 
   if (image) data.image = "/images/categories/" + image.name;
@@ -140,7 +142,7 @@ async function remove(req: Request) {
   }
 }
 
-export const GET = handler(all);
+export const GET = handler(user, admin, all);
 export const POST = handler(user, admin, create);
 export const PUT = handler(user, admin, update);
 export const DELETE = handler(user, admin, remove);

@@ -17,6 +17,7 @@ import Chip from "@/components/ui/Chip";
 import { formFetcher, jsonFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";
 import Meta from "@/components/layout/Meta";
+import CheckBox from "@/components/ui/CheckBox";
 
 interface Filter {
   name: string;
@@ -102,7 +103,8 @@ export default function Product({ params }: { params: { id: string } }) {
   function handleProduct(e: ChangeEvent<HTMLInputElement>) {
     setProduct({
       ...product!,
-      [e.target.name]: e.target.value,
+      [e.target.name]:
+        e.target.name === "active" ? e.target.checked : e.target.value,
     });
   }
 
@@ -351,6 +353,13 @@ export default function Product({ params }: { params: { id: string } }) {
                 ))}
               </div>
             </div>
+            <CheckBox
+              label="Active"
+              name="active"
+              id="active"
+              checked={product?.active ?? true}
+              onChange={handleProduct}
+            />
             <div className={styles.column}>
               <Button>{isAdd ? "Create" : "Update"}</Button>
               {!isAdd && (

@@ -10,10 +10,7 @@ interface ProductFilter extends JsonArray {
   value: string;
 }
 
-interface SortProduct {
-  created_at: Date;
-  list_price: number;
-}
+type SortProduct = Pick<Product, "created_at" | "list_price">;
 
 const sortFunctions = {
   [SortValue.NEWEST]: (a: SortProduct, b: SortProduct) =>
@@ -31,7 +28,7 @@ export async function GET(
   const category = await prisma.category.findUnique({
     where: { url: params.url },
     include: {
-      products: true,
+      products: { where: { active: true } },
     },
   });
 

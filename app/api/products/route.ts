@@ -73,6 +73,7 @@ async function create(req: Request) {
         filters: JSON.parse(formData.get("filters") as string),
         images: JSON.parse(formData.get("images") as string),
         category_id: Number(formData.get("category_id")),
+        active: Boolean(formData.get("active") === "true"),
       },
       include: {
         category: {
