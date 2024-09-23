@@ -356,7 +356,6 @@ export default function Product({ params }: { params: { id: string } }) {
             <CheckBox
               label="Active"
               name="active"
-              id="active"
               checked={product?.active ?? true}
               onChange={handleProduct}
             />

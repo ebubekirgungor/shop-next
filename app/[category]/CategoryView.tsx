@@ -161,7 +161,6 @@ export default function CategoryView({
                       checked={filter.selected}
                       onChange={() => handleChange(key, valueIndex)}
                       label={filter.filter}
-                      id={`${filterIndex}-${valueIndex}`}
                       key={valueIndex}
                     />
                   ))}

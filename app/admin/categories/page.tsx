@@ -279,7 +279,6 @@ export default function Categories() {
                   <CheckBox
                     label="Active"
                     name="active"
-                    id={`active-${newCategory?.id}`}
                     checked={newCategory!.active}
                     onChange={handleNewCategory}
                   />

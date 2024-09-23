@@ -79,7 +79,6 @@ export default function LoginForm() {
       </div>
       <CheckBox
         label="Remember me"
-        id="remember_me"
         name="remember_me"
         checked={form?.remember_me ?? false}
         onChange={handleForm}
