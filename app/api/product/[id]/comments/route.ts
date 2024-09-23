@@ -44,6 +44,30 @@ async function create(req: Request, { params }: { params: { id: string } }) {
   const user_id = (await verify(cookies().get("token")?.value, getPublicKey()))
     .id;
 
+  const userOrders = (
+    await prisma.user.findUnique({
+      where: { id: user_id },
+      include: { orders: { select: { products: true } } },
+    })
+  )?.orders;
+
+  if (
+    !userOrders?.some((order) =>
+      (order.products as { id: number }[]).find(
+        (p) => p.id === Number(params.id)
+      )
+    )
+  ) {
+    return NextResponse.json(
+      {
+        message: "You have not ordered this product",
+      },
+      {
+        status: 401,
+      }
+    );
+  }
+
   const { content, star } = await req.json();
 
   try {
