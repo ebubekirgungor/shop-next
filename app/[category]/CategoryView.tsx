@@ -15,7 +15,6 @@ import Box from "@/components/ui/Box";
 import { SortValue } from "@/lib/types";
 import Chip from "@/components/ui/Chip";
 import { CategoryFilters, CategoryProduct } from "./page";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
 
 const sortValues = [
   {
@@ -59,12 +58,6 @@ export default function CategoryView({
         });
     }
   }, []);
-
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (products) setLoading(false);
-  }, [products]);
 
   async function filterProducts(sortValue?: SortValue) {
     const selectedFilters: { [index: string]: string } = {};
@@ -203,65 +196,59 @@ export default function CategoryView({
           </div>
         </LayoutTitle>
         <LayoutBox minHeight="454px" className={styles.layoutBox}>
-          {loading ? (
-            <LoadingSpinner />
-          ) : (
-            <>
-              <div className={styles.mobileButtons}>
-                <label htmlFor="nav">
-                  <Icon name="filter" />
-                  Filters
-                </label>
-              </div>
-              <div className={styles.row}>
-                {productsState.map((product) => (
-                  <div className={styles.product} key={product.id}>
-                    {isLoggedIn && (
-                      <button
-                        className={styles.favoriteButton}
-                        onClick={() =>
-                          toggleFavorite(
-                            product.id!,
-                            favoriteIds.includes(product.id!)
-                          )
-                        }
-                      >
-                        <Icon
-                          name={
-                            favoriteIds.includes(product.id!)
-                              ? "favorite_filled"
-                              : "favorite"
-                          }
-                          disableFilter
-                        />
-                      </button>
-                    )}
-                    <Link href={"/product/" + product.url}>
-                      <Image
-                        src={"/images/products/" + product.image}
-                        alt={product.image}
-                        width="0"
-                        height="0"
-                        sizes="14rem"
-                      />
-                      <div className={styles.title}>{product.title}</div>
-                    </Link>
-                    <div className={styles.column}>
-                      <div className={styles.price}>
-                        {product.list_price.toLocaleString("tr-TR")} TL
-                      </div>
-                      <Button
-                        className={styles.addToCart}
-                        onClick={() => addProductToCart(product.id!)}
-                      >
-                        Add to Cart
-                      </Button>
-                    </div>
+          <div className={styles.mobileButtons}>
+            <label htmlFor="nav">
+              <Icon name="filter" />
+              Filters
+            </label>
+          </div>
+          <div className={styles.row}>
+            {productsState.map((product) => (
+              <div className={styles.product} key={product.id}>
+                {isLoggedIn && (
+                  <button
+                    className={styles.favoriteButton}
+                    onClick={() =>
+                      toggleFavorite(
+                        product.id!,
+                        favoriteIds.includes(product.id!)
+                      )
+                    }
+                  >
+                    <Icon
+                      name={
+                        favoriteIds.includes(product.id!)
+                          ? "favorite_filled"
+                          : "favorite"
+                      }
+                      disableFilter
+                    />
+                  </button>
+                )}
+                <Link href={"/product/" + product.url}>
+                  <Image
+                    src={"/images/products/" + product.image}
+                    alt={product.image}
+                    width="0"
+                    height="0"
+                    sizes="14rem"
+                  />
+                  <div className={styles.title}>{product.title}</div>
+                </Link>
+                <div className={styles.column}>
+                  <div className={styles.price}>
+                    {product.list_price.toLocaleString("tr-TR")} TL
                   </div>
-                ))}
+                  <Button
+                    className={styles.addToCart}
+                    onClick={() => addProductToCart(product.id!)}
+                  >
+                    Add to Cart
+                  </Button>
+                </div>
               </div>
-            </>
-          )}
+            ))}
+          </div>
         </LayoutBox>
       </LayoutContainer>
     </>
