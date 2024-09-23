@@ -62,6 +62,7 @@ async function create(req: Request) {
     total_amount += product.list_price * cartQuantityById.get(product.id)!;
 
     return {
+      id: product.id,
       title: product.title,
       url: product.url,
       list_price: product.list_price,
