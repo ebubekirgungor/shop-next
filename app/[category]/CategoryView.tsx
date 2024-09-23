@@ -143,8 +143,8 @@ export default function CategoryView({
               </Chip>
             ))}
           </div>
-          {Object.keys(filtersState).map((key) => (
-            <div className={styles.filter} key={key}>
+          {Object.keys(filtersState).map((key, filterIndex) => (
+            <div className={styles.filter} key={filterIndex}>
               <input
                 id={key}
                 type="checkbox"
@@ -156,13 +156,13 @@ export default function CategoryView({
               </label>
               <span className={styles.filterValuesContainer}>
                 <div className={styles.filterValues}>
-                  {filtersState[key].map((filter, index) => (
+                  {filtersState[key].map((filter, valueIndex) => (
                     <CheckBox
                       checked={filter.selected}
-                      onChange={() => handleChange(key, index)}
+                      onChange={() => handleChange(key, valueIndex)}
                       label={filter.filter}
-                      id={filter.filter}
-                      key={filter.filter}
+                      id={`${filterIndex}-${valueIndex}`}
+                      key={valueIndex}
                     />
                   ))}
                 </div>
@@ -170,7 +170,6 @@ export default function CategoryView({
             </div>
           ))}
         </div>
-
         <div className={styles.mobileShowResultsButton}>
           <Button onClick={() => filterProducts()}>Show results</Button>
         </div>
