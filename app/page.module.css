@@ -1,8 +1,23 @@
+.categoryContainer {
+  max-width: 75rem;
+  height: fit-content;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
 .category {
   width: 18rem;
   height: 18rem;
   border: 1px solid rgb(var(--border-color));
   border-radius: 12px;
+}
+
+@media screen and (max-width: 600px) {
+  .category {
+    width: calc(100vw - 2rem);
+    height: calc(100vw - 2rem);
+  }
 }
 
 .category img {
