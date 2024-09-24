@@ -111,6 +111,7 @@ async function update(req: Request) {
     });
 
     revalidatePath("/");
+    revalidatePath("/" + data.url);
 
     return NextResponse.json(
       { message: "Category updated" },

@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import CategoryView from "./CategoryView";
 import meta from "@/config/meta.json";
+import { notFound } from "next/navigation";
 
 interface ProductFilter {
   name: string;
@@ -13,10 +14,10 @@ export interface CategoryProduct extends Product {
   is_favorite: boolean;
 }
 
-interface Category {
-  title: string;
+type CategoryWithProducts = Pick<Category, "title"> & {
   products: CategoryProduct[];
-}
+  active: boolean;
+};
 
 export interface CategoryFilters {
   [key: string]: { filter: string; selected: boolean }[];
@@ -27,9 +28,13 @@ export default async function CategoryPage({
 }: {
   params: { category: string };
 }) {
-  const data: Category = await fetch(
+  const data: CategoryWithProducts = await fetch(
     process.env.BASE_URL + "/api/categories/" + params.category
   ).then((response) => response.json());
+
+  if (!data.active) {
+    return notFound();
+  }
 
   const products = data.products ?? [];
   const filters: CategoryFilters = {};

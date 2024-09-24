@@ -69,5 +69,6 @@ export async function GET(
   return Response.json({
     title: category?.title,
     products: categoryProducts,
+    active: category?.active,
   });
 }

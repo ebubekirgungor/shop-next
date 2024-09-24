@@ -10,22 +10,16 @@ export default async function ProductPage({
 }) {
   const id = params.product.match(/-(\d+)$/)![1];
 
-  await fetch(`${process.env.BASE_URL}/api/product/${id}/is_active`, {
-    next: { tags: ["product-" + id] },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (!data) {
-        return notFound();
-      }
-    });
-
   const data: Product = await fetch(
     process.env.BASE_URL + "/api/product/" + id,
     {
       next: { tags: ["product-" + id] },
     }
   ).then((response) => response.json());
+
+  if (!data.active) {
+    return notFound();
+  }
 
   return (
     <>
