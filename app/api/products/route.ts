@@ -105,6 +105,7 @@ async function create(req: Request) {
       },
     ]);
 
+    revalidatePath("/");
     revalidatePath("/" + product.category.url);
 
     return NextResponse.json(

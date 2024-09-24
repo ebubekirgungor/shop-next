@@ -87,6 +87,7 @@ async function update(req: Request, { params }: { params: { id: string } }) {
     ]);
 
     revalidateTag("product-" + product.id);
+    revalidatePath("/");
     revalidatePath("/" + product.category.url);
 
     return NextResponse.json(

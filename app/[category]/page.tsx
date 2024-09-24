@@ -32,7 +32,7 @@ export default async function CategoryPage({
     process.env.BASE_URL + "/api/categories/" + params.category
   ).then((response) => response.json());
 
-  if (!data.active) {
+  if (!data.active || !data.products.length) {
     return notFound();
   }
 
