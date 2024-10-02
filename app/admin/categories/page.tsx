@@ -170,13 +170,13 @@ export default function Categories() {
                       className={styles.button}
                       onClick={() => openDialog("PUT", category)}
                     >
-                      <Icon name="edit" disableFilter />
+                      <Icon name="edit" />
                     </button>
                     <button
                       className={styles.button}
                       onClick={() => openDialog("DELETE", category)}
                     >
-                      <Icon name="delete" disableFilter />
+                      <Icon name="delete" />
                     </button>
                   </div>
                   <Image
@@ -253,7 +253,7 @@ export default function Categories() {
                           type="button"
                           onClick={deleteNewImage}
                         >
-                          <Icon name="delete" disableFilter />
+                          <Icon name="delete" />
                         </button>
                       </div>
                       <Image

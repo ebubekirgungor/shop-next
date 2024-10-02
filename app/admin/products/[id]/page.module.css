@@ -106,13 +106,13 @@
   margin: 0.5rem;
   padding: 0.5rem;
   border-radius: 100%;
-  border: 2px solid rgb(229, 231, 235);
-  background-color: rgb(255, 255, 255);
+  border: 2px solid rgb(var(--border-color));
+  background-color: rgb(var(--nav-background-color));
   transition: background-color 200ms ease-in-out;
 }
 
 .imageBox button:hover {
-  background-color: rgb(229, 231, 235);
+  background-color: rgb(var(--border-color));
 }
 
 .imageBox div {

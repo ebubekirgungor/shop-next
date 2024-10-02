@@ -86,7 +86,7 @@ export default function Favorites() {
             {favorites.map((product) => (
               <div className={styles.product} key={product.id}>
                 <button onClick={() => openDialog(product.id!)}>
-                  <Icon name="delete" disableFilter />
+                  <Icon name="delete" />
                 </button>
                 <Link href={"/product/" + product.url}>
                   <Image
