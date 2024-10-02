@@ -219,7 +219,7 @@ export default function CategoryView({
                           ? "favorite_filled"
                           : "favorite"
                       }
-                      disableFilter
+                      disableFilter={favoriteIds.includes(product.id!)}
                     />
                   </button>
                 )}
