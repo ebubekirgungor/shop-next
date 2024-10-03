@@ -35,6 +35,8 @@ export default function ProductView({
   const [newCommentStars, setNewCommentStars] = useState(1);
 
   useEffect(() => {
+    history.replaceState({}, "", product.url);
+
     fetch(`/api/product/${product.id}/comments`)
       .then((response) => response.json())
       .then((data) => {
