@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   width: clamp(30rem, 70rem, 70rem);
   height: fit-content;
   min-height: 642px;
@@ -80,13 +79,6 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  border-top-left-radius: 12px;
-}
-
-@media screen and (max-width: 600px) {
-  .slider img {
-    border-top-left-radius: 0;
-  }
 }
 
 .miniImages {
