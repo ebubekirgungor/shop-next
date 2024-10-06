@@ -212,12 +212,12 @@ export default function ProductView({
             onChange={(e) => setNewComment(e.target.value)}
           />
           <span>
-            {[...Array(newCommentStars)].map((_, i) => (
+            {Array.from({ length: newCommentStars }).map((_, i) => (
               <button onClick={() => setNewCommentStars(i + 1)} key={i}>
                 <Icon name="star_filled" disableFilter />
               </button>
             ))}
-            {[...Array(5 - newCommentStars)].map((_, i) => (
+            {Array.from({ length: 5 - newCommentStars }).map((_, i) => (
               <button
                 onClick={() => setNewCommentStars((prev) => prev + (i + 1))}
                 key={i}
@@ -232,10 +232,10 @@ export default function ProductView({
           <div className={styles.comment} key={index}>
             <div className={styles.spaceBetween}>
               <span className={styles.stars}>
-                {[...Array(comment.star)].map((_, i) => (
+                {Array.from({ length: comment.star }).map((_, i) => (
                   <Icon name="star_filled" disableFilter key={i} />
                 ))}
-                {[...Array(5 - comment.star)].map((_, i) => (
+                {Array.from({ length: 5 - comment.star }).map((_, i) => (
                   <Icon name="star" key={i} />
                 ))}
               </span>
