@@ -1,13 +1,11 @@
 "use client";
 import { ChangeEvent, FormEvent, useState } from "react";
 import styles from "./RegisterForm.module.css";
-import Input from "@/components/ui/Input";
-import Button from "@/components/ui/Button";
-import Radio from "@/components/ui/Radio";
-import Icon from "@/components/ui/Icon";
 import { birthDateRegex, formatPhone } from "@/lib/utils";
 import { jsonFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";
+
+import { Button, Icon, Input, Radio } from "@/components/ui";
 
 export default function RegisterForm() {
   const [form, setForm] = useState<User>();

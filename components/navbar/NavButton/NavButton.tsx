@@ -2,7 +2,8 @@
 import { FC } from "react";
 import Link from "next/link";
 import styles from "./NavButton.module.css";
-import Icon from "../../ui/Icon";
+
+import { Icon } from "@/components/ui";
 
 interface Props {
   href: string;

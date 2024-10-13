@@ -1,10 +1,11 @@
-import Icon from "../Icon";
+"use client";
 import styles from "./DataTable.module.css";
 import { ChangeEvent, useState } from "react";
 import sortBy from "lodash/sortBy";
-import Input from "../Input";
 import Link from "next/link";
 import Image from "next/image";
+
+import { Icon, Input } from "@/components/ui";
 
 interface Column {
   key: string;

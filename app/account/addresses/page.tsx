@@ -1,17 +1,22 @@
 "use client";
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import styles from "./page.module.css";
-import LayoutContainer from "@/components/layout/LayoutContainer";
-import LayoutBox from "@/components/layout/LayoutBox";
-import LayoutTitle from "@/components/layout/LayoutTitle";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import Address from "@/components/ui/Address";
-import Dialog from "@/components/ui/Dialog";
-import Input from "@/components/ui/Input";
-import Button from "@/components/ui/Button";
 import { toast } from "react-toastify";
 import { jsonFetcher } from "@/lib/fetchers";
-import Meta from "@/components/layout/Meta";
+
+import {
+  LayoutContainer,
+  LayoutTitle,
+  LayoutBox,
+  Meta,
+} from "@/components/layout";
+import {
+  Address,
+  Button,
+  Dialog,
+  Input,
+  LoadingSpinner,
+} from "@/components/ui";
 
 type DialogType = "POST" | "PUT" | "DELETE";
 

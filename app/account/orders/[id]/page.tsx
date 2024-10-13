@@ -1,16 +1,17 @@
 "use client";
 import { useState, useEffect } from "react";
 import styles from "./page.module.css";
-import LayoutContainer from "@/components/layout/LayoutContainer";
-import LayoutBox from "@/components/layout/LayoutBox";
-import LayoutTitle from "@/components/layout/LayoutTitle";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import Icon from "@/components/ui/Icon";
 import Link from "next/link";
-import Box from "@/components/ui/Box";
 import Image from "next/image";
 import { dateOptions, statusNames } from "../orderUtils";
-import Meta from "@/components/layout/Meta";
+
+import {
+  LayoutContainer,
+  LayoutTitle,
+  LayoutBox,
+  Meta,
+} from "@/components/layout";
+import { Box, Icon, LoadingSpinner } from "@/components/ui";
 
 const shipping = 50;
 

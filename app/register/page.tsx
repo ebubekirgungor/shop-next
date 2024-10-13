@@ -1,7 +1,8 @@
 import styles from "./page.module.css";
-import Box from "@/components/ui/Box";
 import { Metadata } from "next";
-import RegisterForm from "@/components/register/RegisterForm";
+
+import { Box } from "@/components/ui";
+import { RegisterForm } from "@/components/auth";
 
 export const metadata: Metadata = {
   title: "Register",

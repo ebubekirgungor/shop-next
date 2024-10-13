@@ -3,18 +3,13 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import LayoutContainer from "@/components/layout/LayoutContainer";
-import LayoutTitle from "@/components/layout/LayoutTitle";
-import LayoutBox from "@/components/layout/LayoutBox";
-import Icon from "@/components/ui/Icon";
-import CheckBox from "@/components/ui/CheckBox";
-import Button from "@/components/ui/Button";
 import { jsonFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";
-import Box from "@/components/ui/Box";
 import { SortValue } from "@/lib/types";
-import Chip from "@/components/ui/Chip";
 import { CategoryFilters, CategoryProduct } from "./page";
+
+import { LayoutContainer, LayoutTitle, LayoutBox } from "@/components/layout";
+import { Icon, Button, Box, CheckBox, Chip } from "@/components/ui";
 
 const sortValues = [
   {

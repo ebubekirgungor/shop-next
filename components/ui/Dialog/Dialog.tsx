@@ -1,6 +1,7 @@
 import { MouseEvent, FC } from "react";
 import styles from "./Dialog.module.css";
-import Icon from "../Icon";
+
+import { Icon } from "@/components/ui";
 
 interface Props {
   title: string;

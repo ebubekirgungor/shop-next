@@ -1,23 +1,28 @@
 "use client";
 import { ChangeEvent, FormEvent, useState, useEffect } from "react";
 import styles from "./page.module.css";
-import LayoutContainer from "@/components/layout/LayoutContainer";
-import LayoutBox from "@/components/layout/LayoutBox";
-import Input from "@/components/ui/Input";
-import Radio from "@/components/ui/Radio";
-import Button from "@/components/ui/Button";
-import LayoutTitle from "@/components/layout/LayoutTitle";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import Icon from "@/components/ui/Icon";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import Dialog from "@/components/ui/Dialog";
-import Select from "@/components/ui/Select";
 import { Role } from "@/lib/types";
 import { birthDateRegex, formatPhone } from "@/lib/utils";
 import { jsonFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";
-import Meta from "@/components/layout/Meta";
+
+import {
+  LayoutContainer,
+  LayoutTitle,
+  LayoutBox,
+  Meta,
+} from "@/components/layout";
+import {
+  Button,
+  Dialog,
+  Icon,
+  Input,
+  LoadingSpinner,
+  Radio,
+  Select,
+} from "@/components/ui";
 
 export default function User({ params }: { params: { id: string } }) {
   const router = useRouter();

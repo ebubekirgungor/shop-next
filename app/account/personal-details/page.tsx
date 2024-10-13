@@ -1,17 +1,17 @@
 "use client";
 import { ChangeEvent, FormEvent, useState, useEffect } from "react";
 import styles from "./page.module.css";
-import LayoutContainer from "@/components/layout/LayoutContainer";
-import LayoutBox from "@/components/layout/LayoutBox";
-import Input from "@/components/ui/Input";
-import Radio from "@/components/ui/Radio";
-import Button from "@/components/ui/Button";
-import LayoutTitle from "@/components/layout/LayoutTitle";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import { birthDateRegex, formatPhone } from "@/lib/utils";
 import { jsonFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";
-import Meta from "@/components/layout/Meta";
+
+import {
+  LayoutContainer,
+  LayoutTitle,
+  LayoutBox,
+  Meta,
+} from "@/components/layout";
+import { Button, Input, LoadingSpinner, Radio } from "@/components/ui";
 
 export default function PersonalDetails() {
   const [user, setUser] = useState<User>();

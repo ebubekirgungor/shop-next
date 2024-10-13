@@ -1,23 +1,28 @@
 "use client";
 import { useState, useEffect, ChangeEvent, FormEvent, useRef } from "react";
 import styles from "./page.module.css";
-import LayoutContainer from "@/components/layout/LayoutContainer";
-import LayoutBox from "@/components/layout/LayoutBox";
-import LayoutTitle from "@/components/layout/LayoutTitle";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import Input from "@/components/ui/Input";
-import Button from "@/components/ui/Button";
-import Select from "@/components/ui/Select";
 import Link from "next/link";
-import Icon from "@/components/ui/Icon";
-import Dialog from "@/components/ui/Dialog";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import Chip from "@/components/ui/Chip";
 import { formFetcher, jsonFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";
-import Meta from "@/components/layout/Meta";
-import CheckBox from "@/components/ui/CheckBox";
+
+import {
+  LayoutContainer,
+  LayoutTitle,
+  LayoutBox,
+  Meta,
+} from "@/components/layout";
+import {
+  Button,
+  CheckBox,
+  Chip,
+  Dialog,
+  Icon,
+  Input,
+  LoadingSpinner,
+  Select,
+} from "@/components/ui";
 
 interface Filter {
   name: string;

@@ -1,10 +1,10 @@
 "use client";
 import { ChangeEvent, useState } from "react";
-import Box from "../../ui/Box";
 import styles from "./NavSearch.module.css";
 import Link from "next/link";
 import DOMPurify from "dompurify";
-import Icon from "../../ui/Icon";
+
+import { Box, Icon } from "@/components/ui";
 
 type SearchedProduct = Pick<Product, "id" | "title" | "url"> & {
   category: string;

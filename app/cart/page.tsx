@@ -1,19 +1,19 @@
 "use client";
 import { useState, useEffect } from "react";
 import styles from "./page.module.css";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import Image from "next/image";
-import Icon from "@/components/ui/Icon";
-import LayoutContainer from "@/components/layout/LayoutContainer";
-import LayoutTitle from "@/components/layout/LayoutTitle";
-import LayoutBox from "@/components/layout/LayoutBox";
-import CheckBox from "@/components/ui/CheckBox";
 import Link from "next/link";
-import CartLayout from "@/components/cart/CartLayout";
-import NoItem from "@/components/ui/NoItem";
 import { updateCart } from "@/lib/utils";
 import { toast } from "react-toastify";
-import Meta from "@/components/layout/Meta";
+
+import { CartLayout } from "@/components/cart";
+import {
+  LayoutContainer,
+  LayoutTitle,
+  LayoutBox,
+  Meta,
+} from "@/components/layout";
+import { CheckBox, Icon, LoadingSpinner, NoItem } from "@/components/ui";
 
 enum Operation {
   increase = 1,

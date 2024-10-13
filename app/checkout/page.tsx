@@ -1,16 +1,16 @@
 "use client";
 import { useState, useEffect, ChangeEvent } from "react";
 import styles from "./page.module.css";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import Icon from "@/components/ui/Icon";
-import LayoutContainer from "@/components/layout/LayoutContainer";
-import LayoutTitle from "@/components/layout/LayoutTitle";
-import LayoutBox from "@/components/layout/LayoutBox";
 import Link from "next/link";
-import CartLayout from "@/components/cart/CartLayout";
-import Address from "@/components/ui/Address";
-import Input from "@/components/ui/Input";
-import Meta from "@/components/layout/Meta";
+
+import { CartLayout } from "@/components/cart";
+import {
+  LayoutContainer,
+  LayoutTitle,
+  LayoutBox,
+  Meta,
+} from "@/components/layout";
+import { Address, Icon, Input, LoadingSpinner } from "@/components/ui";
 
 interface Card {
   number: string;

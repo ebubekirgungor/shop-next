@@ -1,7 +1,8 @@
-import MobileNavButtons from "@/components/navbar/MobileNavButtons";
 import styles from "./layout.module.css";
-import LayoutLink from "@/components/layout/LayoutLink";
-import Icon from "@/components/ui/Icon";
+
+import { MobileNavButtons } from "@/components/navbar";
+import { LayoutLink } from "@/components/layout";
+import { Icon } from "@/components/ui";
 
 export default function AdminLayout({
   children,

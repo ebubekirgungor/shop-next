@@ -2,11 +2,10 @@
 import { useState, useEffect, TouchEvent } from "react";
 import styles from "./page.module.css";
 import Image from "next/image";
-import Icon from "@/components/ui/Icon";
-import Button from "@/components/ui/Button";
 import { jsonFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";
-import Input from "@/components/ui/Input";
+
+import { Button, Icon, Input } from "@/components/ui";
 
 interface Comment {
   date: Date;

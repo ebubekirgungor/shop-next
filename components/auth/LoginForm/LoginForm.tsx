@@ -1,12 +1,10 @@
 "use client";
 import { ChangeEvent, FormEvent, useState } from "react";
 import styles from "./LoginForm.module.css";
-import Input from "@/components/ui/Input";
-import CheckBox from "@/components/ui/CheckBox";
-import Button from "@/components/ui/Button";
-import Icon from "@/components/ui/Icon";
 import { jsonFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";
+
+import { Button, CheckBox, Icon, Input } from "@/components/ui";
 
 interface Form {
   email: string;

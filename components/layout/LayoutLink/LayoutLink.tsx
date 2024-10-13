@@ -1,10 +1,10 @@
 "use client";
-
 import { FC } from "react";
 import styles from "./LayoutLink.module.css";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import Icon from "../../ui/Icon";
+
+import { Icon } from "@/components/ui";
 
 interface Props {
   href: string;

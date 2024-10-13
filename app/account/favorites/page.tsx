@@ -1,19 +1,19 @@
 "use client";
 import { useState, useEffect, FormEvent } from "react";
 import styles from "./page.module.css";
-import LayoutContainer from "@/components/layout/LayoutContainer";
-import LayoutBox from "@/components/layout/LayoutBox";
-import LayoutTitle from "@/components/layout/LayoutTitle";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import Dialog from "@/components/ui/Dialog";
-import Button from "@/components/ui/Button";
 import Image from "next/image";
 import Link from "next/link";
-import Icon from "@/components/ui/Icon";
-import NoItem from "@/components/ui/NoItem";
+
 import { toast } from "react-toastify";
 import { jsonFetcher } from "@/lib/fetchers";
-import Meta from "@/components/layout/Meta";
+
+import {
+  LayoutContainer,
+  LayoutTitle,
+  LayoutBox,
+  Meta,
+} from "@/components/layout";
+import { Button, Dialog, Icon, LoadingSpinner, NoItem } from "@/components/ui";
 
 interface FavoriteProduct extends Product {
   image: string;

@@ -1,11 +1,11 @@
-import Button from "../../ui/Button";
 import styles from "./CartLayout.module.css";
 import { usePathname, useRouter } from "next/navigation";
 import LoadingSpinner from "../../ui/LoadingSpinner";
 import { updateCart } from "@/lib/utils";
 import { jsonFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";
-import Icon from "../../ui/Icon";
+
+import { Button } from "@/components/ui";
 
 export default function CartLayout({
   products,

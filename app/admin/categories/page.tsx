@@ -1,19 +1,24 @@
 "use client";
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import styles from "./page.module.css";
-import LayoutContainer from "@/components/layout/LayoutContainer";
-import LayoutBox from "@/components/layout/LayoutBox";
-import LayoutTitle from "@/components/layout/LayoutTitle";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import Dialog from "@/components/ui/Dialog";
-import Input from "@/components/ui/Input";
-import Button from "@/components/ui/Button";
-import Icon from "@/components/ui/Icon";
 import Image from "next/image";
 import { formFetcher } from "@/lib/fetchers";
 import { toast } from "react-toastify";
-import Meta from "@/components/layout/Meta";
-import CheckBox from "@/components/ui/CheckBox";
+
+import {
+  LayoutContainer,
+  LayoutTitle,
+  LayoutBox,
+  Meta,
+} from "@/components/layout";
+import {
+  Button,
+  CheckBox,
+  Dialog,
+  Icon,
+  Input,
+  LoadingSpinner,
+} from "@/components/ui";
 
 type DialogType = "POST" | "PUT" | "DELETE";
 

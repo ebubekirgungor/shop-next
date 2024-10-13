@@ -1,8 +1,9 @@
 "use client";
-import LoginForm from "@/components/login/LoginForm";
-import Dialog from "@/components/ui/Dialog";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+
+import { LoginForm } from "@/components/auth";
+import { Dialog } from "@/components/ui";
 
 export default function LoginPage() {
   const router = useRouter();

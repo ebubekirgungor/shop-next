@@ -4,8 +4,9 @@ import "./globals.css";
 import styles from "./layout.module.css";
 import Link from "next/link";
 import ToastProvider from "./ToastProvider";
-import Navbar from "@/components/navbar/Navbar";
 import meta from "@/config/meta.json";
+
+import { Navbar } from "@/components/navbar";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500"] });
 

@@ -2,12 +2,10 @@ import { cookies } from "next/headers";
 import styles from "./Navbar.module.css";
 import Link from "next/link";
 import Image from "next/image";
-import NavSearch from "../NavSearch";
-import Icon from "@/components/ui/Icon";
-import NavButton from "../NavButton";
-import Box from "@/components/ui/Box";
 import { Role } from "@/lib/types";
-import LogoutButton from "../LogoutButton";
+
+import { Box, Icon } from "@/components/ui";
+import { LogoutButton, NavButton, NavSearch } from "@/components/navbar";
 
 const Navbar = () => {
   const role = cookies().get("role")?.value;

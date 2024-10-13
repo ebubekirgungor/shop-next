@@ -1,8 +1,8 @@
 import { cookies } from "next/headers";
-import Icon from "../../ui/Icon";
-import LogoutButton from "../LogoutButton";
-import NavButton from "../NavButton";
 import styles from "./MobileNavButtons.module.css";
+
+import { Icon } from "@/components/ui";
+import { LogoutButton, NavButton } from "@/components/navbar";
 
 const MobileNavButtons = () => {
   const role = cookies().get("role")?.value;
